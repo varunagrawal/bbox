@@ -5,8 +5,17 @@ from bbox.boundingbox import BoundingBox
 
 
 class BoundingBoxList:
-    def __init__(self, bounding_boxes:list):
-        self.bboxes = np.asarray([x.numpy(two_point=True) for x in bounding_boxes])
+    def __init__(self, arr):
+        """"""
+        if arr.shape[0] > 0 and arr.shape[1] != 4:
+            raise Exception("Invalid bounding box dimension. Expected list of array of size 4.")
+        self.bboxes = np.asarray(arr, dtype=np.float64)
+
+    @classmethod
+    def from_bbox_list(cls, bounding_boxes:list):
+        """
+        """
+        return BoundingBoxList(np.asarray([x.numpy(two_point=True) for x in bounding_boxes]))
 
     def __str__(self):
         return str(self.bboxes)
@@ -24,6 +33,12 @@ class BoundingBoxList:
     def x1(self):
         return self.bboxes[:, 0]
     
+    @x1.setter
+    def x1(self, x):
+        if isinstance(x, list):
+            x = np.asarray(x)
+        self.bboxes[:, 0] = x
+
     @property
     def x2(self):
         return self.bboxes[:, 2]
@@ -38,11 +53,11 @@ class BoundingBoxList:
 
     @property
     def width(self):
-        return self.x2 - self.x1
+        return self.x2 - self.x1 + 1
 
     @property
     def height(self):
-        return self.y2 - self.y1
+        return self.y2 - self.y1 + 1
 
     @property    
     def shape(self):
@@ -53,7 +68,7 @@ class BoundingBoxList:
             return self.bboxes
         else:
             bboxes = deepcopy(self.bboxes)
-            bboxes[:, 2] = bboxes[:, 2] - bboxes[:, 0]
-            bboxes[:, 3] = bboxes[:, 3] - bboxes[:, 1]
+            bboxes[:, 2] = bboxes[:, 2] - bboxes[:, 0] + 1
+            bboxes[:, 3] = bboxes[:, 3] - bboxes[:, 1] + 1
             return bboxes
     
