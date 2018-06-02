@@ -3,14 +3,31 @@ from copy import deepcopy
 
 
 class BoundingBox:
-    def __init__(self, x, y, w, h):
-        self.x1 = x
-        self.y1 = y
-        self.w = w
-        self.h = h
+    def __init__(self, x):
+        # Copy constructor makes the constructor idempotent
+        if isinstance(x, BoundingBox):
+            x = x.numpy()
+
+        elif isinstance(x, list):
+            x = np.asarray(x)
+
+        elif isinstance(x, np.ndarray):
+            if x.ndim >= 2:
+                x = x.flatten()
+            if x.size != 4:
+                raise Exception("Invalid input length. Input should have 4 elements (x, y, w, h)")
+
+        self.x1 = np.float(x[0])
+        self.y1 = np.float(x[1])
+        self.w = np.float(x[2])
+        self.h = np.float(x[3])
+        
         # (x2, y2) will be used for indexing, hence we need to subtract 1
-        self.x2 = x + w - 1
-        self.y2 = y + h - 1
+        self.x2 = self.x1 + self.w - 1
+        self.y2 = self.y1 + self.h - 1
+
+    # TODO 
+    # Set up setters and getters
 
     def tolist(self, two_point=False):
         if two_point:
@@ -23,3 +40,6 @@ class BoundingBox:
 
     def __repr__(self):
         return "BoundingBox(x={x}, y={y}, w={w}, h={h})".format(x=self.x1, y=self.y1, w=self.w, h=self.h)
+
+    def __str__(self):
+        return "(x={x}, y={y}, w={w}, h={h})".format(x=self.x1, y=self.y1, w=self.w, h=self.h)
