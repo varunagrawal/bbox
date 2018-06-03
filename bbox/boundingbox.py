@@ -3,10 +3,10 @@ from copy import deepcopy
 
 
 class BoundingBox:
-    def __init__(self, x):
+    def __init__(self, x, two_point=False):
         # Copy constructor makes the constructor idempotent
         if isinstance(x, BoundingBox):
-            x = x.numpy()
+            x = x.numpy(two_point=two_point)
 
         elif isinstance(x, list):
             x = np.asarray(x)
@@ -15,7 +15,11 @@ class BoundingBox:
             if x.ndim >= 2:
                 x = x.flatten()
             if x.size != 4:
-                raise Exception("Invalid input length. Input should have 4 elements (x, y, w, h)")
+                raise Exception("Invalid input length. Input should have 4 elements.")
+
+        if two_point:
+            x[2] = x[2] - x[0] + 1
+            x[3] = x[3] - x[1] + 1
 
         self.x1 = np.float(x[0])
         self.y1 = np.float(x[1])
