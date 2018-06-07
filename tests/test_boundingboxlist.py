@@ -1,15 +1,15 @@
 import numpy as np
-from bbox import BoundingBox, BoundingBoxList
+from bbox import BBox2D, BBox2DList
 
 
-class TestBoundingBoxList(object):
+class TestBBox2DList(object):
     def test_null(self):
-        bbl = BoundingBoxList([])
+        bbl = BBox2DList([])
         assert bbl.shape == (0, 4)
 
     def test_box_shapes(self):
-        l = [BoundingBox(np.random.randint(0, 1024, size=4)) for _ in range(10)]
-        bbl = BoundingBoxList(l)
+        l = [BBox2D(np.random.randint(0, 1024, size=4)) for _ in range(10)]
+        bbl = BBox2DList(l)
 
         assert len(bbl) == 10
         assert bbl.shape == (10, 4)

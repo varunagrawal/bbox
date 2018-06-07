@@ -2,7 +2,7 @@ import numpy as np
 import warnings
 warnings.filterwarnings("ignore")
 
-from bbox import BoundingBox, BoundingBoxList
+from bbox import BBox2D, BBox2DList
 from bbox.metrics import jaccard_index
 
 
@@ -39,8 +39,8 @@ def test_jaccard_index_single():
     bbox1 = [39, 63, 203, 112]
     bbox2 = [54, 66, 198, 114]
 
-    a = BoundingBoxList([bbox1])
-    b = BoundingBoxList([bbox2])
+    a = BBox2DList([bbox1])
+    b = BBox2DList([bbox2])
     iou = jaccard_index(a, b)
 
     bbox1[2], bbox1[3] = bbox1[2] + bbox1[0] - 1, bbox1[3] + bbox1[1] - 1
@@ -56,8 +56,8 @@ def test_jaccard_index():
     bboxes_1 = [[39, 63, 203, 112], [49, 75, 203, 125], [31, 69, 201, 125], [50, 72, 197, 121], [35, 51, 196, 110]]
     bboxes_2 = [[54, 66, 198, 114], [42, 78, 186, 126], [18, 63, 235, 135], [54, 72, 198, 120], [36, 60, 180, 108]]
 
-    a = BoundingBoxList(bboxes_1)
-    b = BoundingBoxList(bboxes_2)
+    a = BBox2DList(bboxes_1)
+    b = BBox2DList(bboxes_2)
 
     iou = jaccard_index(a, b)
     

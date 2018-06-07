@@ -1,22 +1,89 @@
-from bbox import BoundingBox, BoundingBoxList
+import pytest
+from bbox import BBox2D, BBox2DList
 
 
-class TestBoundingBox(object):
+class TestBBox2D(object):
+    def attributes_test(self, bbox, x1, y1, x2, y2, w, h):
+        """
+        Convenience method to test all the bounding box attributes of importance.
+        """
+        assert bbox.x1 == x1
+        assert bbox.x2 == x2
+        assert bbox.y1 == y1
+        assert bbox.y2 == y2
+        assert bbox.w == w
+        assert bbox.h == h
+
+    def test_constructor_empty_list(self):
+        with pytest.raises(ValueError):
+            BBox2D([])
+    
+    def test_constructor_1_item(self):
+        with pytest.raises(ValueError):
+            BBox2D([1])
+        
+    def test_constructor_2_items(self):
+        with pytest.raises(ValueError):
+            BBox2D([1, 2])
+
+    def test_constructor_3_items(self):
+        with pytest.raises(ValueError):
+            BBox2D([1, 2, 4])
+
+    def test_constructor_5_items(self):
+        with pytest.raises(ValueError):
+            BBox2D([1, 2, 3, 4, 5])
+
+    def test_constructor_invalid_type(self):
+        with pytest.raises(TypeError):
+            BBox2D("1, 2, 3, 4")
+
+    def test_copy_constructor(self):
+        bbox1 = BBox2D([10, 11, 510, 511])
+        bbox2 = BBox2D(bbox1)
+        self.attributes_test(bbox2, 10, 11, 519, 521, 510, 511)
+        
     def test_basic_box(self):
-        bbox1 = BoundingBox([0, 0, 500, 500])
-        assert bbox1.x1 == 0
-        assert bbox1.y1 == 0
-        assert bbox1.x2 == 499
-        assert bbox1.y2 == 499
-        assert bbox1.h == 500
-        assert bbox1.w == 500
+        bbox1 = BBox2D([0, 0, 500, 500])
+        self.attributes_test(bbox1, 0, 0, 499, 499, 500, 500)
         
     def test_nonbasic_box(self):
-        bbox2 = BoundingBox([24, 48, 64, 96])
+        bbox2 = BBox2D([24, 48, 64, 96])
+        self.attributes_test(bbox2, 24, 48, 87, 143, 64, 96)
+        
+    def test_x1(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        bbox.x1 = 25
+        assert bbox.x1 == 25
+        assert bbox.w == 63
 
-        assert bbox2.x1 == 24
-        assert bbox2.y1 == 48
-        assert bbox2.x2 == 87
-        assert bbox2.y2 == 143
-        assert bbox2.h == 96
-        assert bbox2.w == 64
+    def test_x2(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        bbox.x2 = 89
+        assert bbox.x2 == 89
+        assert bbox.w == 66
+
+    def test_y1(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        bbox.y1 = 51
+        assert bbox.y1 == 51
+        assert bbox.h == 93
+
+    def test_y2(self):
+        bbox = BBox2D([24, 48, 64, 30])
+        bbox.y2 = 80
+        assert bbox.y2 == 80
+        assert bbox.h == 33
+
+    def test_w(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        bbox.w = 70
+        assert bbox.w == 70
+        assert bbox.x1 == 24
+        assert bbox.x2 == 93
+
+    def test_h(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        bbox.h = 93
+        assert bbox.h == 93
+        assert bbox.y2 == 140
