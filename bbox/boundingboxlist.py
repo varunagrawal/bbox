@@ -99,7 +99,15 @@ class BoundingBoxList:
         return self.x2 - self.x1 + 1
 
     @property
+    def w(self):
+        return self.x2 - self.x1 + 1
+
+    @property
     def height(self):
+        return self.y2 - self.y1 + 1
+
+    @property
+    def h(self):
         return self.y2 - self.y1 + 1
 
     @property    
