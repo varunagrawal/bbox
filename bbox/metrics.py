@@ -16,13 +16,28 @@ def jaccard_index(a, b):
 
     logger.debug(xA, yA, xB, yB)
     
-    intersection = np.maximum((xB - xA + 1), 0) * np.maximum((yB - yA + 1), 0)
+    inter_w = xB - xA + 1
+    inter_w[inter_w<0] = 0
+    
+    inter_h = yB - yA + 1
+    inter_h[inter_h<0] = 0
+
+    # maximum generates a (N,N) matrix which consumes a lot of memory
+    # thus we are aggressive about freeing memory up.
+    del(xA)
+    del(yA)
+    del(xB)
+    del(yB)
+
+    intersection = inter_w * inter_h 
+    
     logger.debug(intersection)
 
     a_area = a.width * a.height
     b_area = b.width * b.height
 
     logger.debug(a_area, b_area)
+    
     iou = intersection / (a_area + b_area.T - intersection)
 
     # set nan and +/- inf to 0
