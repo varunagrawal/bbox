@@ -1,10 +1,10 @@
 from copy import deepcopy
 import numpy as np
 
-from bbox.boundingbox import BoundingBox
+from bbox.boundingbox import BBox2D
 
 
-class BoundingBoxList:
+class BBox2DList:
     def __init__(self, arr, two_point=False):
         """
         Expects an iterable of bounding boxes of the form (x, y, w, h) or (x1, y1, x2, y2) if `two_point=True`.
@@ -23,17 +23,17 @@ class BoundingBoxList:
             # list is not empty, so we continue
             else:
                 # check if the list elements are either numpy arrays or lists
-                # if yes, then convert to a list of BoundingBox objects
+                # if yes, then convert to a list of BBox2D objects
                 if all(isinstance(x, np.ndarray) or isinstance(x, list) for x in arr):
-                    self.bboxes = np.asarray([BoundingBox(x, two_point=two_point).numpy(two_point=True) 
+                    self.bboxes = np.asarray([BBox2D(x, two_point=two_point).numpy(two_point=True) 
                     for x in arr])
 
-                elif all(isinstance(x, BoundingBox) for x in arr):
-                    # parse a list of BoundingBox objects
+                elif all(isinstance(x, BBox2D) for x in arr):
+                    # parse a list of BBox2D objects
                     self.bboxes = np.asarray([x.numpy(two_point=True) for x in arr])
 
                 else:
-                    raise Exception("Element of input is of invalid type. Elements must be all list, np.ndarray or BoundingBox")
+                    raise Exception("Element of input is of invalid type. Elements must be all list, np.ndarray or BBox2D")
 
         # check if `arr` is a 2D numpy array
         elif isinstance(arr, np.ndarray):
@@ -45,10 +45,10 @@ class BoundingBoxList:
                 raise Exception("Invalid dimensions. Expected 2D array of size Nx4. Extra dimensions should be size 1.")
 
             # parse the input
-            self.bboxes = np.asarray([BoundingBox(x, two_point=two_point).numpy(two_point=True) for x in arr], dtype=np.float64)
+            self.bboxes = np.asarray([BBox2D(x, two_point=two_point).numpy(two_point=True) for x in arr], dtype=np.float64)
 
-        # if `arr` is a BoundingBoxList, just make a copy
-        elif isinstance(arr, BoundingBoxList):
+        # if `arr` is a BBox2DList, just make a copy
+        elif isinstance(arr, BBox2DList):
             self.bboxes = arr.bboxes
         
         else:
@@ -58,7 +58,7 @@ class BoundingBoxList:
     def from_bbox_list(cls, bounding_boxes:list):
         """
         """
-        return BoundingBoxList(np.asarray([x.numpy(two_point=True) for x in bounding_boxes]))
+        return BBox2DList(np.asarray([x.numpy(two_point=True) for x in bounding_boxes]))
 
     def __str__(self):
         return str(self.bboxes)

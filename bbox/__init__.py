@@ -1,2 +1,2 @@
-from bbox.boundingbox import BoundingBox
-from bbox.boundingboxlist import BoundingBoxList
+from bbox.boundingbox import BBox2D
+from bbox.boundingboxlist import BBox2DList
