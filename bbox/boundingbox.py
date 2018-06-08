@@ -90,7 +90,6 @@ class BBox2D:
         self._y2 = y
         self._h = self._y2 - self._y1 + 1
 
-
     @property
     def w(self):
         return self._w
@@ -113,6 +112,28 @@ class BBox2D:
         self._h = h
         self._y2 = self._y1 + self._h - 1
 
+    @property
+    def width(self):
+        return self._w
+
+    @width.setter
+    def width(self, w):
+        if w < 1:
+            raise ValueError("Invalid width value. Width cannot be non-positive.")
+        self._w = w
+        self._x2 = self._x1 + self._w - 1
+
+    @property
+    def height(self):
+        return self._h
+
+    @height.setter
+    def height(self, h):
+        if h < 1:
+            raise ValueError("Invalid height value. Height cannot be non-positive.")
+        self._h = h
+        self._y2 = self._y1 + self._h - 1
+
     def tolist(self, two_point=False):
         if two_point:
             return [self.x1, self.y1, self.x2, self.y2]
@@ -127,3 +148,8 @@ class BBox2D:
 
     def __str__(self):
         return "(x={x}, y={y}, w={w}, h={h})".format(x=self.x1, y=self.y1, w=self.w, h=self.h)
+
+
+class BBox3D:
+    def __init__(self):
+        raise NotImplementedError()
