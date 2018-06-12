@@ -150,4 +150,4 @@ class BBox2D:
         return np.asarray(self.tolist(two_point=two_point), dtype=np.float)
 
     def __repr__(self):
-        return "BoundingBox(x={x}, y={y}, w={w}, h={h})".format(x=self.x1, y=self.y1, w=self.w, h=self.h)
+        return "BBox2D(x={x}, y={y}, w={w}, h={h})".format(x=self.x1, y=self.y1, w=self.w, h=self.h)

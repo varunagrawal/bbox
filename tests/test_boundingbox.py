@@ -1,4 +1,5 @@
 import pytest
+import numpy as np
 from bbox import BBox2D, BBox2DList
 
 
@@ -13,6 +14,8 @@ class TestBBox2D(object):
         assert bbox.y2 == y2
         assert bbox.w == w
         assert bbox.h == h
+        assert bbox.width == w
+        assert bbox.height == h
 
     def test_constructor_empty_list(self):
         with pytest.raises(ValueError):
@@ -87,3 +90,27 @@ class TestBBox2D(object):
         bbox.h = 93
         assert bbox.h == 93
         assert bbox.y2 == 140
+
+    def test_tolist(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        bbox_list = bbox.tolist(two_point=False)
+        for x, y in zip(bbox_list, [24, 48, 64, 96]):
+            assert x == y
+        bbox_list_2 = bbox.tolist(two_point=True)
+        for x, y in zip(bbox_list_2, [24, 48, 87, 143]):
+            assert x == y
+        
+    def test_numpy(self):
+        x = np.array([24, 48, 64, 96])
+        bbox = BBox2D(x)
+        bb_np = bbox.numpy(two_point=False)
+        assert np.array_equal(bb_np, x)
+
+        bbox = BBox2D(x, two_point=True)
+        bb_np_2 = bbox.numpy(two_point=True)
+        assert np.array_equal(bb_np_2, x)
+
+    def test_str(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        s = repr(bbox)
+        assert "BBox2D(x=24.0, y=48.0, w=64.0, h=96.0)" == s
