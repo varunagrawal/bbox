@@ -22,13 +22,16 @@ class BBox2D:
             raise TypeError("Expected input to constructor to be a 4 element list, tuple, numpy ndarray, or BBox2D object.")
             
         if two_point:
-            x[2] = x[2] - x[0] + 1
-            x[3] = x[3] - x[1] + 1
+            w = x[2] - x[0] + 1
+            h = x[3] - x[1] + 1
+        else:
+            w = x[2]
+            h = x[3]
 
         self._x1 = np.float(x[0])
         self._y1 = np.float(x[1])
-        self._w = np.float(x[2])
-        self._h = np.float(x[3])
+        self._w = np.float(w)
+        self._h = np.float(h)
         
         # (x2, y2) will be used for indexing, hence we need to subtract 1
         self._x2 = self._x1 + self._w - 1
@@ -144,10 +147,7 @@ class BBox2D:
             return [self.x1, self.y1, self.w, self.h]
 
     def numpy(self, two_point=False):
-        return np.asarray(self.tolist(two_point), dtype=np.float)
+        return np.asarray(self.tolist(two_point=two_point), dtype=np.float)
 
     def __repr__(self):
         return "BoundingBox(x={x}, y={y}, w={w}, h={h})".format(x=self.x1, y=self.y1, w=self.w, h=self.h)
-
-    def __str__(self):
-        return "(x={x}, y={y}, w={w}, h={h})".format(x=self.x1, y=self.y1, w=self.w, h=self.h)
