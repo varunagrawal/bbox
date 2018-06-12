@@ -3,7 +3,7 @@ import logging
 from bbox import BBox2D, BBox2DList
 
 
-logger = logging.getLogger("bbox")
+logger = logging.getLogger(__name__)
 
 
 def jaccard_index_2d(a, b):
@@ -15,7 +15,7 @@ def jaccard_index_2d(a, b):
     xB = np.minimum(a.x2, b.x2)
     yB = np.minimum(a.y2, b.y2)
 
-    logger.debug("jaccard_index: {0} {1} {2} {3}".format(xA, yA, xB, yB))
+    logger.debug("xA={0} yA={1} xB={2} yB={3}".format(xA, yA, xB, yB))
     
     inter_w = xB - xA + 1
     inter_w = inter_w * (inter_w>=0)
@@ -32,7 +32,7 @@ def jaccard_index_2d(a, b):
 
     intersection = inter_w * inter_h 
     
-    logger.debug("jaccard_index: intersection: {0}".format(intersection))
+    logger.debug("jaccard_index: intersection={0}".format(intersection))
 
     a_area = a.width * a.height
     b_area = b.width * b.height
@@ -58,7 +58,7 @@ def multi_jaccard_index_2d(a, b):
     xB = np.minimum(a.x2, b.x2.T)
     yB = np.minimum(a.y2, b.y2.T)
 
-    logger.debug("multi_jaccard_index: {0} {1} {2} {3}".format(xA, yA, xB, yB))
+    logger.debug("\nmulti_jaccard_index:\nxA\n{0}\nyA\n{1}\nxB\n{2}\nyB\n{3}".format(xA, yA, xB, yB))
     
     inter_w = xB - xA + 1
     inter_w[inter_w<0] = 0
@@ -75,12 +75,12 @@ def multi_jaccard_index_2d(a, b):
 
     intersection = inter_w * inter_h 
     
-    logger.debug("multi_jaccard_index: intersection: {0}".format(intersection))
+    logger.debug("\nmulti_jaccard_index intersection:\n {0}".format(intersection))
 
     a_area = a.width * a.height
     b_area = b.width * b.height
 
-    logger.debug("multi_jaccard_index: a_area: {0}, b_area: {1}".format(a_area, b_area))
+    logger.debug("\nmulti_jaccard_index:\n a_area:\n {0} \nb_area:\n {1}".format(a_area, b_area))
     
     iou = intersection / (a_area + b_area.T - intersection)
 
