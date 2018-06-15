@@ -8,6 +8,7 @@ numpy = "*"
 pytest = "*"
 
 [dev-packages]
+pylint = "*"
 
 [requires]
 python_version = "3.6"
