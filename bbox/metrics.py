@@ -53,10 +53,11 @@ def multi_jaccard_index_2d(a, b):
     Computes the Intersection over Union of two sets of bounding boxes.
     Also known as IoU. 
     """
-    xA = np.maximum(a.x1, b.x1.T)
-    yA = np.maximum(a.y1, b.y1.T)
-    xB = np.minimum(a.x2, b.x2.T)
-    yB = np.minimum(a.y2, b.y2.T)
+    # We need to add a trailing dimension so that max/min gives us a (N,N) matrix
+    xA = np.maximum(a.x1[:, np.newaxis], b.x1[:, np.newaxis].T)
+    yA = np.maximum(a.y1[:, np.newaxis], b.y1[:, np.newaxis].T)
+    xB = np.minimum(a.x2[:, np.newaxis], b.x2[:, np.newaxis].T)
+    yB = np.minimum(a.y2[:, np.newaxis], b.y2[:, np.newaxis].T)
 
     logger.debug("\nmulti_jaccard_index:\nxA\n{0}\nyA\n{1}\nxB\n{2}\nyB\n{3}".format(xA, yA, xB, yB))
     
@@ -74,16 +75,14 @@ def multi_jaccard_index_2d(a, b):
     del(yB)
 
     intersection = inter_w * inter_h 
-    
     logger.debug("\nmulti_jaccard_index intersection:\n {0}".format(intersection))
 
-    a_area = a.width * a.height
-    b_area = b.width * b.height
-
+    a_area = a.width[:, np.newaxis] * a.height[:, np.newaxis]
+    b_area = b.width[:, np.newaxis] * b.height[:, np.newaxis]
     logger.debug("\nmulti_jaccard_index:\n a_area:\n {0} \nb_area:\n {1}".format(a_area, b_area))
     
     iou = intersection / (a_area + b_area.T - intersection)
-
+    
     # set nan and +/- inf to 0
     iou[np.isinf(iou)] = 0
     iou[np.isnan(iou)] = 0

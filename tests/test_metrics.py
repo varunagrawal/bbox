@@ -6,9 +6,7 @@ import logging
 from bbox import BBox2D, BBox2DList
 from bbox.metrics import jaccard_index_2d, multi_jaccard_index_2d
 
-
-logger = logging.getLogger("bbox")
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger("test_metrics")
 
 
 def naive_intersection_over_union(boxA, boxB):
@@ -49,6 +47,7 @@ def test_jaccard_index_single():
 
     gt_iou = naive_intersection_over_union(bbox1, bbox2)
     
+    logger.debug("IoU={0}, Naive IoU={1}".format(iou, gt_iou))
     assert iou == gt_iou
 
 def test_multi_jaccard_index():
