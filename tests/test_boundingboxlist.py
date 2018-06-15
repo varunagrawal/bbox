@@ -14,10 +14,10 @@ class TestBBox2DList(object):
         assert len(bbl) == 10
         assert bbl.shape == (10, 4)
 
-        lx1 = np.array([b.x1 for b in l])[:, np.newaxis]
-        lx2 = np.array([b.x2 for b in l])[:, np.newaxis]
-        ly1 = np.array([b.y1 for b in l])[:, np.newaxis]
-        ly2 = np.array([b.y2 for b in l])[:, np.newaxis]
+        lx1 = np.array([b.x1 for b in l])
+        lx2 = np.array([b.x2 for b in l])
+        ly1 = np.array([b.y1 for b in l])
+        ly2 = np.array([b.y2 for b in l])
 
         assert lx1.shape == bbl.x1.shape
         assert ly1.shape == bbl.y1.shape
@@ -29,4 +29,4 @@ class TestBBox2DList(object):
         assert np.array_equal(ly1, bbl.y1)
         assert np.array_equal(ly2, bbl.y2)
 
-        assert bbl.x1.shape == (10, 1)
+        assert bbl.x1.shape == (10,)

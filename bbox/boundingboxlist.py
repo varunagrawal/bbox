@@ -74,7 +74,7 @@ class BBox2DList:
 
     @property
     def x1(self):
-        return self.bboxes[:, [0]]
+        return self.bboxes[:, 0]
     
     @x1.setter
     def x1(self, x):
@@ -84,15 +84,15 @@ class BBox2DList:
 
     @property
     def x2(self):
-        return self.bboxes[:, [2]]
+        return self.bboxes[:, 2]
 
     @property
     def y1(self):
-        return self.bboxes[:, [1]]
+        return self.bboxes[:, 1]
     
     @property
     def y2(self):
-        return self.bboxes[:, [3]]
+        return self.bboxes[:, 3]
 
     @property
     def width(self):
