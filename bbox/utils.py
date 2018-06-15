@@ -16,9 +16,8 @@ def nms(bbl, scores, thresh):
 
     areas = bbl.w * bbl.h
     order = scores.argsort()[::-1]
-
+    
     keep = []
-
     while order.size > 0:
         i = order[0]
         keep.append(int(i))
@@ -27,20 +26,11 @@ def nms(bbl, scores, thresh):
         yy1 = np.maximum(bbl.y1[i], bbl.y1[order[1:]])
         xx2 = np.minimum(bbl.x2[i], bbl.x2[order[1:]])
         yy2 = np.minimum(bbl.y2[i], bbl.y2[order[1:]])
-        print("Start")
-        print(i)
-        print(bbl.x1[i])
-        print(bbl.x1[i].shape)
-        print("xx1", xx1.shape)
-        print("yy1", yy1.shape)
-        print("xx2", xx2.shape)
-        print("yy2", yy2.shape)
-        print("End")
-        exit(0)
-
+    
         w = np.maximum(0.0, xx2 - xx1 + 1)
         h = np.maximum(0.0, yy2 - yy1 + 1)
         inter = w * h
+        
         overlap = inter / (areas[i] + areas[order[1:]] - inter)
 
         idx = np.where(overlap <= thresh)[0]
