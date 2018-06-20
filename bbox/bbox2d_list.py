@@ -1,7 +1,7 @@
 from copy import deepcopy
 import numpy as np
 
-from bbox.boundingbox import BBox2D
+from bbox.bbox2d import BBox2D
 
 
 class BBox2DList:

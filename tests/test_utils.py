@@ -45,7 +45,6 @@ def test_nms():
     y1 = np.random.randint(0, 50, size=40)
     w = np.random.randint(0, 50, size=40)
     h = np.random.randint(0, 50, size=40)
-
     x2 = x1 + w - 1
     y2 = y1 + h - 1
 
@@ -56,6 +55,7 @@ def test_nms():
     dets = np.hstack((bboxes_list, scores[:, np.newaxis]))
     naive_keep = naive_nms(dets, thresh)
     
+    # see how easy it is with `bbox`
     bblist = np.stack((x1, y1, w, h), axis=1)
     bbl = BBox2DList(bblist)
     keep = nms(bbl, scores, thresh)

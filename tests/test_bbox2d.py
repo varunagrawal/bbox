@@ -59,6 +59,9 @@ class TestBBox2D(object):
         bbox.x1 = 25
         assert bbox.x1 == 25
         assert bbox.w == 63
+        this = __import__(__name__)
+        this.varun = "varun"
+        print(dir(this))
 
     def test_x2(self):
         bbox = BBox2D([24, 48, 64, 96])
