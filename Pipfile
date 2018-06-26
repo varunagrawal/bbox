@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 numpy = "*"
 pytest = "*"
+pyquaternion = "*"
+pillow = "*"
+numpy-quaternion = "*"
 
 [dev-packages]
 pylint = "*"

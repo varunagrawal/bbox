@@ -1,127 +1,84 @@
 import numpy as np
+from pyquaternion import Quaternion
 
 
 class BBox3D:
     """
     Class for 3D Bounding Boxes
     """
-    def __init__(self, x, y, z, width, height, length, alpha, beta, gamma, center=False):
+    def __init__(self, x, y, z, length, width, height, rx=0, ry=0, rz=0, rw=1, center=False):
         """
         For now we just take either the center of the 3D bounding box or the top-left-closer corner,
-        and the width, height and length, and euler angles.
+        and the width, height and length, and quaternion values.
         """
         if center:
             self._cx, self._cy, self._cz = x, y, z
+            self._c = np.array([x, y, z])
         else:
-            self._cx = x + width/2
-            self._cy = y + height/2
-            self._cz = z + length/2
+            self._cx = x + length/2
+            self._cy = y + width/2
+            self._cz = z + height/2
+            self._c = np.array([self._cx, self._cy, self._cz])
 
         self._w, self._h, self._l = width, height, length
-        self.alpha, self.beta, self.gamma = alpha, beta, gamma
-
-    def rotate_x(self):
-        rot_x = np.array([[1, 0, 0],
-                          [0, np.cos(self.alpha), -np.sin(self.alpha)],
-                          [0, np.sin(self.alpha), np.cos(self.alpha)]])
-        u = np.array([[self._cx, self._cy, self._cz]]).T
-        v = rot_x @ u
-        self._cx, self._cy, self._cz = v 
+        self._q = Quaternion(rw, rx, ry, rz)
 
     @property
-    def x1(self):
-        return self._cx - self._w/2
+    def center(self):
+        return np.array([self._cx, self._cy, self._cz, 1])
 
     @property
-    def x2(self):
-        return self._cx + self._w/2
+    def p1(self):
+        p = np.array([-self._l/2, self._w/2, -self._h/2])
+        p = self._q.rotate(p)
+        p = p + self._c
+        return np.append(p, 1)
 
     @property
-    def x3(self):
-        return self._cx - self._w/2
+    def p2(self):
+        p = np.array([-self._l/2, -self._w/2, -self._h/2])
+        p = self._q.rotate(p)
+        p = p + self._c
+        return np.append(p, 1)
 
     @property
-    def x4(self):
-        return self._cx + self._w/2
+    def p3(self):
+        p = np.array([self._l/2, -self._w/2, -self._h/2])
+        p = self._q.rotate(p)
+        p = p + self._c
+        return np.append(p, 1)
+        
+    @property
+    def p4(self):
+        p = np.array([self._l/2, self._w/2, -self._h/2])
+        p = self._q.rotate(p)
+        p = p + self._c
+        return np.append(p, 1)
 
     @property
-    def x5(self):
-        return self._cx - self._w/2
+    def p5(self):
+        p = np.array([-self._l/2, self._w/2, self._h/2])
+        p = self._q.rotate(p)
+        p = p + self._c
+        return np.append(p, 1)
 
     @property
-    def x6(self):
-        return self._cx + self._w/2
+    def p6(self):
+        p = np.array([-self._l/2, -self._w/2, self._h/2])
+        p = self._q.rotate(p)
+        p = p + self._c
+        return np.append(p, 1)
 
     @property
-    def x7(self):
-        return self._cx - self._w/2
+    def p7(self):
+        p = np.array([self._l/2, -self._w/2, self._h/2])
+        p = self._q.rotate(p)
+        p = p + self._c
+        return np.append(p, 1)
 
     @property
-    def x8(self):
-        return self._cx + self._w/2
-
-    @property
-    def y1(self):
-        return self._cy - self._h/2
-    
-    @property
-    def y2(self):        
-        return self._cy - self._h/2
-    
-    @property
-    def y3(self):
-        return self._cy + self._h/2
-
-    @property
-    def y4(self):
-        return self._cy + self._h/2
-
-    @property
-    def y5(self):
-        return self._cy - self._h/2
-
-    @property
-    def y6(self):
-        return self._cy - self._h/2
-
-    @property
-    def y7(self):
-        return self._cy + self._h/2
-
-    @property
-    def y8(self):
-        return self._cy + self._h/2
-
-    @property
-    def z1(self):
-        return self._cz - self._l/2
-
-    @property
-    def z2(self):
-        return self._cz - self._l/2
-
-    @property
-    def z3(self):
-        return self._cz - self._l/2
-
-    @property
-    def z4(self):
-        return self._cz - self._l/2
-
-    @property
-    def z5(self):
-        return  self._cz + self._l/2
-
-    @property
-    def z6(self):
-        return self._cz + self._l/2
-
-    @property
-    def z7(self):
-        return self._cz + self._l/2
-
-    @property
-    def z8(self):
-        return self._cz + self._l/2
-
-
+    def p8(self):
+        p = np.array([self._l/2, self._w/2, self._h/2])
+        p = self._q.rotate(p)
+        p = p + self._c
+        return np.append(p, 1)
