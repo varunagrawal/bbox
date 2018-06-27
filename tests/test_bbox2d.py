@@ -20,11 +20,11 @@ class TestBBox2D(object):
     def test_constructor_empty_list(self):
         with pytest.raises(ValueError):
             BBox2D([])
-    
+
     def test_constructor_1_item(self):
         with pytest.raises(ValueError):
             BBox2D([1])
-        
+
     def test_constructor_2_items(self):
         with pytest.raises(ValueError):
             BBox2D([1, 2])
@@ -45,23 +45,20 @@ class TestBBox2D(object):
         bbox1 = BBox2D([10, 11, 510, 511])
         bbox2 = BBox2D(bbox1)
         self.attributes_test(bbox2, 10, 11, 519, 521, 510, 511)
-        
+
     def test_basic_box(self):
         bbox1 = BBox2D([0, 0, 500, 500])
         self.attributes_test(bbox1, 0, 0, 499, 499, 500, 500)
-        
+
     def test_nonbasic_box(self):
         bbox2 = BBox2D([24, 48, 64, 96])
         self.attributes_test(bbox2, 24, 48, 87, 143, 64, 96)
-        
+
     def test_x1(self):
         bbox = BBox2D([24, 48, 64, 96])
         bbox.x1 = 25
         assert bbox.x1 == 25
         assert bbox.w == 63
-        this = __import__(__name__)
-        this.varun = "varun"
-        print(dir(this))
 
     def test_x2(self):
         bbox = BBox2D([24, 48, 64, 96])
@@ -102,7 +99,7 @@ class TestBBox2D(object):
         bbox_list_2 = bbox.tolist(two_point=True)
         for x, y in zip(bbox_list_2, [24, 48, 87, 143]):
             assert x == y
-        
+
     def test_numpy(self):
         x = np.array([24, 48, 64, 96])
         bbox = BBox2D(x)
