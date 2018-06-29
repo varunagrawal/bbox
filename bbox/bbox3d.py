@@ -42,56 +42,56 @@ class BBox3D:
 
     @property
     def p1(self):
-        p = np.array([self._l/2, -self._w/2, -self._h/2])
-        p = self._q.rotate(p)
-        p = p + self._c
-        return np.append(p, 1)
-
-    @property
-    def p2(self):
-        p = np.array([self._l/2, self._w/2, -self._h/2])
-        p = self._q.rotate(p)
-        p = p + self._c
-        return np.append(p, 1)
-
-    @property
-    def p3(self):
-        p = np.array([-self._l/2, self._w/2, -self._h/2])
-        p = self._q.rotate(p)
-        p = p + self._c
-        return np.append(p, 1)
-
-    @property
-    def p4(self):
         p = np.array([-self._l/2, -self._w/2, -self._h/2])
         p = self._q.rotate(p)
         p = p + self._c
         return np.append(p, 1)
 
     @property
+    def p2(self):
+        p = np.array([self._l/2, -self._w/2, -self._h/2])
+        p = self._q.rotate(p)
+        p = p + self._c
+        return np.append(p, 1)
+
+    @property
+    def p3(self):
+        p = np.array([self._l/2, self._w/2, -self._h/2])
+        p = self._q.rotate(p)
+        p = p + self._c
+        return np.append(p, 1)
+
+    @property
+    def p4(self):
+        p = np.array([-self._l/2, self._w/2, -self._h/2])
+        p = self._q.rotate(p)
+        p = p + self._c
+        return np.append(p, 1)
+
+    @property
     def p5(self):
-        p = np.array([self._l/2, -self._w/2, self._h/2])
+        p = np.array([-self._l/2, -self._w/2, self._h/2])
         p = self._q.rotate(p)
         p = p + self._c
         return np.append(p, 1)
 
     @property
     def p6(self):
-        p = np.array([self._l/2, self._w/2, self._h/2])
+        p = np.array([self._l/2, -self._w/2, self._h/2])
         p = self._q.rotate(p)
         p = p + self._c
         return np.append(p, 1)
 
     @property
     def p7(self):
-        p = np.array([-self._l/2, self._w/2, self._h/2])
+        p = np.array([self._l/2, self._w/2, self._h/2])
         p = self._q.rotate(p)
         p = p + self._c
         return np.append(p, 1)
 
     @property
     def p8(self):
-        p = np.array([-self._l/2, -self._w/2, self._h/2])
+        p = np.array([-self._l/2, self._w/2, self._h/2])
         p = self._q.rotate(p)
         p = p + self._c
         return np.append(p, 1)
@@ -101,23 +101,3 @@ class BBox3D:
         x = np.vstack([self.p1, self.p2, self.p3, self.p4,
                        self.p5, self.p6, self.p7, self.p8])
         return x
-
-    # def draw_cuboid(img, p):
-    #     draw = ImageDraw.Draw(img)
-    #     color = tuple(np.random.choice(range(256), size=3))
-
-    #     draw.line([p[0][0], p[0][1], p[1][0], p[1][1]], fill=color, width=2)
-    #     draw.line([p[1][0], p[1][1], p[5][0], p[5][1]], fill=color, width=2)
-    #     draw.line([p[5][0], p[5][1], p[4][0], p[4][1]], fill=color, width=2)
-    #     draw.line([p[4][0], p[4][1], p[0][0], p[0][1]], fill=color, width=2)
-
-    #     draw.line([p[3][0], p[3][1], p[2][0], p[2][1]], fill=color, width=2)
-    #     draw.line([p[2][0], p[2][1], p[6][0], p[6][1]], fill=color, width=2)
-    #     draw.line([p[6][0], p[6][1], p[7][0], p[7][1]], fill=color, width=2)
-    #     draw.line([p[7][0], p[7][1], p[3][0], p[3][1]], fill=color, width=2)
-
-    #     draw.line([p[0][0], p[0][1], p[3][0], p[3][1]], fill=color, width=2)
-    #     draw.line([p[1][0], p[1][1], p[2][0], p[2][1]], fill=color, width=2)
-    #     draw.line([p[5][0], p[5][1], p[6][0], p[6][1]], fill=color, width=2)
-    #     draw.line([p[4][0], p[4][1], p[7][0], p[7][1]], fill=color, width=2)
-    #     return img
