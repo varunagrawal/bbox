@@ -1,10 +1,11 @@
 import numpy as np
+import pytest
 import warnings
 warnings.filterwarnings("ignore")
 import logging
 
-from bbox import BBox2D, BBox2DList
-from bbox.metrics import jaccard_index_2d, multi_jaccard_index_2d
+from bbox import BBox2D, BBox2DList, BBox3D
+from bbox.metrics import jaccard_index_2d, multi_jaccard_index_2d, jaccard_index_3d
 
 logger = logging.getLogger("test_metrics")
 
@@ -33,7 +34,7 @@ def naive_intersection_over_union(boxA, boxB):
     return iou
 
 
-def test_jaccard_index_single():
+def test_single_jaccard_index_2d():
     # sample bounxing boxes (x, y, w, h)
     bbox1 = [39, 63, 203, 112]
     bbox2 = [54, 66, 198, 114]
@@ -46,22 +47,25 @@ def test_jaccard_index_single():
     bbox2[2], bbox2[3] = bbox2[2] + bbox2[0] - 1, bbox2[3] + bbox2[1] - 1
 
     gt_iou = naive_intersection_over_union(bbox1, bbox2)
-    
+
     logger.debug("IoU={0}, Naive IoU={1}".format(iou, gt_iou))
     assert iou == gt_iou
 
-def test_multi_jaccard_index():
+
+def test_multi_jaccard_index_2d():
     # bounding boxes of the form (x, y, w, h)
-    bboxes_1 = [[39, 63, 203, 112], [49, 75, 203, 125], [31, 69, 201, 125], [50, 72, 197, 121], [35, 51, 196, 110]]
-    bboxes_2 = [[54, 66, 198, 114], [42, 78, 186, 126], [18, 63, 235, 135], [54, 72, 198, 120], [36, 60, 180, 108]]
+    bboxes_1 = [[39, 63, 203, 112], [49, 75, 203, 125], [
+        31, 69, 201, 125], [50, 72, 197, 121], [35, 51, 196, 110]]
+    bboxes_2 = [[54, 66, 198, 114], [42, 78, 186, 126], [
+        18, 63, 235, 135], [54, 72, 198, 120], [36, 60, 180, 108]]
 
     a = BBox2DList(bboxes_1)
     b = BBox2DList(bboxes_2)
 
     iou = multi_jaccard_index_2d(a, b)
-    
+
     gt_iou = np.zeros((len(bboxes_1), len(bboxes_2)))
-    
+
     for i, x in enumerate(bboxes_1):
         for j, y in enumerate(bboxes_2):
             bx = [x[0], x[1], x[2]+x[0]-1, x[3]+x[1]-1]
@@ -70,3 +74,16 @@ def test_multi_jaccard_index():
 
     assert gt_iou.shape == iou.shape
     assert np.array_equal(gt_iou, iou)
+
+
+@pytest.mark.skip(reason="Test not ready yet")
+def test_single_jaccard_index_3d():
+    a = BBox3D(0.5, 0.5, 0.5, 1, 1, 1)
+    b = BBox3D(1, 1, 1, 1, 1, 1)
+    print(jaccard_index_3d(a, a))
+    print(jaccard_index_3d(a, b))
+
+
+@pytest.mark.skip()
+def test_multi_jaccard_index_2d_performance():
+    pass
