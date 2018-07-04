@@ -9,7 +9,7 @@ import pytest
 class TestBBox3d:
     @classmethod
     def setup_class(cls):
-        # sample cuboid from KITTI
+        # sample cuboid
         cuboid = {
             'center': {
                 'x': -49.19743041908411,
@@ -28,16 +28,6 @@ class TestBBox3d:
                 'z': 0.022482630300529462
             }
         }
-        # cuboid = {'center': {'x': -51.2454424124917,
-        #                      'y': 0.9068799656389935,
-        #                      'z': 0.6728669271525776},
-        #           'dimensions': {'height': 1.2240348722965009,
-        #                          'length': 1.4777547719174913,
-        #                          'width': 2.6803495688937606},
-        #           'rotation': {'w': 0.9991360361416122,
-        #                        'x': 0.0,
-        #                        'y': 0.0,
-        #                        'z': -0.04155937058266213}}
         center = cuboid['center']
         dim = cuboid['dimensions']
         rotation = cuboid['rotation']
@@ -122,14 +112,14 @@ class TestBBox3d:
         u[6] = self.project(self.box.p7, K, R, t)
         u[7] = self.project(self.box.p8, K, R, t)
 
+        img = Image.open("image_raw_ring_rear_left_315968023469083760.png")
+
         dist_coeff = [-0.17120984449230167,
                       0.1256910189977147,
                       -0.029726711792577232]
 
-        img = Image.open("image_raw_ring_rear_left_315968023469083760.png")
-
-        # for i in range(u.shape[0]):
-        #     u[i] = self.distortion_correction(u[i], dist_coeff, img.size)
+        for i in range(u.shape[0]):
+            u[i] = self.distortion_correction(u[i], dist_coeff, img.size)
 
         img = draw_cuboid(img, u)
         img.show()
