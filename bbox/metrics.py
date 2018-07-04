@@ -3,6 +3,7 @@ import logging
 import warnings
 
 from bbox import BBox2D, BBox2DList, BBox3D
+from bbox.geometry import polygon_intersection, polygon_area
 
 
 logger = logging.getLogger(__name__)
@@ -97,25 +98,16 @@ def multi_jaccard_index_2d(a, b):
 
 
 def jaccard_index_3d(a: BBox3D, b: BBox3D):
-    warnings.warn(
-        "3D IoU is incomplete and incorrect for non-axis-aligned cuboids")
+    """
+    We follow the KITTI format and assume only yaw rotations (along z-axis).
+    """
 
-    x1 = np.maximum(a.p1[0], b.p1[0])
-    y1 = np.maximum(a.p1[1], b.p1[1])
-    z1 = np.maximum(a.p1[2], b.p1[2])
-    x2 = np.minimum(a.p7[0], b.p7[0])
-    y2 = np.minimum(a.p7[1], b.p7[1])
-    z2 = np.minimum(a.p7[2], b.p7[2])
+    intersection_points = polygon_intersection(a.p[0:4, 0:2], b.p[0:4, 0:2])
+    inter_area = polygon_area(intersection_points)
 
-    il = np.linalg.norm(x1-x2)
-    il = il * (il >= 0)
-    iw = np.linalg.norm(y1-y2)
-    iw = iw * (iw >= 0)
-    ih = np.linalg.norm(z1-z2)
-    ih = ih * (ih >= 0)
-    # print(il, iw, ih)
-
-    inter_vol = il * iw * ih
+    zmax = np.minimum(a.cz, b.cz)
+    zmin = np.maximum(a.cz - a.h, b.cz - b.h)
+    inter_vol = inter_area * np.maximum(0, zmax-zmin)
 
     a_vol = a.l * a.w * a.h
     b_vol = b.l * b.w * b.h
