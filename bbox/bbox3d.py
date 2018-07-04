@@ -29,6 +29,18 @@ class BBox3D:
         return np.array([self._cx, self._cy, self._cz, 1])
 
     @property
+    def cx(self):
+        return self._cx
+
+    @property
+    def cy(self):
+        return self._cy
+
+    @property
+    def cz(self):
+        return self._cz
+
+    @property
     def l(self):
         return self._l
 
