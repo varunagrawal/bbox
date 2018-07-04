@@ -3,6 +3,7 @@ import pytest
 import warnings
 warnings.filterwarnings("ignore")
 import logging
+from datetime import datetime
 
 from bbox import BBox2D, BBox2DList, BBox3D
 from bbox.metrics import jaccard_index_2d, multi_jaccard_index_2d, jaccard_index_3d
@@ -59,13 +60,15 @@ def test_multi_jaccard_index_2d():
     bboxes_2 = [[54, 66, 198, 114], [42, 78, 186, 126], [
         18, 63, 235, 135], [54, 72, 198, 120], [36, 60, 180, 108]]
 
+    # generate the BBox2DLists
     a = BBox2DList(bboxes_1)
     b = BBox2DList(bboxes_2)
 
+    # Our method
     iou = multi_jaccard_index_2d(a, b)
 
+    # generate IoU matrix using naive implementation
     gt_iou = np.zeros((len(bboxes_1), len(bboxes_2)))
-
     for i, x in enumerate(bboxes_1):
         for j, y in enumerate(bboxes_2):
             bx = [x[0], x[1], x[2]+x[0]-1, x[3]+x[1]-1]
@@ -76,14 +79,27 @@ def test_multi_jaccard_index_2d():
     assert np.array_equal(gt_iou, iou)
 
 
+def test_multi_jaccard_index_2d_performance():
+    """
+    Test the performance of `multi_jaccard_index_2d` on 10,000 randomly sampled bounding boxes.
+    """
+    # sample bounding boxes and create BBox2DList
+    bboxes = np.random.randint(low=0, high=500, size=(10000, 4))
+    bbl = BBox2DList(bboxes)
+
+    # time the performance
+    start = datetime.now()
+    _ = multi_jaccard_index_2d(bbl, bbl)
+    dt = datetime.now() - start
+
+    # our runtime should be less than 4 seconds for 10k boxes
+    assert dt.microseconds < 1e6
+    assert dt.seconds < 4
+
+
 @pytest.mark.skip(reason="Test not ready yet")
 def test_single_jaccard_index_3d():
     a = BBox3D(0.5, 0.5, 0.5, 1, 1, 1)
     b = BBox3D(1, 1, 1, 1, 1, 1)
     print(jaccard_index_3d(a, a))
     print(jaccard_index_3d(a, b))
-
-
-@pytest.mark.skip()
-def test_multi_jaccard_index_2d_performance():
-    pass
