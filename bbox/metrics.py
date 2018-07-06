@@ -107,6 +107,7 @@ def jaccard_index_3d(a: BBox3D, b: BBox3D):
 
     zmax = np.minimum(a.cz, b.cz)
     zmin = np.maximum(a.cz - a.h, b.cz - b.h)
+
     inter_vol = inter_area * np.maximum(0, zmax-zmin)
 
     a_vol = a.l * a.w * a.h
@@ -120,4 +121,4 @@ def jaccard_index_3d(a: BBox3D, b: BBox3D):
     if np.isinf(iou) or np.isnan(iou):
         iou = 0
 
-    return iou
+    return np.round_(iou, 5)

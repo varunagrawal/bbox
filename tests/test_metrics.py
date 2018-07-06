@@ -3,7 +3,10 @@ import pytest
 import warnings
 warnings.filterwarnings("ignore")
 import logging
-from datetime import datetime
+import pendulum
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+
 
 from bbox import BBox2D, BBox2DList, BBox3D
 from bbox.metrics import jaccard_index_2d, multi_jaccard_index_2d, jaccard_index_3d
@@ -81,25 +84,66 @@ def test_multi_jaccard_index_2d():
 
 def test_multi_jaccard_index_2d_performance():
     """
-    Test the performance of `multi_jaccard_index_2d` on 10,000 randomly sampled bounding boxes.
+    Test the performance of `multi_jaccard_index_2d` on 5,000 randomly sampled bounding boxes.
     """
     # sample bounding boxes and create BBox2DList
-    bboxes = np.random.randint(low=0, high=500, size=(10000, 4))
+    bboxes = np.random.randint(low=0, high=500, size=(5000, 4))
     bbl = BBox2DList(bboxes)
 
     # time the performance
-    start = datetime.now()
+    start = pendulum.now()
     _ = multi_jaccard_index_2d(bbl, bbl)
-    dt = datetime.now() - start
+    dt = pendulum.now() - start
 
     # our runtime should be less than 4 seconds for 10k boxes
     assert dt.microseconds < 1e6
-    assert dt.seconds < 4
+    assert dt.seconds < 2
 
 
-@pytest.mark.skip(reason="Test not ready yet")
-def test_single_jaccard_index_3d():
-    a = BBox3D(0.5, 0.5, 0.5, 1, 1, 1)
-    b = BBox3D(1, 1, 1, 1, 1, 1)
-    print(jaccard_index_3d(a, a))
-    print(jaccard_index_3d(a, b))
+def test_jaccard_index_3d_identity():
+    bb = BBox3D(3.163, z=2.468, y=34.677, height=1.529, width=1.587, length=3.948,
+                rw=0.7002847660410397, rx=-0, ry=-0, rz=-0.7138636049350369)
+    assert jaccard_index_3d(bb, bb) == 1
+
+
+def test_jaccard_index_3d_rotation_only():
+    """
+    Since we take the data from KITTI, we need to swap the Y and Z axes.
+    """
+    a = BBox3D(3.163, z=2.468, y=34.677, height=1.529, width=1.587, length=3.948,
+               euler_angles=[0, 0, -1.59])
+    b = BBox3D(3.163, z=2.468, y=34.677, height=1.529, width=1.587, length=3.948,
+               euler_angles=[0, 0, -1.2])
+
+    assert jaccard_index_3d(a, b) == 0.62952
+
+
+def test_jaccard_index_3d_rotation_height():
+    a = BBox3D(3.163, z=2.468, y=34.677, height=1.529, width=1.587, length=3.948,
+               rw=0.7002847660410397, rx=-0, ry=-0, rz=-0.7138636049350369)
+    b = BBox3D(3.163, z=1.468, y=34.677, height=1.529, width=1.587, length=3.948,
+               rw=0.8253356149096783, rx=-0, ry=-0, rz=-0.5646424733950354)
+
+    assert jaccard_index_3d(a, b) == 0.15428
+
+
+def test_jaccard_index_3d():
+    a = BBox3D(x=3.163, z=2.468, y=34.677, height=1.529, width=1.587, length=3.948,
+               rw=0.7002847660410397, rx=-0, ry=-0, rz=-0.7138636049350369)
+    b = BBox3D(x=3.18, z=2.27, y=34.38, height=1.41, width=1.58, length=4.36,
+               rx=-0, ry=-0, rz=-0.7103532724176078, rw=0.7038453156522361)
+
+    assert jaccard_index_3d(a, b) == 0.71232
+
+
+def visualize_boxes(box_list):
+    for b in box_list:
+        polygon = Polygon(b.p[0:4, 0:2], fill=False)
+        plt.gca().add_patch(polygon)
+
+    # inter_points = []
+    # for p in inter_points:
+    #     plt.plot(p[0], p[1], 'bx')
+
+    plt.axis('scaled')
+    plt.show()
