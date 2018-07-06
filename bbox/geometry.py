@@ -36,9 +36,9 @@ def polygon_area(polygon):
     """
     x = polygon[:, 0]
     y = polygon[:, 1]
-    area = (np.dot(x[:-1], np.roll(y, -1)[:-1]) -
-            np.dot(np.roll(x, -1)[:-1], y[:-1])) / 2
-    return area
+    area = (np.dot(x, np.roll(y, -1)) -
+            np.dot(np.roll(x, -1), y))
+    return np.abs(area)/2
 
 
 def polygon_intersection(poly1, poly2):
@@ -53,6 +53,10 @@ def polygon_intersection(poly1, poly2):
         n3 = 1.0 / (np.cross(dc, dp))
         return np.array([(n1*dp[0] - n2*dc[0]) * n3, (n1*dp[1] - n2*dc[1]) * n3])
 
+    def is_inside_edge(p, e1, e2):
+        """Return True if e is inside edge (e1, e2)"""
+        return np.cross(e2-e1, p-e1) >= 0
+
     output_list = poly1
     # e1 and e2 are the edge vertices for each edge in the clipping polygon
     e1 = poly2[-1]
@@ -63,15 +67,14 @@ def polygon_intersection(poly1, poly2):
         s = input_list[-1]
 
         for e in input_list:
-            # if e is inside edge (e1, e2)
-            if np.cross(e2-e1, e-e1) > 0:
+            if is_inside_edge(e, e1, e2):
                 # if s in not inside edge (e1, e2)
-                if not np.cross(e2-e1, s-e1) > 0:
+                if not is_inside_edge(s, e1, e2):
                     # line intersects edge hence we compute intersection point
                     output_list.append(line_intersection(e1, e2, s, e))
                 output_list.append(e)
             # is s inside edge (e1, e2)
-            elif np.cross(e2-e1, s-e1) > 0:
+            elif is_inside_edge(s, e1, e2):
                 output_list.append(line_intersection(e1, e2, s, e))
 
             s = e
