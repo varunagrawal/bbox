@@ -33,8 +33,9 @@ class TestBBox3d:
         rotation = cuboid['rotation']
 
         cls.box = BBox3D(center['x'], center['y'], center['z'],
-                         dim['length'], dim['width'], dim['height'],
-                         rotation['x'], rotation['y'], rotation['z'], rotation['w'])
+                         length=dim['length'], width=dim['width'], height=dim['height'],
+                         rw=rotation['w'], rx=rotation['x'], ry=rotation['y'], rz=rotation['z'])
+        cls.cuboid = cuboid
 
     def test_points(self):
         points = np.array([[-51.80993533, 11.03900409,  -0.18905555],
@@ -56,6 +57,29 @@ class TestBBox3d:
         assert np.allclose(self.box.p8[0: 3], points[7, :])
 
         assert np.allclose(self.box.p[:, 0:3], points)
+
+    def test_center(self):
+        center = np.array(
+            [-49.19743041908411, 12.38666074615689, 0.782056864653507])
+        # we get homogenous coordinates
+        assert np.array_equal(self.box.center[0:3], center)
+
+    def test_center_points(self):
+        assert self.box.cx == self.cuboid['center']['x']
+        assert self.box.cy == self.cuboid['center']['y']
+        assert self.box.cz == self.cuboid['center']['z']
+
+    def test_quaternion(self):
+        q = np.array([0.9997472337219893, 0.0, 0.0, 0.022482630300529462])
+        assert np.array_equal(self.box.q, q)
+        # alternative attribute for the quaternion
+        assert np.array_equal(self.box.quaternion, q)
+
+    def test_euler_angles(self):
+        box = BBox3D(3.163, z=2.468, y=34.677, height=1.529, width=1.587, length=3.948,
+                     euler_angles=[0, 0, -1.59])
+        q = np.array([0.7002847660410397, -0.0, -0.0, -0.7138636049350369])
+        assert np.array_equal(box.q, q)
 
     def test_projection(self):
         K = np.array([[1406.3359, 0.0, 966.366034, 0.0],
