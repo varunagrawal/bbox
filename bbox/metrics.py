@@ -9,7 +9,7 @@ from bbox.geometry import polygon_intersection, polygon_area
 logger = logging.getLogger(__name__)
 
 
-def jaccard_index_2d(a, b):
+def jaccard_index_2d(a: BBox2D, b: BBox2D):
     """
     Computes the Intersection over Union (IoU) of 2 2-d bounding boxes.
     """
@@ -52,7 +52,7 @@ def jaccard_index_2d(a, b):
     return iou
 
 
-def multi_jaccard_index_2d(a, b):
+def multi_jaccard_index_2d(a: BBox2D, b: BBox2D):
     """
     Computes the Intersection over Union of two sets of bounding boxes.
     Also known as IoU. 
@@ -101,7 +101,6 @@ def jaccard_index_3d(a: BBox3D, b: BBox3D):
     """
     We follow the KITTI format and assume only yaw rotations (along z-axis).
     """
-
     intersection_points = polygon_intersection(a.p[0:4, 0:2], b.p[0:4, 0:2])
     inter_area = polygon_area(intersection_points)
 
