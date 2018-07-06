@@ -136,6 +136,15 @@ def test_jaccard_index_3d():
     assert jaccard_index_3d(a, b) == 0.71232
 
 
+def test_jaccard_index_3d_euler_angles():
+    a = BBox3D(3.163, z=2.468, y=34.677, height=1.529, width=1.587, length=3.948,
+               euler_angles=[0, 0, 1.59])
+    b = BBox3D(3.18, z=2.27, y=34.38, height=1.41, width=1.58, length=4.36,
+               euler_angles=[0, 0, 1.58])
+
+    assert jaccard_index_3d(a, b) == 0.71636
+
+
 def visualize_boxes(box_list):
     for b in box_list:
         polygon = Polygon(b.p[0:4, 0:2], fill=False)

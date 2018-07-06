@@ -25,12 +25,14 @@ class BBox3D:
             self._c = np.array([self._cx, self._cy, self._cz])
 
         self._w, self._h, self._l = width, height, length
+
         if euler_angles:
             # we need to apply y, z and x rotations in order
             # http://www.euclideanspace.com/maths/geometry/rotations/euler/index.htm
             self._q = Quaternion(axis=[0, 1, 0], angle=euler_angles[1]) * \
                 Quaternion(axis=[0, 0, 1], angle=euler_angles[2]) * \
                 Quaternion(axis=[1, 0, 0], angle=euler_angles[0])
+
         else:
             self._q = Quaternion(rw, rx, ry, rz)
 
