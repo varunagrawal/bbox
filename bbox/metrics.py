@@ -52,7 +52,7 @@ def jaccard_index_2d(a: BBox2D, b: BBox2D):
     return iou
 
 
-def multi_jaccard_index_2d(a: BBox2D, b: BBox2D):
+def multi_jaccard_index_2d(a: BBox2DList, b: BBox2DList):
     """
     Computes the Intersection over Union of two sets of bounding boxes.
     Also known as IoU. 
