@@ -7,7 +7,10 @@ class BBox3D:
     Class for 3D Bounding Boxes
     """
 
-    def __init__(self, x, y, z, length, width, height, rx=0, ry=0, rz=0, rw=1, center=True):
+    def __init__(self, x, y, z,
+                 length, width, height,
+                 rw=1, rx=0, ry=0, rz=0,
+                 euler_angles=None, center=True):
         """
         For now we just take either the center of the 3D bounding box or the top-left-closer corner,
         and the width, height and length, and quaternion values.
@@ -22,11 +25,27 @@ class BBox3D:
             self._c = np.array([self._cx, self._cy, self._cz])
 
         self._w, self._h, self._l = width, height, length
-        self._q = Quaternion(rw, rx, ry, rz)
+        if euler_angles:
+            # we need to apply y, z and x rotations in order
+            # http://www.euclideanspace.com/maths/geometry/rotations/euler/index.htm
+            self._q = Quaternion(axis=[0, 1, 0], angle=euler_angles[1]) * \
+                Quaternion(axis=[0, 0, 1], angle=euler_angles[2]) * \
+                Quaternion(axis=[1, 0, 0], angle=euler_angles[0])
+        else:
+            self._q = Quaternion(rw, rx, ry, rz)
 
     @property
     def center(self):
         return np.array([self._cx, self._cy, self._cz, 1])
+
+    @property
+    def q(self):
+        """Return the rotation quaternion"""
+        return np.hstack((self._q.real, self._q.imaginary))
+
+    @property
+    def quaternion(self):
+        return self.q
 
     @property
     def cx(self):
