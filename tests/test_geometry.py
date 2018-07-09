@@ -1,6 +1,7 @@
 import numpy as np
+import pytest
 from bbox import BBox3D
-from bbox.geometry import point_plane_dist, polygon_area, polygon_intersection
+from bbox.geometry import plane, point_plane_dist, polygon_area, polygon_intersection
 
 
 def clip(subjectPolygon, clipPolygon):
@@ -39,6 +40,26 @@ def clip(subjectPolygon, clipPolygon):
             s = e
         cp1 = cp2
     return(outputList)
+
+
+def test_plane():
+    # define the 3 points
+    a = np.array([1, 1, 1])
+    b = np.array([-1, 1, 0])
+    c = np.array([2, 0, 3])
+    assert np.array_equal(plane(a, b, c), np.array([-1, 3, 2, -4]))
+
+
+def test_point_plane_dist():
+    pt = np.array([2, 8, 5])
+    plane = np.array([1, -2, -2, -1])
+    assert point_plane_dist(pt, plane) == 25/3
+    assert point_plane_dist(pt, plane, signed=True) == -25/3
+
+
+def test_polygon_area():
+    polygon = np.array([[-3, -2], [-1, 4], [6, 1], [3, 10], [-4, 9]])
+    assert polygon_area(polygon) == 60
 
 
 def test_polygon_intersection():
