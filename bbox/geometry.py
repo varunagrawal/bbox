@@ -19,14 +19,21 @@ def plane(a, b, c):
     return pl
 
 
-def point_plane_dist(pt, plane):
+def point_plane_dist(pt, plane, signed=False):
     """
     Get the signed distance from a point `pt` to a plane `plane`.
     Reference: http://mathworld.wolfram.com/Point-PlaneDistance.html
+
+    Plane is of the format [A, B, C, D], where the plane equation is Ax+By+Cz+D=0
+    Point is of the form [x, y, z]
+    `signed` flag indicates whether to return signed distance.
     """
     v = plane[0:3]
     dist = (np.dot(v, pt) + plane[3]) / np.linalg.norm(v)
-    return dist
+    if signed:
+        return dist
+    else:
+        return np.abs(dist)
 
 
 def polygon_area(polygon):
