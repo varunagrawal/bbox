@@ -7,13 +7,12 @@ class BBox3D:
     Class for 3D Bounding Boxes
     """
 
-    def __init__(self, x, y, z,
-                 length, width, height,
+    def __init__(self, x, y, z, c=None,
+                 length=1, width=1, height=1,
                  rw=1, rx=0, ry=0, rz=0,
                  euler_angles=None, center=True):
         """
-        For now we just take either the center of the 3D bounding box or the top-left-closer corner,
-        and the width, height and length, and quaternion values.
+        For now we just take either the center of the 3D bounding box or the top-left-closer corner, and the width, height and length, and quaternion values.
         """
         if center:
             self._cx, self._cy, self._cz = x, y, z
@@ -38,7 +37,7 @@ class BBox3D:
 
     @property
     def center(self):
-        return np.array([self._cx, self._cy, self._cz, 1])
+        return np.hstack((self._c, 1))
 
     @property
     def q(self):
@@ -66,11 +65,23 @@ class BBox3D:
         return self._l
 
     @property
+    def length(self):
+        return self._l
+
+    @property
     def w(self):
         return self._w
 
     @property
+    def width(self):
+        return self._w
+
+    @property
     def h(self):
+        return self._h
+
+    @property
+    def height(self):
         return self._h
 
     @property
@@ -134,3 +145,9 @@ class BBox3D:
         x = np.vstack([self.p1, self.p2, self.p3, self.p4,
                        self.p5, self.p6, self.p7, self.p8])
         return x
+
+    def __repr__(self):
+        return "BBox3D(c=({cx},{cy},{cz}), {l}x{w}x{h}, q=[{rw}, {rx}, {ry}, {rz}])".format(
+            cx=self._cx, cy=self._cy, cz=self._cz,
+            l=self._l, w=self._w, h=self._h,
+            rw=self._q.real, rx=self._q.imaginary[0], ry=self._q.imaginary[1], rz=self._q.imaginary[2])

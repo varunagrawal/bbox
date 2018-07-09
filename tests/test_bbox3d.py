@@ -60,14 +60,23 @@ class TestBBox3d:
 
     def test_center(self):
         center = np.array(
-            [-49.19743041908411, 12.38666074615689, 0.782056864653507])
+            [-49.19743041908411, 12.38666074615689, 0.782056864653507, 1])
         # we get homogenous coordinates
-        assert np.array_equal(self.box.center[0:3], center)
+        assert np.array_equal(self.box.center, center)
+        assert np.array_equal(self.box.center[0:3], center[0:3])
 
     def test_center_points(self):
         assert self.box.cx == self.cuboid['center']['x']
         assert self.box.cy == self.cuboid['center']['y']
         assert self.box.cz == self.cuboid['center']['z']
+    
+    def test_dimensions(self):
+        assert self.box.l == self.cuboid['dimensions']['length']
+        assert self.box.length == self.cuboid['dimensions']['length']
+        assert self.box.w == self.cuboid['dimensions']['width']
+        assert self.box.width == self.cuboid['dimensions']['width']
+        assert self.box.h == self.cuboid['dimensions']['height']
+        assert self.box.height == self.cuboid['dimensions']['height']
 
     def test_quaternion(self):
         q = np.array([0.9997472337219893, 0.0, 0.0, 0.022482630300529462])
