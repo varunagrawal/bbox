@@ -37,7 +37,7 @@ class BBox3D:
 
     @property
     def center(self):
-        return np.hstack((self._c, 1))
+        return self._c
 
     @property
     def q(self):
@@ -84,61 +84,58 @@ class BBox3D:
     def height(self):
         return self._h
 
+    def _transform(self, x):
+        """Rotate and translate the point to world coordinates"""
+        y = self._c + self._q.rotate(x)
+        return y
+
     @property
     def p1(self):
         p = np.array([-self._l/2, -self._w/2, -self._h/2])
-        p = self._q.rotate(p)
-        p = p + self._c
-        return np.append(p, 1)
+        p = self._transform(p)
+        return p
 
     @property
     def p2(self):
         p = np.array([self._l/2, -self._w/2, -self._h/2])
-        p = self._q.rotate(p)
-        p = p + self._c
-        return np.append(p, 1)
+        p = self._transform(p)
+        return p
 
     @property
     def p3(self):
         p = np.array([self._l/2, self._w/2, -self._h/2])
-        p = self._q.rotate(p)
-        p = p + self._c
-        return np.append(p, 1)
+        p = self._transform(p)
+        return p
 
     @property
     def p4(self):
         p = np.array([-self._l/2, self._w/2, -self._h/2])
-        p = self._q.rotate(p)
-        p = p + self._c
-        return np.append(p, 1)
+        p = self._transform(p)
+        return p
 
     @property
     def p5(self):
         p = np.array([-self._l/2, -self._w/2, self._h/2])
-        p = self._q.rotate(p)
-        p = p + self._c
-        return np.append(p, 1)
+        p = self._transform(p)
+        return p
 
     @property
     def p6(self):
         p = np.array([self._l/2, -self._w/2, self._h/2])
-        p = self._q.rotate(p)
-        p = p + self._c
-        return np.append(p, 1)
+        p = self._transform(p)
+        return p
 
     @property
     def p7(self):
         p = np.array([self._l/2, self._w/2, self._h/2])
-        p = self._q.rotate(p)
-        p = p + self._c
-        return np.append(p, 1)
+        p = self._transform(p)
+        return p
 
     @property
     def p8(self):
         p = np.array([-self._l/2, self._w/2, self._h/2])
-        p = self._q.rotate(p)
-        p = p + self._c
-        return np.append(p, 1)
+        p = self._transform(p)
+        return p
 
     @property
     def p(self):

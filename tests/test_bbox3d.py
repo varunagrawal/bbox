@@ -47,23 +47,21 @@ class TestBBox3d:
                            [-46.58492551, 13.7343174,   1.75316928],
                            [-51.92041869, 13.49422348,  1.75316928]])
 
-        assert np.allclose(self.box.p1[0: 3], points[0, :])
-        assert np.allclose(self.box.p2[0: 3], points[1, :])
-        assert np.allclose(self.box.p3[0: 3], points[2, :])
-        assert np.allclose(self.box.p4[0: 3], points[3, :])
-        assert np.allclose(self.box.p5[0: 3], points[4, :])
-        assert np.allclose(self.box.p6[0: 3], points[5, :])
-        assert np.allclose(self.box.p7[0: 3], points[6, :])
-        assert np.allclose(self.box.p8[0: 3], points[7, :])
+        assert np.allclose(self.box.p1, points[0, :])
+        assert np.allclose(self.box.p2, points[1, :])
+        assert np.allclose(self.box.p3, points[2, :])
+        assert np.allclose(self.box.p4, points[3, :])
+        assert np.allclose(self.box.p5, points[4, :])
+        assert np.allclose(self.box.p6, points[5, :])
+        assert np.allclose(self.box.p7, points[6, :])
+        assert np.allclose(self.box.p8, points[7, :])
 
-        assert np.allclose(self.box.p[:, 0:3], points)
+        assert np.allclose(self.box.p, points)
 
     def test_center(self):
         center = np.array(
-            [-49.19743041908411, 12.38666074615689, 0.782056864653507, 1])
-        # we get homogenous coordinates
+            [-49.19743041908411, 12.38666074615689, 0.782056864653507])
         assert np.array_equal(self.box.center, center)
-        assert np.array_equal(self.box.center[0:3], center[0:3])
 
     def test_center_points(self):
         assert self.box.cx == self.cuboid['center']['x']
@@ -159,6 +157,7 @@ class TestBBox3d:
 
     @staticmethod
     def project(p, K, R, t):
+        p = np.hstack((p, 1))
         E = np.eye(4)
         E[0: 3, 0: 3] = R
         E[0: 3, 3: 4] = t
