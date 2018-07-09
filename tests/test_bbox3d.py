@@ -121,6 +121,59 @@ class TestBBox3d:
         for i in range(8):
             assert np.allclose(u[i], image_points[i])
 
+    def test_setters(self):
+        x, y, z, h, w, l = np.random.rand(6)
+        self.box.cx = x
+        self.box.cy = y
+        self.box.cz = z
+        self.box.h = h
+        self.box.w = w
+        self.box.l = l
+        assert self.box.cx == x
+        assert self.box.cy == y
+        assert self.box.cz == z
+        assert self.box.h == h
+        assert self.box.w == w
+        assert self.box.l == l
+
+        q = np.random.rand(4)
+        self.box.q = q
+        assert np.array_equal(self.box.q, q)
+        q = np.random.rand(4)
+        self.box.quaternion = q
+        assert np.array_equal(self.box.quaternion, q)
+
+        center = np.random.rand(3)
+        self.box.center = center
+        assert np.array_equal(self.box.center, center)
+
+    def test_bad_setters(self):
+        inputs = [[1, 2], np.zeros((3)), np.zeros((3, 1)), np.zeros((1, 3)), "center"]
+        for x in inputs:
+            with pytest.raises((ValueError, TypeError)):
+                self.box.cx = x
+            with pytest.raises((ValueError, TypeError)):
+                self.box.cy = x
+            with pytest.raises((ValueError, TypeError)):
+                self.box.cz = x
+            with pytest.raises((ValueError, TypeError)):
+                self.box.h = x
+            with pytest.raises((ValueError, TypeError)):
+                self.box.w = x
+            with pytest.raises((ValueError, TypeError)):
+                self.box.l = x
+            with pytest.raises((ValueError, TypeError)):
+                self.box.height = x
+            with pytest.raises((ValueError, TypeError)):
+                self.box.width = x
+            with pytest.raises((ValueError, TypeError)):
+                self.box.length = x
+
+        quaternion_inputs = [1, [1], [1, 2, 3], [1, 2, 3, 4, 5], "quaternion"]
+        for q in quaternion_inputs:
+            with pytest.raises((ValueError, TypeError)):
+                self.box.q = q
+
     @pytest.mark.skip(reason="This is just for visualization. We already test the values beforehand.")
     def test_render(self):
         K = np.array([[1406.3359, 0.0, 966.366034, 0.0],

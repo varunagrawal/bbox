@@ -39,50 +39,113 @@ class BBox3D:
     def center(self):
         return self._c
 
-    @property
-    def q(self):
-        """Return the rotation quaternion"""
-        return np.hstack((self._q.real, self._q.imaginary))
-
-    @property
-    def quaternion(self):
-        return self.q
+    @center.setter
+    def center(self, c):
+        if len(c) != 3:
+            raise ValueError("Center coordinates should be a vector of size 3")
+        self._c = c
 
     @property
     def cx(self):
         return self._cx
 
+    def _is_valid_scalar(self, x):
+        if not np.isscalar(x):
+            raise ValueError("Value should be a scalar")
+        else:  # x is a scalar so we check for numeric type
+            if not isinstance(x, (np.float, np.int)):
+                raise TypeError("Value needs to be either a float or an int")
+        return x
+
+    @cx.setter
+    def cx(self, x):
+        self._cx = self._is_valid_scalar(x)
+
     @property
     def cy(self):
         return self._cy
+
+    @cy.setter
+    def cy(self, x):
+        self._cy = self._is_valid_scalar(x)
 
     @property
     def cz(self):
         return self._cz
 
+    @cz.setter
+    def cz(self, x):
+        self._cz = self._is_valid_scalar(x)
+
+    @property
+    def q(self):
+        """Return the rotation quaternion"""
+        return np.hstack((self._q.real, self._q.imaginary))
+
+    @q.setter
+    def q(self, q):
+        if not isinstance(q, (list, tuple, np.ndarray, Quaternion)):
+            raise TypeError("Value shoud be either list, numpy array or Quaterion")
+        if isinstance(q, (list, tuple, np.ndarray)) and len(q) != 4:
+            raise ValueError("Quaternion input should be a vector of size 4")
+
+        self._q = Quaternion(q)
+
+    @property
+    def quaternion(self):
+        return self.q
+
+    @quaternion.setter
+    def quaternion(self, q):
+        self.q = q
+
     @property
     def l(self):
         return self._l
+
+    @l.setter
+    def l(self, x):
+        self._l = self._is_valid_scalar(x)
 
     @property
     def length(self):
         return self._l
 
+    @length.setter
+    def length(self, x):
+        self.l = x
+
     @property
     def w(self):
         return self._w
+
+    @w.setter
+    def w(self, x):
+        self._w = self._is_valid_scalar(x)
 
     @property
     def width(self):
         return self._w
 
+    @width.setter
+    def width(self, x):
+        self.w = x
+
     @property
     def h(self):
         return self._h
 
+    @h.setter
+    def h(self, x):
+        self._h = self._is_valid_scalar(x)
+
     @property
     def height(self):
         return self._h
+
+    @height.setter
+    def height(self, x):
+        self.h = x
 
     def _transform(self, x):
         """Rotate and translate the point to world coordinates"""
