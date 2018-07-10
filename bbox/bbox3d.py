@@ -4,17 +4,45 @@ from pyquaternion import Quaternion
 
 class BBox3D:
     """
-    Class for 3D Bounding Boxes
+    Class for 3D Bounding Boxes (3-orthotope).
     """
 
-    def __init__(self, x, y, z, c=None,
+    def __init__(self, x, y, z,
                  length=1, width=1, height=1,
                  rw=1, rx=0, ry=0, rz=0,
-                 euler_angles=None, center=True):
+                 euler_angles=None, is_center=True):
         """
-        For now we just take either the center of the 3D bounding box or the top-left-closer corner, and the width, height and length, and quaternion values.
+        Constructor for 3D bounding box (3-orthotope). It takes either the center of the 3D bounding box or the back-bottom-left corner, the width, height and length of the box, and quaternion values to indicate the rotation.
+        
+        Parameters
+        ----------
+        x : float
+            X axis coordinate of 3D bounding box. Can be either center of bounding box or back-bottom-left corner.
+        y : float
+            Y axis coordinate of 3D bounding box. Can be either center of bounding box or back-bottom-left corner.
+        z : float
+            Z axis coordinate of 3D bounding box. Can be either center of bounding box or back-bottom-left corner.
+        length : float, optional
+            The length of the box (the default is 1).
+        width : float, optional
+            The width of the box (the default is 1).
+        height : float, optional
+            The height of the box (the default is 1).
+        rw : float, optional
+            The real part of the rotation quaternion (the default is 1).
+        rx : int, optional
+            The first element of the quaternion vector (the default is 0).
+        ry : int, optional
+            The second element of the quaternion vector (the default is 0).
+        rz : int, optional
+            The third element of the quaternion vector (the default is 0).
+        euler_angles : list or ndarray of float, optional
+            Sequence of euler angles in `[x, y, z]` rotation order (the default is None).
+        is_center : bool, optional
+            Flag to indicate if the provided coordinate is the center of the box (the default is True).
+        
         """
-        if center:
+        if is_center:
             self._cx, self._cy, self._cz = x, y, z
             self._c = np.array([x, y, z])
         else:
@@ -37,49 +65,107 @@ class BBox3D:
 
     @property
     def center(self):
+        """
+        Attribute to access center coordinates of box.
+        
+        Returns
+        -------
+        ndarray of float
+            3-dimensional vector representing (x, y, z) coordinates of the box.
+        """
         return self._c
 
     @center.setter
     def center(self, c):
+        """
+        Setter for center coordinates of the box.
+        
+        Parameters
+        ----------
+        c : list or ndarray of float
+            Center coordinates in (x, y, z) format.
+        Raises
+        ------
+        ValueError
+            If `c` is not a vector/list of length 3.
+        
+        """
         if len(c) != 3:
             raise ValueError("Center coordinates should be a vector of size 3")
         self._c = c
 
-    @property
-    def cx(self):
-        return self._cx
-
-    def _is_valid_scalar(self, x):
+    def __valid_scalar(self, x):
         if not np.isscalar(x):
             raise ValueError("Value should be a scalar")
         else:  # x is a scalar so we check for numeric type
             if not isinstance(x, (np.float, np.int)):
                 raise TypeError("Value needs to be either a float or an int")
         return x
+    
+    @property
+    def cx(self):
+        """
+        Get the X coordinate of center.
+        
+        Returns
+        -------
+        float
+            X coordinate of center
+        """
+        return self._cx
 
     @cx.setter
     def cx(self, x):
-        self._cx = self._is_valid_scalar(x)
+        """Setter for X coordinate of center.
+        
+        Parameters
+        ----------
+        x : float
+        """
+        self._cx = self.__valid_scalar(x)
 
     @property
     def cy(self):
+        """
+        Get the Y coordinate of center.
+        
+        Returns
+        -------
+        float
+            Y coordinate of center
+        """
         return self._cy
 
     @cy.setter
     def cy(self, x):
-        self._cy = self._is_valid_scalar(x)
+        self._cy = self.__valid_scalar(x)
 
     @property
     def cz(self):
+        """
+        Get the Z coordinate of center.
+        
+        Returns
+        -------
+        float
+            Z coordinate of center
+        """
         return self._cz
 
     @cz.setter
     def cz(self, x):
-        self._cz = self._is_valid_scalar(x)
+        self._cz = self.__valid_scalar(x)
 
     @property
     def q(self):
-        """Return the rotation quaternion"""
+        """
+        Get the the rotation quaternion.
+        
+        Returns
+        -------
+        ndarray of float
+            Quaternion values in (w, x, y, z) form.
+        """
         return np.hstack((self._q.real, self._q.imaginary))
 
     @q.setter
@@ -93,6 +179,14 @@ class BBox3D:
 
     @property
     def quaternion(self):
+        """
+        Get the the rotation quaternion.
+        
+        Returns
+        -------
+        ndarray of float
+            Quaternion values in (w, x, y, z) form.
+        """
         return self.q
 
     @quaternion.setter
@@ -101,14 +195,30 @@ class BBox3D:
 
     @property
     def l(self):
+        """
+        Get the length of the box.
+        
+        Returns
+        -------
+        float
+            Length of the box.
+        """
         return self._l
 
     @l.setter
     def l(self, x):
-        self._l = self._is_valid_scalar(x)
+        self._l = self.__valid_scalar(x)
 
     @property
     def length(self):
+        """
+        Get the length of the box.
+        
+        Returns
+        -------
+        float
+            Length of the box.
+        """
         return self._l
 
     @length.setter
@@ -117,14 +227,30 @@ class BBox3D:
 
     @property
     def w(self):
+        """
+        Get the width of the box.
+        
+        Returns
+        -------
+        float
+            Width of the box.
+        """
         return self._w
 
     @w.setter
     def w(self, x):
-        self._w = self._is_valid_scalar(x)
+        self._w = self.__valid_scalar(x)
 
     @property
     def width(self):
+        """
+        Get the width of the box.
+        
+        Returns
+        -------
+        float
+            Width of the box.
+        """
         return self._w
 
     @width.setter
@@ -133,21 +259,37 @@ class BBox3D:
 
     @property
     def h(self):
+        """
+        Get the height of the box.
+        
+        Returns
+        -------
+        float
+            Height of the box.
+        """
         return self._h
 
     @h.setter
     def h(self, x):
-        self._h = self._is_valid_scalar(x)
+        self._h = self.__valid_scalar(x)
 
     @property
     def height(self):
+        """
+        Get the height of the box.
+        
+        Returns
+        -------
+        float
+            Height of the box.
+        """
         return self._h
 
     @height.setter
     def height(self, x):
         self.h = x
 
-    def _transform(self, x):
+    def __transform(self, x):
         """Rotate and translate the point to world coordinates"""
         y = self._c + self._q.rotate(x)
         return y
@@ -155,53 +297,61 @@ class BBox3D:
     @property
     def p1(self):
         p = np.array([-self._l/2, -self._w/2, -self._h/2])
-        p = self._transform(p)
+        p = self.__transform(p)
         return p
 
     @property
     def p2(self):
         p = np.array([self._l/2, -self._w/2, -self._h/2])
-        p = self._transform(p)
+        p = self.__transform(p)
         return p
 
     @property
     def p3(self):
         p = np.array([self._l/2, self._w/2, -self._h/2])
-        p = self._transform(p)
+        p = self.__transform(p)
         return p
 
     @property
     def p4(self):
         p = np.array([-self._l/2, self._w/2, -self._h/2])
-        p = self._transform(p)
+        p = self.__transform(p)
         return p
 
     @property
     def p5(self):
         p = np.array([-self._l/2, -self._w/2, self._h/2])
-        p = self._transform(p)
+        p = self.__transform(p)
         return p
 
     @property
     def p6(self):
         p = np.array([self._l/2, -self._w/2, self._h/2])
-        p = self._transform(p)
+        p = self.__transform(p)
         return p
 
     @property
     def p7(self):
         p = np.array([self._l/2, self._w/2, self._h/2])
-        p = self._transform(p)
+        p = self.__transform(p)
         return p
 
     @property
     def p8(self):
         p = np.array([-self._l/2, self._w/2, self._h/2])
-        p = self._transform(p)
+        p = self.__transform(p)
         return p
 
     @property
     def p(self):
+        """
+        Attribute to access ndarray of all corners of box in order.
+        
+        Returns
+        -------
+        ndarray of float
+            All corners of the bounding box in order.
+        """
         x = np.vstack([self.p1, self.p2, self.p3, self.p4,
                        self.p5, self.p6, self.p7, self.p8])
         return x
