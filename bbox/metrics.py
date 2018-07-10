@@ -11,8 +11,20 @@ logger = logging.getLogger(__name__)
 
 def jaccard_index_2d(a: BBox2D, b: BBox2D):
     """
-    Computes the Intersection over Union (IoU) of 2 2-d bounding boxes.
+    Compute the Jaccard Index / Intersection over Union (IoU) of a pair of 2D bounding boxes.
+
+    Parameters
+    ----------
+    a : BBox2D
+        2D bounding box.
+    b : BBox2D
+        2D bounding box.
+    Returns
+    -------
+    float
+        The IoU of the 2 bounding boxes.
     """
+
     xA = np.maximum(a.x1, b.x1)
     yA = np.maximum(a.y1, b.y1)
     xB = np.minimum(a.x2, b.x2)
@@ -25,13 +37,6 @@ def jaccard_index_2d(a: BBox2D, b: BBox2D):
 
     inter_h = yB - yA + 1
     inter_h = inter_h * (inter_h >= 0)
-
-    # maximum generates a (N,N) matrix which consumes a lot of memory
-    # thus we are aggressive about freeing memory up.
-    del(xA)
-    del(yA)
-    del(xB)
-    del(yB)
 
     intersection = inter_w * inter_h
 
@@ -54,9 +59,20 @@ def jaccard_index_2d(a: BBox2D, b: BBox2D):
 
 def multi_jaccard_index_2d(a: BBox2DList, b: BBox2DList):
     """
-    Computes the Intersection over Union of two sets of bounding boxes.
-    Also known as IoU. 
+    Compute the Jaccard Index (Intersection over Union) of two sets of 2D bounding boxes.
+    
+    Parameters
+    ----------
+    a : BBox2DList
+        List of 2D bounding boxes.
+    b : BBox2DList
+        List of 2D bounding boxes.
+    Returns
+    -------
+    ndarray
+        Matrix
     """
+
     # We need to add a trailing dimension so that max/min gives us a (N,N) matrix
     xA = np.maximum(a.x1[:, np.newaxis], b.x1[:, np.newaxis].T)
     yA = np.maximum(a.y1[:, np.newaxis], b.y1[:, np.newaxis].T)
@@ -99,7 +115,21 @@ def multi_jaccard_index_2d(a: BBox2DList, b: BBox2DList):
 
 def jaccard_index_3d(a: BBox3D, b: BBox3D):
     """
-    We follow the KITTI format and assume only yaw rotations (along z-axis).
+    Compute the Jaccard Index / Intersection over Union (IoU) of a pair of 3D bounding boxes.
+    We compute the IoU using the top-down bird's eye view of the boxes.
+
+    **Note**: We follow the KITTI format and assume only yaw rotations (along z-axis).
+    
+    Parameters
+    ----------
+    a : BBox3D
+        3D bounding box.
+    b : BBox3D
+        3D bounding box.
+    Returns
+    -------
+    float
+        The IoU of the 2 bounding boxes.
     """
     intersection_points = polygon_intersection(a.p[0:4, 0:2], b.p[0:4, 0:2])
     inter_area = polygon_area(intersection_points)
