@@ -68,6 +68,10 @@ class TestBBox3d:
         assert self.box.cy == self.cuboid['center']['y']
         assert self.box.cz == self.cuboid['center']['z']
     
+    def test_center_init(self):
+        box = BBox3D(*[self.box.cx, self.box.cy, self.box.cz])
+        assert np.array_equal(box.center, self.box.center)
+    
     def test_dimensions(self):
         assert self.box.l == self.cuboid['dimensions']['length']
         assert self.box.length == self.cuboid['dimensions']['length']
