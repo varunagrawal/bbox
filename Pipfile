@@ -8,7 +8,6 @@ numpy = "*"
 pytest = "*"
 pyquaternion = "*"
 pillow = "*"
-numpy-quaternion = "*"
 
 [dev-packages]
 pylint = "*"
