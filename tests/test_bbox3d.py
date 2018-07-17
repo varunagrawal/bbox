@@ -1,5 +1,6 @@
 from bbox import BBox3D
 from bbox.utils import draw_cuboid
+from bbox.metrics import jaccard_index_3d
 
 import numpy as np
 from PIL import Image, ImageDraw
@@ -67,11 +68,11 @@ class TestBBox3d:
         assert self.box.cx == self.cuboid['center']['x']
         assert self.box.cy == self.cuboid['center']['y']
         assert self.box.cz == self.cuboid['center']['z']
-    
+
     def test_center_init(self):
         box = BBox3D(*[self.box.cx, self.box.cy, self.box.cz])
         assert np.array_equal(box.center, self.box.center)
-    
+
     def test_dimensions(self):
         assert self.box.l == self.cuboid['dimensions']['length']
         assert self.box.length == self.cuboid['dimensions']['length']
@@ -152,7 +153,8 @@ class TestBBox3d:
         assert np.array_equal(self.box.center, center)
 
     def test_bad_setters(self):
-        inputs = [[1, 2], np.zeros((3)), np.zeros((3, 1)), np.zeros((1, 3)), "center"]
+        inputs = [[1, 2], np.zeros((3)), np.zeros(
+            (3, 1)), np.zeros((1, 3)), "center"]
         for x in inputs:
             with pytest.raises((ValueError, TypeError)):
                 self.box.cx = x
@@ -177,6 +179,16 @@ class TestBBox3d:
         for q in quaternion_inputs:
             with pytest.raises((ValueError, TypeError)):
                 self.box.q = q
+
+    def test_non_overlapping_boxes(self):
+        a = BBox3D(x=-2.553668269106177, y=-63.56305079381365, z=1.988316894113887,
+                   length=4.7, width=1.8420955618567376, height=1.4,
+                   q=(-0.7123296970493456, 0.0, 0.0, 0.7018449990571904))
+
+        b = BBox3D(x=-60.00052106600015, y=-4.111285291215302, z=0.7497459084120979,
+                   length=4.7, width=1.8, height=1.819601518010064,
+                   q=(0.999845654958524, 0.0, 0.0, 0.017568900379933073))
+        print(jaccard_index_3d(a, b))
 
     @pytest.mark.skip(reason="This is just for visualization. We already test the values beforehand.")
     def test_render(self):
