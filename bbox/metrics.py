@@ -3,7 +3,7 @@ import logging
 import warnings
 
 from bbox import BBox2D, BBox2DList, BBox3D
-from bbox.geometry import polygon_intersection, polygon_area
+from bbox.geometry import polygon_intersection, polygon_area, polygon_collision
 
 
 logger = logging.getLogger(__name__)
@@ -60,7 +60,7 @@ def jaccard_index_2d(a: BBox2D, b: BBox2D):
 def multi_jaccard_index_2d(a: BBox2DList, b: BBox2DList):
     """
     Compute the Jaccard Index (Intersection over Union) of two sets of 2D bounding boxes.
-    
+
     Parameters
     ----------
     a : BBox2DList
@@ -119,7 +119,7 @@ def jaccard_index_3d(a: BBox3D, b: BBox3D):
     We compute the IoU using the top-down bird's eye view of the boxes.
 
     **Note**: We follow the KITTI format and assume only yaw rotations (along z-axis).
-    
+
     Parameters
     ----------
     a : BBox3D
@@ -131,6 +131,11 @@ def jaccard_index_3d(a: BBox3D, b: BBox3D):
     float
         The IoU of the 2 bounding boxes.
     """
+    # check if the two boxes don't overlap
+    if not polygon_collision(a.p[0:4, 0:2], b.p[0:4, 0:2]):
+        print("polygons don't intersect")
+        return np.round_(0, 5)
+
     intersection_points = polygon_intersection(a.p[0:4, 0:2], b.p[0:4, 0:2])
     inter_area = polygon_area(intersection_points)
 
