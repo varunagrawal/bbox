@@ -36,6 +36,86 @@ def point_plane_dist(pt, plane, signed=False):
         return np.abs(dist)
 
 
+def edges_of(vertices):
+    """
+    Return the vectors for the edges of the polygon p.
+
+    p is a polygon.
+    """
+    edges = []
+    N = len(vertices)
+
+    for i in range(N):
+        edge = vertices[(i + 1) % N] - vertices[i]
+        edges.append(edge)
+
+    return edges
+
+
+def orthogonal(v):
+    """
+    Return a 90 degree clockwise rotation of the vector v.
+    """
+    return np.array([-v[1], v[0]])
+
+
+def is_separating_axis(o, p1, p2):
+    """
+    Return True and the push vector if o is a separating axis of p1 and p2.
+    Otherwise, return False and None.
+    """
+    min1, max1 = float('+inf'), float('-inf')
+    min2, max2 = float('+inf'), float('-inf')
+
+    for v in p1:
+        projection = np.dot(v, o)
+
+        min1 = min(min1, projection)
+        max1 = max(max1, projection)
+
+    for v in p2:
+        projection = np.dot(v, o)
+
+        min2 = min(min2, projection)
+        max2 = max(max2, projection)
+
+    if max1 >= min2 and max2 >= min1:
+        d = min(max2 - min1, max1 - min2)
+        # push a bit more than needed so the shapes do not overlap in future
+        # tests due to float precision
+        d_over_o_squared = d/np.dot(o, o) + 1e-10
+        pv = d_over_o_squared*o
+        return False, pv
+    else:
+        return True, None
+
+
+def polygon_collision(p1, p2):
+    """
+    Return True if the shapes collide. Otherwise, return False.
+
+    p1 and p2 are np.arrays, the vertices of the polygons in the
+    counterclockwise direction.
+
+    Source: https://hackmd.io/s/ryFmIZrsl
+    """
+    edges = edges_of(p1)
+    edges += edges_of(p2)
+    orthogonals = [orthogonal(e) for e in edges]
+
+    push_vectors = []
+    for o in orthogonals:
+        separates, pv = is_separating_axis(o, p1, p2)
+
+        if separates:
+            # they do not collide and there is no push vector
+            return False
+        else:
+            push_vectors.append(pv)
+
+    return True
+
+
 def polygon_area(polygon):
     """
     Get the area of a polygon which is represented by a 2D array of points.
