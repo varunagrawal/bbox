@@ -11,6 +11,7 @@ pillow = "*"
 
 [dev-packages]
 pylint = "*"
+pendulum = "*"
 
 [requires]
 python_version = "3.6"
