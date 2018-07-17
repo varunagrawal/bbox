@@ -133,7 +133,6 @@ def jaccard_index_3d(a: BBox3D, b: BBox3D):
     """
     # check if the two boxes don't overlap
     if not polygon_collision(a.p[0:4, 0:2], b.p[0:4, 0:2]):
-        print("polygons don't intersect")
         return np.round_(0, 5)
 
     intersection_points = polygon_intersection(a.p[0:4, 0:2], b.p[0:4, 0:2])
