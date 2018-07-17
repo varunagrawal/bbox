@@ -87,6 +87,9 @@ class TestBBox3d:
         # alternative attribute for the quaternion
         assert np.array_equal(self.box.quaternion, q)
 
+        box = BBox3D(self.box.cx, self.box.cy, self.box.cz, q=self.box.q)
+        assert np.array_equal(self.box.q, box.q)
+
     def test_euler_angles(self):
         box = BBox3D(3.163, z=2.468, y=34.677, height=1.529, width=1.587, length=3.948,
                      euler_angles=[0, 0, -1.59])

@@ -60,7 +60,7 @@ class BBox3D:
                 Quaternion(axis=[0, 0, 1], angle=euler_angles[2]) * \
                 Quaternion(axis=[1, 0, 0], angle=euler_angles[0])
 
-        elif q:
+        elif q is not None:
             self._q = Quaternion(q)
         else:
             self._q = Quaternion(rw, rx, ry, rz)
