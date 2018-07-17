@@ -9,11 +9,11 @@ class BBox3D:
 
     def __init__(self, x, y, z,
                  length=1, width=1, height=1,
-                 rw=1, rx=0, ry=0, rz=0,
+                 rw=1, rx=0, ry=0, rz=0, q=None,
                  euler_angles=None, is_center=True):
         """
         Constructor for 3D bounding box (3-orthotope). It takes either the center of the 3D bounding box or the back-bottom-left corner, the width, height and length of the box, and quaternion values to indicate the rotation.
-        
+
         Parameters
         ----------
         x : float
@@ -40,7 +40,7 @@ class BBox3D:
             Sequence of euler angles in `[x, y, z]` rotation order (the default is None).
         is_center : bool, optional
             Flag to indicate if the provided coordinate is the center of the box (the default is True).
-        
+
         """
         if is_center:
             self._cx, self._cy, self._cz = x, y, z
@@ -60,6 +60,8 @@ class BBox3D:
                 Quaternion(axis=[0, 0, 1], angle=euler_angles[2]) * \
                 Quaternion(axis=[1, 0, 0], angle=euler_angles[0])
 
+        elif q:
+            self._q = Quaternion(q)
         else:
             self._q = Quaternion(rw, rx, ry, rz)
 
@@ -67,7 +69,7 @@ class BBox3D:
     def center(self):
         """
         Attribute to access center coordinates of box.
-        
+
         Returns
         -------
         ndarray of float
@@ -79,7 +81,7 @@ class BBox3D:
     def center(self, c):
         """
         Setter for center coordinates of the box.
-        
+
         Parameters
         ----------
         c : list or ndarray of float
@@ -88,7 +90,7 @@ class BBox3D:
         ------
         ValueError
             If `c` is not a vector/list of length 3.
-        
+
         """
         if len(c) != 3:
             raise ValueError("Center coordinates should be a vector of size 3")
@@ -101,12 +103,12 @@ class BBox3D:
             if not isinstance(x, (np.float, np.int)):
                 raise TypeError("Value needs to be either a float or an int")
         return x
-    
+
     @property
     def cx(self):
         """
         Get the X coordinate of center.
-        
+
         Returns
         -------
         float
@@ -117,7 +119,7 @@ class BBox3D:
     @cx.setter
     def cx(self, x):
         """Setter for X coordinate of center.
-        
+
         Parameters
         ----------
         x : float
@@ -128,7 +130,7 @@ class BBox3D:
     def cy(self):
         """
         Get the Y coordinate of center.
-        
+
         Returns
         -------
         float
@@ -144,7 +146,7 @@ class BBox3D:
     def cz(self):
         """
         Get the Z coordinate of center.
-        
+
         Returns
         -------
         float
@@ -160,7 +162,7 @@ class BBox3D:
     def q(self):
         """
         Get the the rotation quaternion.
-        
+
         Returns
         -------
         ndarray of float
@@ -171,7 +173,8 @@ class BBox3D:
     @q.setter
     def q(self, q):
         if not isinstance(q, (list, tuple, np.ndarray, Quaternion)):
-            raise TypeError("Value shoud be either list, numpy array or Quaterion")
+            raise TypeError(
+                "Value shoud be either list, numpy array or Quaterion")
         if isinstance(q, (list, tuple, np.ndarray)) and len(q) != 4:
             raise ValueError("Quaternion input should be a vector of size 4")
 
@@ -181,7 +184,7 @@ class BBox3D:
     def quaternion(self):
         """
         Get the the rotation quaternion.
-        
+
         Returns
         -------
         ndarray of float
@@ -197,7 +200,7 @@ class BBox3D:
     def l(self):
         """
         Get the length of the box.
-        
+
         Returns
         -------
         float
@@ -213,7 +216,7 @@ class BBox3D:
     def length(self):
         """
         Get the length of the box.
-        
+
         Returns
         -------
         float
@@ -229,7 +232,7 @@ class BBox3D:
     def w(self):
         """
         Get the width of the box.
-        
+
         Returns
         -------
         float
@@ -245,7 +248,7 @@ class BBox3D:
     def width(self):
         """
         Get the width of the box.
-        
+
         Returns
         -------
         float
@@ -261,7 +264,7 @@ class BBox3D:
     def h(self):
         """
         Get the height of the box.
-        
+
         Returns
         -------
         float
@@ -277,7 +280,7 @@ class BBox3D:
     def height(self):
         """
         Get the height of the box.
-        
+
         Returns
         -------
         float
@@ -346,7 +349,7 @@ class BBox3D:
     def p(self):
         """
         Attribute to access ndarray of all corners of box in order.
-        
+
         Returns
         -------
         ndarray of float
@@ -357,7 +360,7 @@ class BBox3D:
         return x
 
     def __repr__(self):
-        return "BBox3D(c=({cx},{cy},{cz}), {l}x{w}x{h}, q=[{rw}, {rx}, {ry}, {rz}])".format(
+        return "BBox3D(x={cx},y={cy},z={cz}), length={l},width={w},height={h}, q=({rw}, {rx}, {ry}, {rz}))".format(
             cx=self._cx, cy=self._cy, cz=self._cz,
             l=self._l, w=self._w, h=self._h,
             rw=self._q.real, rx=self._q.imaginary[0], ry=self._q.imaginary[1], rz=self._q.imaginary[2])
