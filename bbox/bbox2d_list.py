@@ -25,15 +25,17 @@ class BBox2DList:
                 # check if the list elements are either numpy arrays or lists
                 # if yes, then convert to a list of BBox2D objects
                 if all(isinstance(x, np.ndarray) or isinstance(x, list) for x in arr):
-                    self.bboxes = np.asarray([BBox2D(x, two_point=two_point).numpy(two_point=True) 
-                    for x in arr])
+                    self.bboxes = np.asarray([BBox2D(x, two_point=two_point).numpy(two_point=True)
+                                              for x in arr])
 
                 elif all(isinstance(x, BBox2D) for x in arr):
                     # parse a list of BBox2D objects
-                    self.bboxes = np.asarray([x.numpy(two_point=True) for x in arr])
+                    self.bboxes = np.asarray(
+                        [x.numpy(two_point=True) for x in arr])
 
                 else:
-                    raise Exception("Element of input is of invalid type. Elements must be all list, np.ndarray or BBox2D")
+                    raise Exception(
+                        "Element of input is of invalid type. Elements must be all list, np.ndarray or BBox2D")
 
         # check if `arr` is a 2D numpy array
         elif isinstance(arr, np.ndarray):
@@ -42,23 +44,31 @@ class BBox2DList:
 
             # if the dimensions of the array are incorrect, raise exception.
             if arr.ndim != 2 or arr.shape[1] != 4:
-                raise Exception("Invalid dimensions. Expected 2D array of size Nx4. Extra dimensions should be size 1.")
+                raise Exception(
+                    "Invalid dimensions. Expected 2D array of size Nx4. Extra dimensions should be size 1.")
 
             # parse the input
-            self.bboxes = np.asarray([BBox2D(x, two_point=two_point).numpy(two_point=True) for x in arr], dtype=np.float64)
+            self.bboxes = np.asarray([BBox2D(x, two_point=two_point).numpy(
+                two_point=True) for x in arr], dtype=np.float64)
 
         # if `arr` is a BBox2DList, just make a copy
         elif isinstance(arr, BBox2DList):
             self.bboxes = arr.bboxes
-        
+
         else:
-            raise Exception("Cannot understand input type. Please use a list or a numpy array.")    
+            raise Exception(
+                "Cannot understand input type. Please use a list or a numpy array.")
 
     @classmethod
-    def from_bbox_list(cls, bounding_boxes:list):
+    def from_bbox_list(cls, bounding_boxes: list):
         """
         """
         return BBox2DList(np.asarray([x.numpy(two_point=True) for x in bounding_boxes]))
+
+    def __eq__(self, x):
+        if not isinstance(x, BBox2DList):
+            return False
+        return np.array_equal(self.bboxes, x.bboxes)
 
     def __str__(self):
         return str(self.bboxes)
@@ -67,7 +77,10 @@ class BBox2DList:
         return str(self.bboxes)
 
     def __getitem__(self, key):
-        return self.bboxes[key]
+        return BBox2D(self.bboxes[key], two_point=True)
+
+    def __setitem__(self, key, value):
+        self.bboxes[key] = BBox2D(value).numpy(two_point=True)
 
     def __len__(self):
         return self.bboxes.shape[0]
@@ -75,7 +88,7 @@ class BBox2DList:
     @property
     def x1(self):
         return self.bboxes[:, 0]
-    
+
     @x1.setter
     def x1(self, x):
         if isinstance(x, list):
@@ -89,7 +102,7 @@ class BBox2DList:
     @property
     def y1(self):
         return self.bboxes[:, 1]
-    
+
     @property
     def y2(self):
         return self.bboxes[:, 3]
@@ -110,7 +123,7 @@ class BBox2DList:
     def h(self):
         return self.y2 - self.y1 + 1
 
-    @property    
+    @property
     def shape(self):
         return self.bboxes.shape
 
@@ -122,4 +135,3 @@ class BBox2DList:
             bboxes[:, 2] = bboxes[:, 2] - bboxes[:, 0] + 1
             bboxes[:, 3] = bboxes[:, 3] - bboxes[:, 1] + 1
             return bboxes
-    
