@@ -10,17 +10,20 @@ class BBox2D:
 
         elif isinstance(x, (list, tuple)):
             if len(x) != 4:
-                raise ValueError("Invalid input length. Input should have 4 elements.")
+                raise ValueError(
+                    "Invalid input length. Input should have 4 elements.")
             x = np.asarray(x)
 
         elif isinstance(x, np.ndarray):
             if x.ndim >= 2:
                 x = x.flatten()
             if x.size != 4:
-                raise ValueError("Invalid input length. Input should have 4 elements.")
+                raise ValueError(
+                    "Invalid input length. Input should have 4 elements.")
         else:
-            raise TypeError("Expected input to constructor to be a 4 element list, tuple, numpy ndarray, or BBox2D object.")
-            
+            raise TypeError(
+                "Expected input to constructor to be a 4 element list, tuple, numpy ndarray, or BBox2D object.")
+
         if two_point:
             w = x[2] - x[0] + 1
             h = x[3] - x[1] + 1
@@ -32,15 +35,23 @@ class BBox2D:
         self._y1 = np.float(x[1])
         self._w = np.float(w)
         self._h = np.float(h)
-        
+
         # (x2, y2) will be used for indexing, hence we need to subtract 1
         self._x2 = self._x1 + self._w - 1
         self._y2 = self._y1 + self._h - 1
 
+    def __eq__(self, x):
+        if not isinstance(x, BBox2D):
+            return False
+        return self._x1 == x.x1 \
+            and self._y1 == x.y1 \
+            and self._x2 == x.x2 \
+            and self._y2 == x.y2
+
     @property
     def x1(self):
         return self._x1
-    
+
     @x1.setter
     def x1(self, x):
         if x < 0:
@@ -61,7 +72,7 @@ class BBox2D:
             raise ValueError("Invalid input. Should be non-negative.")
         elif x < self.x1:
             raise ValueError("Value is lesser than x1={0}".format(self.x1))
-            
+
         self._x2 = x
         self._w = self._x2 - self._x1 + 1
 
@@ -82,7 +93,7 @@ class BBox2D:
     @property
     def y2(self):
         return self._y2
-        
+
     @y2.setter
     def y2(self, y):
         if y < 0:
@@ -100,7 +111,8 @@ class BBox2D:
     @w.setter
     def w(self, w):
         if w < 1:
-            raise ValueError("Invalid width value. Width cannot be non-positive.")
+            raise ValueError(
+                "Invalid width value. Width cannot be non-positive.")
         self._w = w
         self._x2 = self._x1 + self._w - 1
 
@@ -111,7 +123,8 @@ class BBox2D:
     @h.setter
     def h(self, h):
         if h < 1:
-            raise ValueError("Invalid height value. Height cannot be non-positive.")
+            raise ValueError(
+                "Invalid height value. Height cannot be non-positive.")
         self._h = h
         self._y2 = self._y1 + self._h - 1
 
@@ -122,7 +135,8 @@ class BBox2D:
     @width.setter
     def width(self, w):
         if w < 1:
-            raise ValueError("Invalid width value. Width cannot be non-positive.")
+            raise ValueError(
+                "Invalid width value. Width cannot be non-positive.")
         self._w = w
         self._x2 = self._x1 + self._w - 1
 
@@ -133,7 +147,8 @@ class BBox2D:
     @height.setter
     def height(self, h):
         if h < 1:
-            raise ValueError("Invalid height value. Height cannot be non-positive.")
+            raise ValueError(
+                "Invalid height value. Height cannot be non-positive.")
         self._h = h
         self._y2 = self._y1 + self._h - 1
 

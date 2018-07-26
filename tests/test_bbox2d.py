@@ -54,6 +54,13 @@ class TestBBox2D(object):
         bbox2 = BBox2D([24, 48, 64, 96])
         self.attributes_test(bbox2, 24, 48, 87, 143, 64, 96)
 
+    def test_equality(self):
+        b1 = BBox2D([1, 2, 3, 4])
+        b2 = BBox2D([1, 2, 3, 4])
+        assert b1 == b2
+        b3 = BBox2D([1, 2, 3, 5])
+        assert b1 != b3
+
     def test_x1(self):
         bbox = BBox2D([24, 48, 64, 96])
         bbox.x1 = 25
