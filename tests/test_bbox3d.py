@@ -191,7 +191,7 @@ class TestBBox3d:
         b = BBox3D(x=-60.00052106600015, y=-4.111285291215302, z=0.7497459084120979,
                    length=4.7, width=1.8, height=1.819601518010064,
                    q=(0.999845654958524, 0.0, 0.0, 0.017568900379933073))
-        print(jaccard_index_3d(a, b))
+        # print(jaccard_index_3d(a, b))
 
     @pytest.mark.skip(reason="This is just for visualization. We already test the values beforehand.")
     def test_render(self):
