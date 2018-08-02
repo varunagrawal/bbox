@@ -7,8 +7,8 @@ import bbox
 
 
 dependencies = [
-    "numpy==1.14.5",
-    "pyquaternion==0.9.2"
+    "numpy>=1.14.5",
+    "pyquaternion>=0.9.2"
 ]
 
 here = path.abspath(path.dirname(__file__))
