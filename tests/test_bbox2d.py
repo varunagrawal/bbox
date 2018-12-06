@@ -121,3 +121,15 @@ class TestBBox2D(object):
         bbox = BBox2D([24, 48, 64, 96])
         s = repr(bbox)
         assert "BBox2D(x=24.0, y=48.0, w=64.0, h=96.0)" == s
+
+    def test_aspect_ratio(self):
+        bbox = BBox2D([0, 0, 16, 16])
+
+        new_bbox = bbox.aspect_ratio(1)
+        assert new_bbox.w == 16 and new_bbox.h == 16
+
+        new_bbox = bbox.aspect_ratio(0.5)
+        assert new_bbox.w == 23 and new_bbox.h == 12
+
+        new_bbox = bbox.aspect_ratio(2)
+        assert new_bbox.w == 11 and new_bbox.h == 22
