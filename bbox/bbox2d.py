@@ -155,6 +155,19 @@ class BBox2D:
     def center(self):
         return np.array([self._x1 + self._w/2, self._y1 + self._h/2])
 
+    def aspect_ratio(self, ratio):
+        """
+        Return 2D BBox mapped to new aspect ratio denoted by `ratio`.
+        The ratio should be given as the result of `height / width`
+        """
+        area = self.h * self.w
+        area_ratio = area / ratio
+        new_width = np.round(np.sqrt(area_ratio))
+        new_height = np.round(ratio * new_width)
+        new_bbox = BBox2D((self.x1, self.y1, new_width, new_height),
+                          two_point=False)
+        return new_bbox
+
     def tolist(self, two_point=False):
         if two_point:
             return [self.x1, self.y1, self.x2, self.y2]
