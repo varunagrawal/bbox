@@ -25,8 +25,9 @@ class BBox2DList:
                 # check if the list elements are either numpy arrays or lists
                 # if yes, then convert to a list of BBox2D objects
                 if all(isinstance(x, np.ndarray) or isinstance(x, list) for x in arr):
-                    self.bboxes = np.asarray([BBox2D(x, two_point=two_point).numpy(two_point=True)
-                                              for x in arr])
+                    self.bboxes = np.asarray([
+                        BBox2D(x, two_point=two_point).numpy(two_point=True)
+                        for x in arr])
 
                 elif all(isinstance(x, BBox2D) for x in arr):
                     # parse a list of BBox2D objects
@@ -39,17 +40,23 @@ class BBox2DList:
 
         # check if `arr` is a 2D numpy array
         elif isinstance(arr, np.ndarray):
-            # remove singleton dimensions if any
-            arr = np.squeeze(arr)
+            # Check for empty ndarray
+            if arr.ndim == 2 and arr.shape[0] == 0:
+                self.bboxes = np.empty((0, 4))
 
-            # if the dimensions of the array are incorrect, raise exception.
-            if arr.ndim != 2 or arr.shape[1] != 4:
-                raise Exception(
-                    "Invalid dimensions. Expected 2D array of size Nx4. Extra dimensions should be size 1.")
+            else:
+                # if input is a 1D vector, we add the second dimension
+                if arr.ndim == 1 and arr.shape[0] == 4:
+                    arr = arr[np.newaxis, :]
 
-            # parse the input
-            self.bboxes = np.asarray([BBox2D(x, two_point=two_point).numpy(
-                two_point=True) for x in arr], dtype=np.float64)
+                # if the dimensions of the array are incorrect, raise exception.
+                if arr.ndim != 2 or arr.shape[1] != 4:
+                    raise Exception(
+                        "Invalid dimensions. Expected 2D array of size Nx4. Extra dimensions should be size 1. Got {0}".format(arr.shape))
+
+                # parse the input
+                self.bboxes = np.asarray(
+                    [BBox2D(x, two_point=two_point).numpy(two_point=True) for x in arr], dtype=np.float64)
 
         # if `arr` is a BBox2DList, just make a copy
         elif isinstance(arr, BBox2DList):
@@ -84,6 +91,18 @@ class BBox2DList:
 
     def __len__(self):
         return self.bboxes.shape[0]
+
+    def mul(self, s):
+        if not isinstance(s, (int, float)):
+            raise ValueError(
+                "Bounding boxes can only be multiplied by scalar (int or float)")
+        return BBox2DList(self.bboxes * s, two_point=True)
+
+    def __mul__(self, s):
+        return self.mul(s)
+
+    def __rmul__(self, s):
+        return self.mul(s)
 
     @property
     def x1(self):
@@ -126,6 +145,67 @@ class BBox2DList:
     @property
     def shape(self):
         return self.bboxes.shape
+
+    def append(self, x, two_point=False):
+        if isinstance(x, (tuple, list, np.ndarray)):
+            try:
+                x = np.asarray(x)
+            except:
+                raise ValueError("Expected numpy array or list")
+
+            if x.ndim == 1:
+                x = x[np.newaxis, :]
+
+            if x.ndim > 1 and x.shape[1] != 4:
+                raise ValueError(
+                    "Input should have shape Nx4, got {0}".format(x.shape))
+
+            # Convert to BBox2D
+            x = BBox2D(x, two_point=two_point)
+
+        elif isinstance(x, BBox2D):
+            pass
+
+        else:
+            raise TypeError(
+                "Expected input of type (list, tuple, np.ndarray, BBox2D)")
+
+        # ensure that the input is in 2 point format
+        x = x.numpy(two_point=True).reshape(1, 4)
+
+        return BBox2DList(np.append(self.bboxes, x, axis=0), two_point=True)
+
+    def insert(self, x, idx, two_point=False):
+        if isinstance(x, (tuple, list, np.ndarray)):
+            try:
+                x = np.asarray(x)
+            except:
+                raise ValueError("Expected numpy array or list")
+
+            if x.ndim > 1 or x.shape[0] != 4:
+                raise ValueError(
+                    "Input should have shape Nx4, got {0}".format(x.shape))
+
+            # ensure that the input is in 2 point format
+            x = BBox2D(x, two_point=two_point)
+
+        elif isinstance(x, BBox2D):
+            pass
+
+        else:
+            raise TypeError(
+                "Expected input of type (list, tuple, np.ndarray, BBox2D)")
+
+        # ensure that the input is in 2 point format
+        x = x.numpy(two_point=True).reshape(1, 4)
+
+        return BBox2DList(np.insert(self.bboxes, idx, x, axis=0), two_point=True)
+
+    def delete(self, idx):
+        if idx >= self.bboxes.shape[0]:
+            raise IndexError("Index {0} is invalid. Should be in range (0, {1})".format(
+                idx, self.bboxes.shape[0]-1))
+        return BBox2DList(np.delete(self.bboxes, idx, axis=0), two_point=True)
 
     def numpy(self, two_point=False):
         if two_point:

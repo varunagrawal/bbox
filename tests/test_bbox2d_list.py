@@ -81,3 +81,80 @@ class TestBBox2DList(object):
 
         assert np.array_equal(self.bbl.h, h)
         assert np.array_equal(self.bbl.height, h)
+
+    def test_mul(self):
+        bbl = BBox2DList(np.ones((7, 4)))
+        bbl_scaled = bbl * 11
+        assert np.all(bbl_scaled.bboxes == 11)
+
+    def test_append_list(self):
+        x = [3, 7, 10, 16]
+        bbl = self.bbl.append(x, two_point=True)
+        assert np.array_equal(bbl.bboxes[-1], x)
+
+    def test_append_numpy(self):
+        x = np.asarray([3, 7, 10, 16])
+        bbl = self.bbl.append(x, two_point=True)
+        assert np.array_equal(bbl.bboxes[-1], x)
+
+    def test_append_bbox(self):
+        x = BBox2D([3, 7, 10, 16], two_point=True)
+        bbl = self.bbl.append(x)
+        assert np.array_equal(bbl.bboxes[-1], x.numpy(two_point=True))
+
+    def test_append_invalid_type(self):
+        x = range(4)
+        with pytest.raises(TypeError):
+            self.bbl.append(x)
+
+    def test_append_invalid_value(self):
+        with pytest.raises(ValueError):
+            self.bbl.append((1, 2, 3))
+
+        with pytest.raises(ValueError):
+            self.bbl.append((1, 2, 3, 4, 5))
+
+    def test_insert_list(self):
+        x = [3, 7, 10, 16]
+        bbl = self.bbl.insert(x, 0, two_point=True)
+        assert np.array_equal(bbl.bboxes[0], x)
+
+    def test_insert_numpy(self):
+        x = np.asarray([3, 7, 10, 16])
+        bbl = self.bbl.insert(x, 0, two_point=True)
+        assert np.array_equal(bbl.bboxes[0], x)
+
+    def test_insert_bbox(self):
+        x = BBox2D([3, 7, 10, 16], two_point=True)
+        bbl = self.bbl.insert(x, 0)
+        assert np.array_equal(bbl.bboxes[0], x.numpy(two_point=True))
+
+    def test_insert_invalid_type(self):
+        x = range(4)
+        with pytest.raises(TypeError):
+            self.bbl.insert(x, 0)
+
+    def test_insert_invalid_value(self):
+        with pytest.raises(ValueError):
+            self.bbl.insert((1, 2, 3), 0)
+
+        with pytest.raises(ValueError):
+            self.bbl.insert((1, 2, 3, 4, 5), 0)
+
+    def test_delete(self):
+        idx = 5
+        bbl = self.bbl.delete(idx)
+        assert bbl.shape[0] == self.bbl.shape[0]-1
+        assert self.bbl[idx] not in bbl
+
+    def test_delete_negative(self):
+        idx = -3
+        bbl = self.bbl.delete(idx)
+        assert bbl.shape[0] == self.bbl.shape[0]-1
+        assert self.bbl[idx] not in bbl
+
+    def test_delete_invalid(self):
+        # idx is one greater than the max allowed index
+        idx = self.bbl.shape[0]
+        with pytest.raises(IndexError):
+            bbl = self.bbl.delete(idx)
