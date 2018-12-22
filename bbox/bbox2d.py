@@ -4,6 +4,43 @@ from copy import deepcopy
 
 class BBox2D:
     def __init__(self, x, two_point=False):
+        """
+        Class to reprsent a 2D bounding box.
+
+        Parameters
+        ----------
+        x
+            Sequence of length 4 representing (x, y, w, h) or (x1, y1, x2, y2) depending on if `two_point` is False or True respectively.
+        two_point : bool 
+            Flag to indicate which format `x` is in (x, y, w, h) or (x1, y1, x2, y2).
+
+        Attributes
+        ----------
+        x1 : float
+            Left x coordinate
+        y1 : float
+            Top y coordinate
+        x2 : float
+            Right x coordinate
+        y2 : float
+            Bottom y coordinate
+        width : float
+            Width of bounding box
+        height : float
+            Height of bounding box
+        w : float
+            Syntactic sugar for width
+        h : float
+            Syntactic sugar for height
+
+        Raises
+        ------
+        ValueError
+            If `x` is not of length 4.
+        TypeError
+            If `x` is not of type {list, tuple, numpy.ndarray, BBox2D}
+
+        """
         # Copy constructor makes the constructor idempotent
         if isinstance(x, BBox2D):
             x = x.numpy(two_point=two_point)
@@ -145,6 +182,7 @@ class BBox2D:
         self.height = h
 
     def center(self):
+        """Return center coordinates of the bounding box"""
         return np.array([self._x1 + self._w/2, self._y1 + self._h/2])
 
     def aspect_ratio(self, ratio):
@@ -161,12 +199,20 @@ class BBox2D:
         return new_bbox
 
     def tolist(self, two_point=False):
+        """
+        Return bounding box as a `list` of 4 numbers. 
+        Format depends on `two_point` flag.
+        """
         if two_point:
             return [self.x1, self.y1, self.x2, self.y2]
         else:
             return [self.x1, self.y1, self.w, self.h]
 
     def numpy(self, two_point=False):
+        """
+        Return bounding box as a numpy vector of length 4.
+        Format depends on `two_point` flag.
+        """
         return np.asarray(self.tolist(two_point=two_point), dtype=np.float)
 
     def __repr__(self):
