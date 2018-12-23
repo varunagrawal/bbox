@@ -105,30 +105,6 @@ class BBox2D:
         self._h = self._y2 - self._y1 + 1
 
     @property
-    def w(self):
-        return self._w
-
-    @w.setter
-    def w(self, w):
-        if w < 1:
-            raise ValueError(
-                "Invalid width value. Width cannot be non-positive.")
-        self._w = w
-        self._x2 = self._x1 + self._w - 1
-
-    @property
-    def h(self):
-        return self._h
-
-    @h.setter
-    def h(self, h):
-        if h < 1:
-            raise ValueError(
-                "Invalid height value. Height cannot be non-positive.")
-        self._h = h
-        self._y2 = self._y1 + self._h - 1
-
-    @property
     def width(self):
         return self._w
 
@@ -141,6 +117,14 @@ class BBox2D:
         self._x2 = self._x1 + self._w - 1
 
     @property
+    def w(self):
+        return self._w
+
+    @w.setter
+    def w(self, w):
+        self.width = w
+
+    @property
     def height(self):
         return self._h
 
@@ -151,6 +135,14 @@ class BBox2D:
                 "Invalid height value. Height cannot be non-positive.")
         self._h = h
         self._y2 = self._y1 + self._h - 1
+
+    @property
+    def h(self):
+        return self._h
+
+    @h.setter
+    def h(self, h):
+        self.height = h
 
     def center(self):
         return np.array([self._x1 + self._w/2, self._y1 + self._h/2])
