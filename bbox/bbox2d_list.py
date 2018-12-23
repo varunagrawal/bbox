@@ -7,9 +7,44 @@ from bbox.bbox2d import BBox2D
 class BBox2DList:
     def __init__(self, arr, two_point=False):
         """
+        Class to reprsent a list of 2D bounding boxes.
         Expects an iterable of bounding boxes of the form (x, y, w, h) or (x1, y1, x2, y2) if `two_point=True`.
-        :param arr:
-        :param two_point: Flag to indicate if `arr` is in two point format (x1, y1, x2, y2)
+
+        Parameters
+        ----------
+        arr:
+            Sequence of list/tuple/ndarray/BBox2D, each representing a single bounding box.
+        two_point : bool
+            Flag to indicate which format `x` is in (x, y, w, h) or (x1, y1, x2, y2).
+
+        Attributes
+        ----------
+        x1 : float
+            Left x coordinate of all boxes
+        y1 : float
+            Top y coordinate of all boxes
+        x2 : float
+            Right x coordinate of all boxes
+        y2 : float
+            Bottom y coordinate of all boxes
+        width : float
+            Width of bounding box of all boxes
+        height : float
+            Height of bounding box of all boxes
+        w : float
+            Syntactic sugar for width
+        h : float
+            Syntactic sugar for height
+        shape : np.ndarray
+            Return the shape of the bounding boxes container in the form (N, 4).
+
+        Raises
+        ------
+        ValueError
+            If `x` is not of length 4.
+        TypeError
+            If `x` is not of type {list, tuple, numpy.ndarray, BBox2D}
+
         """
         # Internally, we record the Bounding Box list as a 2D ndarray in two_point format.
 
@@ -66,12 +101,6 @@ class BBox2DList:
             raise Exception(
                 "Cannot understand input type. Please use a list or a numpy array.")
 
-    @classmethod
-    def from_bbox_list(cls, bounding_boxes: list):
-        """
-        """
-        return BBox2DList(np.asarray([x.numpy(two_point=True) for x in bounding_boxes]))
-
     def __eq__(self, x):
         if not isinstance(x, BBox2DList):
             return False
@@ -108,39 +137,80 @@ class BBox2DList:
     def x1(self):
         return self.bboxes[:, 0]
 
+    def _convert_attribute_input(self, x):
+        if not isinstance(x, (list, tuple, np.ndarray)):
+            raise TypeError("Input should be of type list/tuple/ndarray")
+        x = np.asarray(x)
+        if x.ndim != 1 or (x.ndim == 1 and x.shape[0] != self.bboxes.shape[0]):
+            raise ValueError("Invalid shape of input. Expected shape to be ({0},)".format(
+                self.bboxes.shape[0]))
+        return x
+
     @x1.setter
     def x1(self, x):
-        if isinstance(x, list):
-            x = np.asarray(x)
+        x = self._convert_attribute_input(x)
         self.bboxes[:, 0] = x
 
     @property
     def x2(self):
         return self.bboxes[:, 2]
 
+    @x2.setter
+    def x2(self, x):
+        x = self._convert_attribute_input(x)
+        self.bboxes[:, 2] = x
+
     @property
     def y1(self):
         return self.bboxes[:, 1]
+
+    @y1.setter
+    def y1(self, x):
+        x = self._convert_attribute_input(x)
+        self.bboxes[:, 1] = x
 
     @property
     def y2(self):
         return self.bboxes[:, 3]
 
+    @y2.setter
+    def y2(self, x):
+        x = self._convert_attribute_input(x)
+        self.bboxes[:, 3] = x
+
     @property
     def width(self):
         return self.x2 - self.x1 + 1
+
+    @width.setter
+    def width(self, w):
+        w = self._convert_attribute_input(w)
+        self.x2 = self.x1 + w - 1
 
     @property
     def w(self):
         return self.x2 - self.x1 + 1
 
+    @w.setter
+    def w(self, w):
+        self.width = w
+
     @property
     def height(self):
         return self.y2 - self.y1 + 1
 
+    @height.setter
+    def height(self, h):
+        h = self._convert_attribute_input(h)
+        self.y2 = self.y1 + h - 1
+
     @property
     def h(self):
         return self.y2 - self.y1 + 1
+
+    @h.setter
+    def h(self, h):
+        self.height = h
 
     @property
     def shape(self):
@@ -208,6 +278,7 @@ class BBox2DList:
         return BBox2DList(np.delete(self.bboxes, idx, axis=0), two_point=True)
 
     def numpy(self, two_point=False):
+        """Return np.ndarray of shape (N, 4) representing all the bounding boxes"""
         if two_point:
             return self.bboxes
         else:
