@@ -83,15 +83,27 @@ class TestBBox2D(object):
 
     def test_w(self):
         bbox = BBox2D([24, 48, 64, 96])
-        bbox.w = 70
-        assert bbox.w == 70 and bbox.x1 == 24 and bbox.x2 == 93
         bbox.width = 70
+        assert bbox.width == 70 and bbox.x1 == 24 and bbox.x2 == 93
+        bbox.w = 70
         assert bbox.width == 70 and bbox.w == 70
+
+        with pytest.raises(ValueError):
+            bbox.w = -1
+        with pytest.raises(ValueError):
+            bbox.width = -1
 
     def test_h(self):
         bbox = BBox2D([24, 48, 64, 96])
+        bbox.height = 93
+        assert bbox.height == 93 and bbox.y1 == 48 and bbox.y2 == 140
         bbox.h = 93
-        assert bbox.h == 93 and bbox.y2 == 140
+        assert bbox.height == 93 and bbox.h == 93
+
+        with pytest.raises(ValueError):
+            bbox.h = -1
+        with pytest.raises(ValueError):
+            bbox.height = -1
 
     def test_tolist(self):
         bbox = BBox2D([24, 48, 64, 96])
