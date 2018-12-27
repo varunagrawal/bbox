@@ -70,7 +70,7 @@ class BBox2DList:
                         [x.numpy(two_point=True) for x in arr])
 
                 else:
-                    raise Exception(
+                    raise TypeError(
                         "Element of input is of invalid type. Elements must be all list, np.ndarray or BBox2D")
 
         # check if `arr` is a 2D numpy array
@@ -86,7 +86,7 @@ class BBox2DList:
 
                 # if the dimensions of the array are incorrect, raise exception.
                 if arr.ndim != 2 or arr.shape[1] != 4:
-                    raise Exception(
+                    raise ValueError(
                         "Invalid dimensions. Expected 2D array of size Nx4. Extra dimensions should be size 1. Got {0}".format(arr.shape))
 
                 # parse the input
@@ -98,8 +98,8 @@ class BBox2DList:
             self.bboxes = arr.bboxes
 
         else:
-            raise Exception(
-                "Cannot understand input type. Please use a list or a numpy array.")
+            raise TypeError(
+                "Invalid input type. Please use a list or a numpy array.")
 
     def __eq__(self, x):
         if not isinstance(x, BBox2DList):
@@ -232,16 +232,18 @@ class BBox2DList:
 
             # Convert to BBox2D
             x = BBox2D(x, two_point=two_point)
+            x = x.numpy(two_point=True).reshape(1, 4)
 
         elif isinstance(x, BBox2D):
-            pass
+            # ensure that the input is in 2 point format
+            x = x.numpy(two_point=True).reshape(1, 4)
+
+        elif isinstance(x, BBox2DList):
+            x = x.numpy(two_point=True)
 
         else:
             raise TypeError(
                 "Expected input of type (list, tuple, np.ndarray, BBox2D)")
-
-        # ensure that the input is in 2 point format
-        x = x.numpy(two_point=True).reshape(1, 4)
 
         return BBox2DList(np.append(self.bboxes, x, axis=0), two_point=True)
 
@@ -272,7 +274,11 @@ class BBox2DList:
         return BBox2DList(np.insert(self.bboxes, idx, x, axis=0), two_point=True)
 
     def delete(self, idx):
-        if idx >= self.bboxes.shape[0]:
+        # TODO improve checks here or enforce constraints
+        if isinstance(idx, (tuple, list)) and (idx[0] >= self.bboxes.shape[0]).any():
+            raise IndexError("Invalid index. All indices should be in range (0, {1})".format(
+                idx, self.bboxes.shape[0]-1))
+        elif isinstance(idx, int) and idx >= self.bboxes.shape[0]:
             raise IndexError("Index {0} is invalid. Should be in range (0, {1})".format(
                 idx, self.bboxes.shape[0]-1))
         return BBox2DList(np.delete(self.bboxes, idx, axis=0), two_point=True)
