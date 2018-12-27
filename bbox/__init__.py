@@ -5,7 +5,7 @@ from bbox.bbox3d import BBox3D
 
 __author__ = "Varun Agrawal"
 __copyright__ = "GTRC & Argo AI LLC"
-__version__ = "0.7.5"
+__version__ = "0.8.0"
 __maintainer__ = "Varun Agrawal"
 __email__ = "varunagrawal@gatech.com"
 __status__ = "Beta"
