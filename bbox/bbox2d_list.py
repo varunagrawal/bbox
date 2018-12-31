@@ -273,15 +273,22 @@ class BBox2DList:
 
         return BBox2DList(np.insert(self.bboxes, idx, x, axis=0), two_point=True)
 
-    def delete(self, idx):
+    def delete(self, idx, axis=None):
         # TODO improve checks here or enforce constraints
-        if isinstance(idx, (tuple, list)) and (idx[0] >= self.bboxes.shape[0]).any():
-            raise IndexError("Invalid index. All indices should be in range (0, {1})".format(
-                idx, self.bboxes.shape[0]-1))
-        elif isinstance(idx, int) and idx >= self.bboxes.shape[0]:
-            raise IndexError("Index {0} is invalid. Should be in range (0, {1})".format(
-                idx, self.bboxes.shape[0]-1))
-        return BBox2DList(np.delete(self.bboxes, idx, axis=0), two_point=True)
+        # if len(idx) == 0:
+        #     return self.copy()
+
+        # if isinstance(idx, (tuple, list)) and (idx[0] >= self.bboxes.shape[0]).any():
+        #     raise IndexError("Invalid index. All indices should be in range (0, {1})".format(
+        #         idx, self.bboxes.shape[0]-1))
+        # elif isinstance(idx, int) and idx >= self.bboxes.shape[0]:
+        #     raise IndexError("Index {0} is invalid. Should be in range (0, {1})".format(
+        #         idx, self.bboxes.shape[0]-1))
+
+        return BBox2DList(np.delete(self.bboxes, idx, axis=axis), two_point=True)
+
+    def copy(self):
+        return deepcopy(self)
 
     def numpy(self, two_point=False):
         """Return np.ndarray of shape (N, 4) representing all the bounding boxes"""
