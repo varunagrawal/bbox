@@ -208,6 +208,9 @@ class BBox2D:
         else:
             return [self.x1, self.y1, self.w, self.h]
 
+    def copy(self):
+        return deepcopy(self)
+
     def numpy(self, two_point=False):
         """
         Return bounding box as a numpy vector of length 4.
