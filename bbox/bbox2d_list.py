@@ -273,8 +273,8 @@ class BBox2DList:
 
         return BBox2DList(np.insert(self.bboxes, idx, x, axis=0), two_point=True)
 
-    def delete(self, idx, axis=0):
-        return BBox2DList(np.delete(self.bboxes, idx, axis=axis), two_point=True)
+    def delete(self, idx):
+        return BBox2DList(np.delete(self.bboxes, idx, axis=0), two_point=True)
 
     def copy(self):
         return deepcopy(self)
