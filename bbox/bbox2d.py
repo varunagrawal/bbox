@@ -183,7 +183,7 @@ class BBox2D:
 
     def center(self):
         """Return center coordinates of the bounding box"""
-        return np.array([self._x1 + self._w/2, self._y1 + self._h/2])
+        return np.array([self._x1 + (self._w-1)/2, self._y1 + (self._h-1)/2])
 
     def aspect_ratio(self, ratio):
         """
@@ -220,3 +220,15 @@ class BBox2D:
 
     def __repr__(self):
         return "BBox2D([{x}, {y}, {w}, {h}])".format(x=self.x1, y=self.y1, w=self.w, h=self.h)
+
+    def mul(self, s):
+        if not isinstance(s, (int, float)):
+            raise ValueError(
+                "Bounding boxes can only be multiplied by scalar (int or float)")
+        return BBox2D([self.x1*s, self.y1*s, self.x2*s, self.y2*s], two_point=True)
+
+    def __mul__(self, s):
+        return self.mul(s)
+
+    def __rmul__(self, s):
+        return self.mul(s)
