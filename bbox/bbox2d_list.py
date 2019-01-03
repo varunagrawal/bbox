@@ -107,10 +107,10 @@ class BBox2DList:
         return np.array_equal(self.bboxes, x.bboxes)
 
     def __str__(self):
-        return str(self.bboxes)
+        return str(self.numpy())
 
     def __repr__(self):
-        return str(self.bboxes)
+        return str(self.numpy())
 
     def __getitem__(self, key):
         return BBox2D(self.bboxes[key], two_point=True)
