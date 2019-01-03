@@ -5,6 +5,7 @@ Adapted from Tomasz Malisiewicz's & Ross Girshick's code.
  """
 
 import numpy as np
+from bbox import BBox2D, BBox2DList
 from PIL import ImageDraw
 
 
@@ -38,6 +39,25 @@ def nms(bbl, scores, thresh):
         order = order[idx + 1]
 
     return np.array(keep).astype(np.int)
+
+
+def aspect_ratio(bbox: BBox2D, ratios):
+    """
+    Enumerate box for each aspect ratio.
+    """
+
+    cx, cy = bbox.center()
+    w, h = bbox.w, bbox.h
+    size = w * h
+    size_ratios = size / ratios
+    ws = np.round(np.sqrt(size_ratios))
+    hs = np.round(ws * ratios)
+
+    stack = np.vstack((cx - 0.5*(ws-1), cy - 0.5*(hs-1),
+                       cx + 0.5*(ws-1), cy + 0.5*(hs-1)))
+
+    boxes = BBox2DList(stack.T, two_point=True)
+    return boxes
 
 
 def draw_cuboid(img, p):
