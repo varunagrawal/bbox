@@ -60,9 +60,9 @@ def aspect_ratio(bbox: BBox2D, ratios):
     return boxes
 
 
-def draw_cuboid(img, p):
+def draw_cuboid(img, p, color=None):
     draw = ImageDraw.Draw(img)
-    color = tuple(np.random.choice(range(256), size=3))
+    color = color or tuple(np.random.choice(range(256), size=3))
 
     draw.line([p[0][0], p[0][1], p[1][0], p[1][1]], fill=color, width=2)
     draw.line([p[1][0], p[1][1], p[5][0], p[5][1]], fill=color, width=2)
