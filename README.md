@@ -17,12 +17,12 @@ box = BBox2D([0, 0, 32, 32])
 # equivalently, in (x1, y1, x2, y2) (aka two point format), we can use
 box = BBox2D([0, 0, 31, 31], two_point=True)
 
-print(bbox.x1, bbox.y1)  # -> 0 0
-print(bbox.x2, bbox.y2)  # -> 31 31
-print(bbox.height, bbox.width)  # -> 32 32
+print(box.x1, box.y1)  # -> 0 0
+print(box.x2, box.y2)  # -> 31 31
+print(box.height, box.width)  # -> 32 32
 
 # Syntatic sugar for height and width
-print(bbox.h, bbox.w)  # -> 32 32
+print(box.h, box.w)  # -> 32 32
 ```
 ### Sequence of 2D bounding boxes
 
