@@ -219,9 +219,9 @@ class BBox2DList:
     def append(self, x, two_point=False):
         if isinstance(x, (tuple, list, np.ndarray)):
             try:
-                x = np.asarray(x)
-            except:
-                raise ValueError("Expected numpy array or list")
+                x = np.asarray(x, dtype=np.float)
+            except (ValueError,):
+                raise ValueError("Expected list, tuple, or numpy array of ints/floats")
 
             if x.ndim == 1:
                 x = x[np.newaxis, :]
@@ -250,9 +250,9 @@ class BBox2DList:
     def insert(self, x, idx, two_point=False):
         if isinstance(x, (tuple, list, np.ndarray)):
             try:
-                x = np.asarray(x)
-            except:
-                raise ValueError("Expected numpy array or list")
+                x = np.asarray(x, dtype=np.float)
+            except (ValueError,):
+                raise ValueError("Expected list, tuple, or numpy array of ints/floats")
 
             if x.ndim > 1 or x.shape[0] != 4:
                 raise ValueError(
