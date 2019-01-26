@@ -14,6 +14,12 @@ Run all the tests with `debug` logger.
 pytest --log-cli-level debug
 ```
 
+## test-coverage
+
+```sh
+py.test --cov-report term-missing --cov=bbox tests/ 
+```
+
 ## build
 
 ```sh
