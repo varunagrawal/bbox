@@ -183,6 +183,7 @@ class BBox2D:
 
     def center(self):
         """Return center coordinates of the bounding box"""
+        # TODO have separate methods for cx and cy
         return np.array([self._x1 + (self._w-1)/2, self._y1 + (self._h-1)/2])
 
     def aspect_ratio(self, ratio):
@@ -217,6 +218,12 @@ class BBox2D:
         Format depends on `two_point` flag.
         """
         return np.asarray(self.tolist(two_point=two_point), dtype=np.float)
+    
+    def __array__(self):
+        """
+        Magic method for allowing np.array() call on object.
+        """
+        return self.numpy()
 
     def __repr__(self):
         return "BBox2D([{x}, {y}, {w}, {h}])".format(x=self.x1, y=self.y1, w=self.w, h=self.h)

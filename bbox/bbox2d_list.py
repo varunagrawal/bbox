@@ -288,3 +288,9 @@ class BBox2DList:
             bboxes[:, 2] = bboxes[:, 2] - bboxes[:, 0] + 1
             bboxes[:, 3] = bboxes[:, 3] - bboxes[:, 1] + 1
             return bboxes
+
+    def __array__(self):
+        """
+        Magic method for allowing np.array() call on object.
+        """
+        return self.numpy()
