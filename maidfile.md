@@ -23,7 +23,9 @@ python setup.py sdist bdist_wheel
 
 ## publish
 
+Run task `build` before this
+
 ```sh
-maid build
+echo "publishing"
 twine upload dist/*
 ```
