@@ -49,7 +49,10 @@ def aspect_ratio(bbox: BBox2D, ratios):
     cx, cy = bbox.center()
     w, h = bbox.w, bbox.h
     size = w * h
+    ratios = np.asarray(ratios, dtype=np.float)
+
     size_ratios = size / ratios
+
     ws = np.round(np.sqrt(size_ratios))
     hs = np.round(ws * ratios)
 
