@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 from bbox import BBox3D
-from bbox.geometry import plane, point_plane_dist, polygon_area, polygon_intersection
+from bbox.geometry import plane, point_plane_dist, polygon_area, polygon_intersection, polygon_collision, edges_of, orthogonal, is_separating_axis
 
 
 def clip(subjectPolygon, clipPolygon):
@@ -70,3 +70,30 @@ def test_polygon_intersection():
     i1 = np.array(i1)
     i2 = polygon_intersection(a.p[0: 4, 0: 2], b.p[0: 4, 0: 2])
     assert np.array_equal(i1, i2)
+
+
+# Ensure 100% test coverage
+def test_is_separating_axis():
+    # randomly generated values
+    a = BBox3D(0.9, 0.5, 0.5, 1, 1, 1)
+    b = BBox3D(0.1, 0.1, 0.1, 0.1, 1, 1)
+
+    p1, p2 = a.p[0:4, 0:2], b.p[0:4, 0:2]
+    edges = edges_of(p1)
+    edges += edges_of(p2)
+    
+    # positive case
+    separates, pv = is_separating_axis(orthogonal(edges[0]), p1, p2)
+    assert separates == False and pv is not None
+
+    separates, pv = is_separating_axis(orthogonal(edges[1]), p1, p2)
+    assert separates == True and pv is None
+
+
+def test_polygon_no_collision():
+    # randomly generated values
+    a = BBox3D(0.9, 0.5, 0.5, 1, 1, 1)
+    b = BBox3D(0.1, 0.1, 0.1, 0.1, 1, 1)
+    p1, p2 = a.p[0:4, 0:2], b.p[0:4, 0:2]
+
+    assert polygon_collision(p1, p2) == False
