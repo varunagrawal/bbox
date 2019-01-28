@@ -191,6 +191,7 @@ class TestBBox2D(object):
         assert np.array_equal(scaled_bbox_left.numpy(two_point=True),
                               np.array([48, 96, 128, 192],
                                        dtype=np.float))
+
     def test_invalid_mul(self):
         bbox = BBox2D([24, 48, 64, 96])
         with pytest.raises(ValueError):
