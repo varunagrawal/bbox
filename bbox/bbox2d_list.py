@@ -110,7 +110,7 @@ class BBox2DList:
         return str(self.numpy())
 
     def __repr__(self):
-        return str(self.numpy())
+        return repr(self.numpy())
 
     def __getitem__(self, key):
         return BBox2D(self.bboxes[key], two_point=True)
@@ -262,6 +262,7 @@ class BBox2DList:
             x = BBox2D(x, two_point=two_point)
 
         elif isinstance(x, BBox2D):
+            # don't need to do anything here
             pass
 
         else:

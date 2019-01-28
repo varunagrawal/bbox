@@ -18,6 +18,34 @@ class TestBBox2DList(object):
     def test_len(self):
         assert len(self.bbl) == self.n
 
+    def test_init(self):
+        bbl = BBox2DList(self.bbl)
+        assert np.array_equal(bbl.numpy(), self.bbl.numpy())
+
+    def test_init_invalid(self):
+        with pytest.raises(TypeError):
+            BBox2DList("1, 2, 3, 4")
+
+    def test_init_invalid_element_type(self):
+        with pytest.raises(TypeError):
+            BBox2DList(["1, 2, 3, 4", [1, 2, 3, 4]])
+
+    def test_init_empty_ndarray(self):
+        bbl = BBox2DList(np.empty((0, 4)))
+        assert bbl.bboxes.shape == (0, 4)
+
+    def test_init_vector(self):
+        bbl = BBox2DList(np.asarray([0, 1, 2, 4]))
+        assert bbl.bboxes.shape == (1, 4)
+
+    def test_init_invalid_dims(self):
+        with pytest.raises(ValueError):
+            BBox2DList(np.random.rand(10, 3))
+        with pytest.raises(ValueError):
+            BBox2DList(np.random.rand(10, 5))
+        with pytest.raises(ValueError):
+            BBox2DList(np.random.rand(10, 1, 4))
+
     def test_box_shapes(self):
         n = 10
         l = [BBox2D(np.random.randint(0, 1024, size=4)) for _ in range(n)]
@@ -46,6 +74,15 @@ class TestBBox2DList(object):
         bblist = BBox2DList(self.l)
         assert bblist == self.bbl
 
+    def test_inequality(self):
+        bbl = BBox2DList([BBox2D(np.random.randint(0, 1024, size=4))
+                          for _ in range(self.n)])
+        assert bbl != self.bbl
+
+    def test_equality_invalid(self):
+        bblist = BBox2DList(self.l)
+        assert bblist != repr(self.bbl)
+
     def test_getitem(self):
         assert self.bbl[3] == self.l[3]
 
@@ -61,34 +98,88 @@ class TestBBox2DList(object):
         assert np.array_equal(self.bbl[0], BBox2D([5, 6, 7, 8]))
         assert np.array_equal(self.bbl[1], BBox2D([1, 2, 3, 4]))
 
-    def test_x1(self):
+    def test_x1_getter(self):
         assert np.array_equal(self.bbl.x1, self.bbl.bboxes[:, 0])
 
-    def test_y1(self):
+    def test_x1_setter(self):
+        bbl = self.bbl.copy()
+        bbl.x1 = np.zeros(bbl.shape[0])
+        assert np.array_equal(bbl.x1, np.zeros(bbl.shape[0]))
+
+    def test_y1_getter(self):
         assert np.array_equal(self.bbl.y1, self.bbl.bboxes[:, 1])
 
-    def test_x2(self):
+    def test_y1_setter(self):
+        bbl = self.bbl.copy()
+        bbl.y1 = np.zeros(bbl.shape[0])
+        assert np.array_equal(bbl.y1, np.zeros(bbl.shape[0]))
+
+    def test_x2_getter(self):
         assert np.array_equal(self.bbl.x2, self.bbl.bboxes[:, 2])
 
-    def test_y2(self):
+    def test_x2_setter(self):
+        bbl = self.bbl.copy()
+        bbl.x2 = np.zeros(bbl.shape[0])
+        assert np.array_equal(bbl.x2, np.zeros(bbl.shape[0]))
+
+    def test_y2_getter(self):
         assert np.array_equal(self.bbl.y2, self.bbl.bboxes[:, 3])
 
-    def test_width(self):
+    def test_y2_setter(self):
+        bbl = self.bbl.copy()
+        bbl.y2 = np.zeros(bbl.shape[0])
+        assert np.array_equal(bbl.y2, np.zeros(bbl.shape[0]))
+
+    def test_invalid_setter(self):
+        """
+        One test is sufficient since all setters use the same verification function
+        """
+        bbl = self.bbl.copy()
+        with pytest.raises(TypeError):
+            bbl.x1 = "0," * self.bbl.shape[0]
+        with pytest.raises(ValueError):
+            bbl.x1 = np.zeros((5, 4))
+        with pytest.raises(ValueError):
+            bbl.x1 = np.zeros(5)
+
+    def test_width_getter(self):
         w = self.bbl.bboxes[:, 2] - self.bbl.bboxes[:, 0] + 1
-        h = self.bbl.bboxes[:, 3] - self.bbl.bboxes[:, 1] + 1
         assert np.array_equal(self.bbl.w, w)
         assert np.array_equal(self.bbl.width, w)
 
+    def test_width_setter(self):
+        bbl = self.bbl.copy()
+        w = np.ones(bbl.shape[0])
+        bbl.w = w
+        assert np.array_equal(bbl.w, w)
+        assert np.array_equal(bbl.width, w)
+
+    def test_height_getter(self):
+        h = self.bbl.bboxes[:, 3] - self.bbl.bboxes[:, 1] + 1
         assert np.array_equal(self.bbl.h, h)
         assert np.array_equal(self.bbl.height, h)
+
+    def test_height_setter(self):
+        bbl = self.bbl.copy()
+        h = np.ones(bbl.shape[0])
+        bbl.h = h
+        assert np.array_equal(bbl.h, h)
+        assert np.array_equal(bbl.height, h)
 
     def test_mul(self):
         bbl = BBox2DList(np.ones((7, 4)))
         bbl_scaled = bbl * 11
         assert np.all(bbl_scaled.bboxes == 11)
+        bbl_scaled = 11 * bbl
+        assert np.all(bbl_scaled.bboxes == 11)
+
+    def test_invalid_mul(self):
+        bbl = BBox2DList(np.ones((7, 4)))
+        with pytest.raises(ValueError):
+            bbl * "11"
 
     def test_append_list(self):
-        x = [3, 7, 10, 16]
+        x = [3, 7, 10, 44]
         bbl = self.bbl.append(x, two_point=True)
         assert np.array_equal(bbl.bboxes[-1], x)
 
@@ -102,17 +193,37 @@ class TestBBox2DList(object):
         bbl = self.bbl.append(x)
         assert np.array_equal(bbl.bboxes[-1], x.numpy(two_point=True))
 
-    def test_append_invalid_type(self):
+    def test_append_bboxlist(self):
+        x = BBox2DList([[3, 7, 10, 16]], two_point=True)
+        bbl = self.bbl.append(x)
+        assert np.array_equal(bbl.bboxes,
+                              np.vstack((self.bbl.bboxes,
+                                        [3, 7, 10, 16])))
+
+    def test_append_invalid(self):
+        x = "3, 7, 10, 16"
+        with pytest.raises(TypeError):
+            bbl = self.bbl.append(x, two_point=True)
+
+    def test_append_invalid_list(self):
+        x = ["abc", "7", 10, 16]
+        with pytest.raises(ValueError):
+            bbl = self.bbl.append(x, two_point=True)
+
+    def test_append_invalid_range(self):
         x = range(4)
         with pytest.raises(TypeError):
             self.bbl.append(x)
 
-    def test_append_invalid_value(self):
+    def test_append_invalid_dimensions(self):
         with pytest.raises(ValueError):
             self.bbl.append((1, 2, 3))
 
         with pytest.raises(ValueError):
             self.bbl.append((1, 2, 3, 4, 5))
+        
+        with pytest.raises(ValueError):
+            self.bbl.append([[1, 2, 3, 4, 5]])
 
     def test_insert_list(self):
         x = [3, 7, 10, 16]
@@ -129,12 +240,18 @@ class TestBBox2DList(object):
         bbl = self.bbl.insert(x, 0)
         assert np.array_equal(bbl.bboxes[0], x.numpy(two_point=True))
 
-    def test_insert_invalid_type(self):
+    def test_insert_invalid_datatype(self):
         x = range(4)
         with pytest.raises(TypeError):
             self.bbl.insert(x, 0)
+        with pytest.raises(TypeError):
+            self.bbl.insert("abcd", 0)
 
-    def test_insert_invalid_value(self):
+    def test_insert_invalid_type(self):
+        with pytest.raises(ValueError):
+            self.bbl.insert(["a", "b", "c", "d"], 0)
+
+    def test_insert_invalid_dimensions(self):
         with pytest.raises(ValueError):
             self.bbl.insert((1, 2, 3), 0)
 
@@ -158,3 +275,12 @@ class TestBBox2DList(object):
         idx = self.bbl.shape[0]
         with pytest.raises(IndexError):
             bbl = self.bbl.delete(idx)
+
+    def test_str(self):
+        bbl = BBox2DList([[0, 0, 1, 1], [5, 5, 5, 5]])
+        assert str(bbl) == "[[0. 0. 1. 1.]\n [5. 5. 5. 5.]]"
+
+    def test_repr(self):
+        bbl = BBox2DList([[0, 0, 1, 1], [5, 5, 5, 5]])
+        assert repr(
+            bbl) == "array([[0., 0., 1., 1.],\n       [5., 5., 5., 5.]])"
