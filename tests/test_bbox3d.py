@@ -193,7 +193,6 @@ class TestBBox3d:
                    q=(0.999845654958524, 0.0, 0.0, 0.017568900379933073))
         # print(jaccard_index_3d(a, b))
 
-    @pytest.mark.skip(reason="This is just for visualization. We already test the values beforehand.")
     def test_render(self):
         K = np.array([[1406.3359, 0.0, 966.366034, 0.0],
                       [0.0, 1408.94297, 607.479746, 0.0],
@@ -215,7 +214,7 @@ class TestBBox3d:
         u[6] = self.project(self.box.p7, K, R, t)
         u[7] = self.project(self.box.p8, K, R, t)
 
-        img = Image.open("image_raw_ring_rear_left_315968023469083760.png")
+        img = Image.new(mode='RGB', size=(512, 512))
 
         dist_coeff = [-0.17120984449230167,
                       0.1256910189977147,
@@ -225,7 +224,7 @@ class TestBBox3d:
             u[i] = self.distortion_correction(u[i], dist_coeff, img.size)
 
         img = draw_cuboid(img, u)
-        img.show()
+        # img.show()
 
     @staticmethod
     def project(p, K, R, t):

@@ -56,6 +56,20 @@ def test_single_jaccard_index_2d():
     assert iou == gt_iou
 
 
+def test_invalid_jaccard_index_2d():
+    # sample bounxing boxes (x, y, w, h)
+    # should result in `nan` and be corrected to 0
+    bbox1 = [39, 63, 0, 0]
+    bbox2 = [54, 66, 0, 0]
+
+    a = BBox2D(bbox1)
+    b = BBox2D(bbox2)
+    iou = jaccard_index_2d(a, b)
+
+    logger.debug("IoU={0}".format(iou))
+    assert iou == 0
+
+
 def test_multi_jaccard_index_2d():
     # bounding boxes of the form (x, y, w, h)
     bboxes_1 = [[39, 63, 203, 112], [49, 75, 203, 125], [
@@ -144,6 +158,20 @@ def test_jaccard_index_3d_euler_angles():
 
     assert jaccard_index_3d(a, b) == 0.71636
 
+def test_jaccard_index_3d_polygon_collision():
+    # these two boxes should not overlap
+    a = BBox3D(x=3.163, z=2.468, y=34.677, height=1.529, width=1.587, length=3.948,
+               rw=0.7002847660410397, rx=-0, ry=-0, rz=-0.7138636049350369)
+    b = BBox3D(x=30.18, z=20.27, y=90.38, height=1.41, width=1.58, length=4.36,
+               rx=-0, ry=-0, rz=-0.7103532724176078, rw=0.7038453156522361)
+
+    assert jaccard_index_3d(a, b) == 0
+
+def test_invalid_jaccard_index_3d():
+    # H=0,W=0,L=0, so the IoU should be nan
+    bb = BBox3D(3.163, z=2.468, y=34.677, height=0, width=0, length=0,
+                rw=0.7002847660410397, rx=-0, ry=-0, rz=-0.7138636049350369)
+    assert jaccard_index_3d(bb, bb) == 0
 
 def visualize_boxes(box_list):
     for b in box_list:
