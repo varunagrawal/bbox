@@ -69,9 +69,29 @@ class TestBBox3d:
         assert self.box.cy == self.cuboid['center']['y']
         assert self.box.cz == self.cuboid['center']['z']
 
-    def test_center_init(self):
-        box = BBox3D(*[self.box.cx, self.box.cy, self.box.cz])
+    def test_init_center(self):
+        box = BBox3D(*[self.box.cx, self.box.cy, self.box.cz],
+                     is_center=True)
         assert np.array_equal(box.center, self.box.center)
+
+    def test_init_non_center(self):
+        cx, cy, cz = self.box.cx, self.box.cy, self.box.cz
+        box = BBox3D(cx-self.box.length/2,
+                     cy-self.box.width/2,
+                     cz-self.box.height/2,
+                     self.box.length, self.box.width, self.box.height,
+                     is_center=False)
+        assert np.array_equal(box.center, self.box.center)
+
+    def test_center_setter(self):
+        box = self.box.copy()
+        box.center = np.asarray([0, 1, 2])
+        assert np.array_equal(box.center,
+                              np.asarray([0, 1, 2]))
+
+        with pytest.raises(ValueError):
+            box.center = np.asarray([0, 1])
+            box.center = np.asarray([0, 1, 2, 3])
 
     def test_dimensions(self):
         assert self.box.l == self.cuboid['dimensions']['length']
@@ -131,29 +151,30 @@ class TestBBox3d:
 
     def test_setters(self):
         x, y, z, h, w, l = np.random.rand(6)
-        self.box.cx = x
-        self.box.cy = y
-        self.box.cz = z
-        self.box.h = h
-        self.box.w = w
-        self.box.l = l
-        assert self.box.cx == x
-        assert self.box.cy == y
-        assert self.box.cz == z
-        assert self.box.h == h
-        assert self.box.w == w
-        assert self.box.l == l
+        box = self.box.copy()
+        box.cx = x
+        box.cy = y
+        box.cz = z
+        box.h = h
+        box.w = w
+        box.l = l
+        assert box.cx == x
+        assert box.cy == y
+        assert box.cz == z
+        assert box.h == h
+        assert box.w == w
+        assert box.l == l
 
         q = np.random.rand(4)
-        self.box.q = q
-        assert np.array_equal(self.box.q, q)
+        box.q = q
+        assert np.array_equal(box.q, q)
         q = np.random.rand(4)
-        self.box.quaternion = q
-        assert np.array_equal(self.box.quaternion, q)
+        box.quaternion = q
+        assert np.array_equal(box.quaternion, q)
 
         center = np.random.rand(3)
-        self.box.center = center
-        assert np.array_equal(self.box.center, center)
+        box.center = center
+        assert np.array_equal(box.center, center)
 
     def test_bad_setters(self):
         inputs = [[1, 2], np.zeros((3)), np.zeros(
@@ -254,3 +275,7 @@ class TestBBox3d:
         # correct for distortion
         v = u + (u - np.array([w, h])/2)*distortion
         return v
+
+    def test_repr(self):
+        representation = "BBox3D(x=-49.19743041908411, y=12.38666074615689, z=0.782056864653507), length=5.340892485711914, width=2.457703972075464,height=1.9422248281533563, q=(0.9997472337219893, 0.0, 0.0, 0.022482630300529462))"
+        assert repr(self.box) == representation
