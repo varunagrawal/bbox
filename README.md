@@ -2,6 +2,20 @@
 
 `bbox` a Python library that is intended to ease the use of 2D and 3D bounding boxes in areas such as Object Detection by providing a set of flexible primitives and functions that are intuitive and easy to use out of the box.
 
+[![Build Status](https://travis-ci.org/varunagrawal/bbox.svg?branch=master)](https://travis-ci.org/varunagrawal/bbox)
+[![codecov](https://codecov.io/gh/varunagrawal/bbox/branch/master/graph/badge.svg)](https://codecov.io/gh/varunagrawal/bbox)
+
+
+[![PyPI version](https://badge.fury.io/py/bbox.svg)](https://badge.fury.io/py/bbox)
+[![PyPI format](https://img.shields.io/pypi/format/bbox.svg)]
+![](https://img.shields.io/pypi/status/bbox.svg)
+![](https://img.shields.io/pypi/pyversions/bbox.svg)
+
+
+![](https://img.shields.io/pypi/l/bbox.svg)
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/varunagrawal)
+
+
 ## Features
 
 ### 2D Bounding Box
