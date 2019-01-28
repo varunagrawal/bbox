@@ -1,9 +1,12 @@
 import numpy as np
 import pytest
-import warnings
-warnings.filterwarnings("ignore")
 import logging
 import pendulum
+
+# needed to ignore matplotlib warnings
+import warnings
+warnings.filterwarnings("ignore")
+
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
 
@@ -56,6 +59,7 @@ def test_single_jaccard_index_2d():
     assert iou == gt_iou
 
 
+@pytest.mark.filterwarnings("ignore:.*double_scalars")
 def test_invalid_jaccard_index_2d():
     # sample bounxing boxes (x, y, w, h)
     # should result in `nan` and be corrected to 0
@@ -96,6 +100,7 @@ def test_multi_jaccard_index_2d():
     assert np.array_equal(gt_iou, iou)
 
 
+@pytest.mark.filterwarnings("ignore:.*true_divide")
 def test_multi_jaccard_index_2d_performance():
     """
     Test the performance of `multi_jaccard_index_2d` on 5,000 randomly sampled bounding boxes.
@@ -167,11 +172,13 @@ def test_jaccard_index_3d_polygon_collision():
 
     assert jaccard_index_3d(a, b) == 0
 
+@pytest.mark.filterwarnings("ignore:.*double_scalars")
 def test_invalid_jaccard_index_3d():
     # H=0,W=0,L=0, so the IoU should be nan
     bb = BBox3D(3.163, z=2.468, y=34.677, height=0, width=0, length=0,
                 rw=0.7002847660410397, rx=-0, ry=-0, rz=-0.7138636049350369)
     assert jaccard_index_3d(bb, bb) == 0
+
 
 def visualize_boxes(box_list):
     for b in box_list:
