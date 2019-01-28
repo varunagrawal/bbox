@@ -36,6 +36,8 @@ class TestBBox2D(object):
     def test_constructor_5_items(self):
         with pytest.raises(ValueError):
             BBox2D([1, 2, 3, 4, 5])
+        with pytest.raises(ValueError):
+            BBox2D(np.array([1, 2, 3, 4, 5]))
 
     def test_constructor_invalid_type(self):
         with pytest.raises(TypeError):
@@ -61,25 +63,57 @@ class TestBBox2D(object):
         b3 = BBox2D([1, 2, 3, 5])
         assert b1 != b3
 
+    def test_non_equality(self):
+        b = BBox2D([1, 2, 3, 4])
+        assert (b == [1, 2, 3, 4]) == False
+
     def test_x1(self):
         bbox = BBox2D([24, 48, 64, 96])
         bbox.x1 = 25
         assert bbox.x1 == 25 and bbox.w == 63
+
+    def test_invalid_x1(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        with pytest.raises(ValueError):
+            bbox.x1 = -25
+        with pytest.raises(ValueError):
+            bbox.x1 = bbox.x2 + 1
 
     def test_x2(self):
         bbox = BBox2D([24, 48, 64, 96])
         bbox.x2 = 89
         assert bbox.x2 == 89 and bbox.w == 66
 
+    def test_invalid_x2(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        with pytest.raises(ValueError):
+            bbox.x2 = -25
+        with pytest.raises(ValueError):
+            bbox.x2 = bbox.x1 - 1
+
     def test_y1(self):
         bbox = BBox2D([24, 48, 64, 96])
         bbox.y1 = 51
         assert bbox.y1 == 51 and bbox.h == 93
 
+    def test_invalid_y1(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        with pytest.raises(ValueError):
+            bbox.y1 = -25
+        with pytest.raises(ValueError):
+            bbox.y1 = bbox.y2 + 1
+
     def test_y2(self):
         bbox = BBox2D([24, 48, 64, 30])
         bbox.y2 = 80
         assert bbox.y2 == 80 and bbox.h == 33
+
+    def test_invalid_y2(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        with pytest.raises(ValueError):
+            bbox.y2 = -25
+        with pytest.raises(ValueError):
+            bbox.y2 = bbox.y1 - 1
 
     def test_w(self):
         bbox = BBox2D([24, 48, 64, 96])
@@ -140,3 +174,24 @@ class TestBBox2D(object):
 
         new_bbox = bbox.aspect_ratio(2)
         assert new_bbox.w == 11 and new_bbox.h == 22
+
+    def test_copy(self):
+        b1 = BBox2D([24, 48, 64, 96])
+        b2 = b1.copy()
+
+        assert b1 == b2
+
+    def test_mul(self):
+        bbox = BBox2D([24, 48, 64, 96], two_point=True)
+        scaled_bbox = bbox * 2
+        assert np.array_equal(scaled_bbox.numpy(two_point=True),
+                              np.array([48, 96, 128, 192],
+                                       dtype=np.float))
+        scaled_bbox_left = 2 * bbox
+        assert np.array_equal(scaled_bbox_left.numpy(two_point=True),
+                              np.array([48, 96, 128, 192],
+                                       dtype=np.float))
+    def test_invalid_mul(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        with pytest.raises(ValueError):
+            bbox * (1, 2)
