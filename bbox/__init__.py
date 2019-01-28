@@ -10,4 +10,4 @@ __version__ = "0.8.2"
 __maintainer__ = "Varun Agrawal"
 __email__ = "varunagrawal@gatech.com"
 __status__ = "Beta"
-__license__ = None
+__license__ = "MIT"
