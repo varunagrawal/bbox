@@ -1,14 +1,14 @@
 language: python
 python:
   - "3.6"
-  - "3.7"
+  - "3.7-dev"
 
 install:
   - pip install pipenv
   - pipenv install --dev
 
 script:
-  - py.test --cov-report term-missing --cov=bbox tests/
+  - py.test --cov=bbox tests/
 
 after_success:
   - codecov
