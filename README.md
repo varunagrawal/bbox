@@ -7,7 +7,7 @@
 
 
 [![PyPI version](https://badge.fury.io/py/bbox.svg)](https://badge.fury.io/py/bbox)
-[![PyPI format](https://img.shields.io/pypi/format/bbox.svg)]
+![PyPI format](https://img.shields.io/pypi/format/bbox.svg)
 ![](https://img.shields.io/pypi/status/bbox.svg)
 ![](https://img.shields.io/pypi/pyversions/bbox.svg)
 
