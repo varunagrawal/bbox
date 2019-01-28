@@ -2,6 +2,7 @@ import numpy as np
 from bbox import BBox2D, BBox2DList, BBox3D
 from bbox.utils import nms, aspect_ratio
 from PIL import Image
+import pytest
 
 
 def naive_nms(dets, thresh):
@@ -51,6 +52,7 @@ def test_blank_nms():
     assert np.all(keep == naive_keep)
 
 
+@pytest.mark.filterwarnings("ignore:.*[double_scalars|true_divide|less_equal]")
 def test_nms():
     # bbl, scores, thresh
     np.random.seed(529)
