@@ -78,10 +78,11 @@ def test_nms():
 
 
 def test_aspect_ratio():
-    box = BBox2D([0, 0, 15, 15])
+    box = BBox2D([0, 0, 15, 15], two_point=True)
     box_ar = aspect_ratio(box, [0.5, 1, 2])
-    gt_box_ar = BBox2DList(np.array([[-3.,  2.5, 21., 10.],
+    gt_box_ar = BBox2DList(np.array([[-3.5,  2., 18.5, 13.],
                                      [0.,  0., 15., 15.],
-                                     [2., -3.5, 11., 22.]]))
+                                     [2.5, -3, 12.5, 18.]]),
+                           two_point=True)
 
     assert box_ar == gt_box_ar

@@ -58,7 +58,7 @@ def aspect_ratio(bbox: BBox2D, ratios):
 
     stack = np.vstack((cx - 0.5*(ws-1), cy - 0.5*(hs-1),
                        cx + 0.5*(ws-1), cy + 0.5*(hs-1)))
-
+                       
     boxes = BBox2DList(stack.T, two_point=True)
     return boxes
 
