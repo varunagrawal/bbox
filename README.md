@@ -29,7 +29,7 @@ from bbox import BBox2D
 box = BBox2D([0, 0, 32, 32])
 
 # equivalently, in (x1, y1, x2, y2) (aka two point format), we can use
-box = BBox2D([0, 0, 31, 31], two_point=True)
+box = BBox2D([0, 0, 31, 31], mode=XYXY)
 
 print(box.x1, box.y1)  # -> 0 0
 print(box.x2, box.y2)  # -> 31 31
@@ -44,7 +44,7 @@ Most tasks involve dealing with multiple bounding boxes. This can also be handle
 
 ```python
 bbl = BBox2DList(np.random.randint(10, 4),
-                 two_point=False)
+                 mode=XYWH)
 ```
 
 The above snippet creates a list of 10 bounding boxes neatly abstracted into a convenient object.

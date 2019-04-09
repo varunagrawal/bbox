@@ -6,6 +6,7 @@ Adapted from Tomasz Malisiewicz's & Ross Girshick's code.
 
 import numpy as np
 from bbox import BBox2D, BBox2DList
+from bbox.box_modes import XYXY, XYWH
 from PIL import ImageDraw
 
 
@@ -59,7 +60,7 @@ def aspect_ratio(bbox: BBox2D, ratios):
     stack = np.vstack((cx - 0.5*(ws-1), cy - 0.5*(hs-1),
                        cx + 0.5*(ws-1), cy + 0.5*(hs-1)))
                        
-    boxes = BBox2DList(stack.T, two_point=True)
+    boxes = BBox2DList(stack.T, mode=XYXY)
     return boxes
 
 

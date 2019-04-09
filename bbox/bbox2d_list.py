@@ -2,19 +2,20 @@ from copy import deepcopy
 import numpy as np
 
 from bbox.bbox2d import BBox2D
+from bbox.box_modes import XYXY, XYWH
 
 
 class BBox2DList:
-    def __init__(self, arr, two_point=False):
+    def __init__(self, arr, mode=XYWH):
         """
         Class to reprsent a list of 2D bounding boxes.
-        Expects an iterable of bounding boxes of the form (x, y, w, h) or (x1, y1, x2, y2) if `two_point=True`.
+        Expects an iterable of bounding boxes of the form (x, y, w, h) or (x1, y1, x2, y2) if `mode=XYXY`.
 
         Parameters
         ----------
         arr:
             Sequence of list/tuple/ndarray/BBox2D, each representing a single bounding box.
-        two_point : bool
+        mode : BoxMode
             Flag to indicate which format `x` is in (x, y, w, h) or (x1, y1, x2, y2).
 
         Attributes
@@ -46,7 +47,7 @@ class BBox2DList:
             If `x` is not of type {list, tuple, numpy.ndarray, BBox2D}
 
         """
-        # Internally, we record the Bounding Box list as a 2D ndarray in two_point format.
+        # Internally, we record the Bounding Box list as a 2D ndarray in XYXY format.
 
         # We convert arr to a 2D numpy array when possible
         # check if input is a list
@@ -61,13 +62,13 @@ class BBox2DList:
                 # if yes, then convert to a list of BBox2D objects
                 if all(isinstance(x, np.ndarray) or isinstance(x, list) for x in arr):
                     self.bboxes = np.asarray([
-                        BBox2D(x, two_point=two_point).numpy(two_point=True)
+                        BBox2D(x, mode=mode).numpy(mode=XYXY)
                         for x in arr])
 
                 elif all(isinstance(x, BBox2D) for x in arr):
                     # parse a list of BBox2D objects
                     self.bboxes = np.asarray(
-                        [x.numpy(two_point=True) for x in arr])
+                        [x.numpy(mode=XYXY) for x in arr])
 
                 else:
                     raise TypeError(
@@ -91,7 +92,7 @@ class BBox2DList:
 
                 # parse the input
                 self.bboxes = np.asarray(
-                    [BBox2D(x, two_point=two_point).numpy(two_point=True) for x in arr], dtype=np.float64)
+                    [BBox2D(x, mode=mode).numpy(mode=XYXY) for x in arr], dtype=np.float64)
 
         # if `arr` is a BBox2DList, just make a copy
         elif isinstance(arr, BBox2DList):
@@ -113,10 +114,10 @@ class BBox2DList:
         return repr(self.numpy())
 
     def __getitem__(self, key):
-        return BBox2D(self.bboxes[key], two_point=True)
+        return BBox2D(self.bboxes[key], mode=XYXY)
 
     def __setitem__(self, key, value):
-        self.bboxes[key] = BBox2D(value).numpy(two_point=True)
+        self.bboxes[key] = BBox2D(value).numpy(mode=XYXY)
 
     def __len__(self):
         return self.bboxes.shape[0]
@@ -125,7 +126,7 @@ class BBox2DList:
         if not isinstance(s, (int, float)):
             raise ValueError(
                 "Bounding boxes can only be multiplied by scalar (int or float)")
-        return BBox2DList(self.bboxes * s, two_point=True)
+        return BBox2DList(self.bboxes * s, mode=XYXY)
 
     def __mul__(self, s):
         return self.mul(s)
@@ -216,12 +217,13 @@ class BBox2DList:
     def shape(self):
         return self.bboxes.shape
 
-    def append(self, x, two_point=False):
+    def append(self, x, mode=XYWH):
         if isinstance(x, (tuple, list, np.ndarray)):
             try:
                 x = np.asarray(x, dtype=np.float)
             except (ValueError,):
-                raise ValueError("Expected list, tuple, or numpy array of ints/floats")
+                raise ValueError(
+                    "Expected list, tuple, or numpy array of ints/floats")
 
             if x.ndim == 1:
                 x = x[np.newaxis, :]
@@ -231,35 +233,36 @@ class BBox2DList:
                     "Input should have shape Nx4, got {0}".format(x.shape))
 
             # Convert to BBox2D
-            x = BBox2D(x, two_point=two_point)
-            x = x.numpy(two_point=True).reshape(1, 4)
+            x = BBox2D(x, mode=mode)
+            x = x.numpy(mode=XYXY).reshape(1, 4)
 
         elif isinstance(x, BBox2D):
             # ensure that the input is in 2 point format
-            x = x.numpy(two_point=True).reshape(1, 4)
+            x = x.numpy(mode=XYXY).reshape(1, 4)
 
         elif isinstance(x, BBox2DList):
-            x = x.numpy(two_point=True)
+            x = x.numpy(mode=XYXY)
 
         else:
             raise TypeError(
                 "Expected input of type (list, tuple, np.ndarray, BBox2D)")
 
-        return BBox2DList(np.append(self.bboxes, x, axis=0), two_point=True)
+        return BBox2DList(np.append(self.bboxes, x, axis=0), mode=XYXY)
 
-    def insert(self, x, idx, two_point=False):
+    def insert(self, x, idx, mode=XYWH):
         if isinstance(x, (tuple, list, np.ndarray)):
             try:
                 x = np.asarray(x, dtype=np.float)
             except (ValueError,):
-                raise ValueError("Expected list, tuple, or numpy array of ints/floats")
+                raise ValueError(
+                    "Expected list, tuple, or numpy array of ints/floats")
 
             if x.ndim > 1 or x.shape[0] != 4:
                 raise ValueError(
                     "Input should have shape Nx4, got {0}".format(x.shape))
 
             # ensure that the input is in 2 point format
-            x = BBox2D(x, two_point=two_point)
+            x = BBox2D(x, mode=mode)
 
         elif isinstance(x, BBox2D):
             # don't need to do anything here
@@ -270,19 +273,19 @@ class BBox2DList:
                 "Expected input of type (list, tuple, np.ndarray, BBox2D)")
 
         # ensure that the input is in 2 point format
-        x = x.numpy(two_point=True).reshape(1, 4)
+        x = x.numpy(mode=XYXY).reshape(1, 4)
 
-        return BBox2DList(np.insert(self.bboxes, idx, x, axis=0), two_point=True)
+        return BBox2DList(np.insert(self.bboxes, idx, x, axis=0), mode=XYXY)
 
     def delete(self, idx):
-        return BBox2DList(np.delete(self.bboxes, idx, axis=0), two_point=True)
+        return BBox2DList(np.delete(self.bboxes, idx, axis=0), mode=XYXY)
 
     def copy(self):
         return deepcopy(self)
 
-    def numpy(self, two_point=False):
+    def numpy(self, mode=XYWH):
         """Return np.ndarray of shape (N, 4) representing all the bounding boxes"""
-        if two_point:
+        if mode:
             return self.bboxes
         else:
             bboxes = deepcopy(self.bboxes)

@@ -1,6 +1,7 @@
+import pytest
 import numpy as np
 from bbox import BBox2D, BBox2DList
-import pytest
+from bbox.box_modes import XYXY, XYWH
 
 
 class TestBBox2DList(object):
@@ -180,35 +181,35 @@ class TestBBox2DList(object):
 
     def test_append_list(self):
         x = [3, 7, 10, 44]
-        bbl = self.bbl.append(x, two_point=True)
+        bbl = self.bbl.append(x, mode=XYXY)
         assert np.array_equal(bbl.bboxes[-1], x)
 
     def test_append_numpy(self):
         x = np.asarray([3, 7, 10, 16])
-        bbl = self.bbl.append(x, two_point=True)
+        bbl = self.bbl.append(x, mode=XYXY)
         assert np.array_equal(bbl.bboxes[-1], x)
 
     def test_append_bbox(self):
-        x = BBox2D([3, 7, 10, 16], two_point=True)
+        x = BBox2D([3, 7, 10, 16], mode=XYXY)
         bbl = self.bbl.append(x)
-        assert np.array_equal(bbl.bboxes[-1], x.numpy(two_point=True))
+        assert np.array_equal(bbl.bboxes[-1], x.numpy(mode=XYXY))
 
     def test_append_bboxlist(self):
-        x = BBox2DList([[3, 7, 10, 16]], two_point=True)
+        x = BBox2DList([[3, 7, 10, 16]], mode=XYXY)
         bbl = self.bbl.append(x)
         assert np.array_equal(bbl.bboxes,
                               np.vstack((self.bbl.bboxes,
-                                        [3, 7, 10, 16])))
+                                         [3, 7, 10, 16])))
 
     def test_append_invalid(self):
         x = "3, 7, 10, 16"
         with pytest.raises(TypeError):
-            bbl = self.bbl.append(x, two_point=True)
+            bbl = self.bbl.append(x, mode=XYXY)
 
     def test_append_invalid_list(self):
         x = ["abc", "7", 10, 16]
         with pytest.raises(ValueError):
-            bbl = self.bbl.append(x, two_point=True)
+            bbl = self.bbl.append(x, mode=XYXY)
 
     def test_append_invalid_range(self):
         x = range(4)
@@ -221,24 +222,24 @@ class TestBBox2DList(object):
 
         with pytest.raises(ValueError):
             self.bbl.append((1, 2, 3, 4, 5))
-        
+
         with pytest.raises(ValueError):
             self.bbl.append([[1, 2, 3, 4, 5]])
 
     def test_insert_list(self):
         x = [3, 7, 10, 16]
-        bbl = self.bbl.insert(x, 0, two_point=True)
+        bbl = self.bbl.insert(x, 0, mode=XYXY)
         assert np.array_equal(bbl.bboxes[0], x)
 
     def test_insert_numpy(self):
         x = np.asarray([3, 7, 10, 16])
-        bbl = self.bbl.insert(x, 0, two_point=True)
+        bbl = self.bbl.insert(x, 0, mode=XYXY)
         assert np.array_equal(bbl.bboxes[0], x)
 
     def test_insert_bbox(self):
-        x = BBox2D([3, 7, 10, 16], two_point=True)
+        x = BBox2D([3, 7, 10, 16], mode=XYXY)
         bbl = self.bbl.insert(x, 0)
-        assert np.array_equal(bbl.bboxes[0], x.numpy(two_point=True))
+        assert np.array_equal(bbl.bboxes[0], x.numpy(mode=XYXY))
 
     def test_insert_invalid_datatype(self):
         x = range(4)

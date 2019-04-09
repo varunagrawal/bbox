@@ -1,6 +1,7 @@
 import pytest
 import numpy as np
 from bbox import BBox2D, BBox2DList
+from bbox.box_modes import XYXY, XYWH
 
 
 class TestBBox2D(object):
@@ -141,21 +142,21 @@ class TestBBox2D(object):
 
     def test_tolist(self):
         bbox = BBox2D([24, 48, 64, 96])
-        bbox_list = bbox.tolist(two_point=False)
+        bbox_list = bbox.tolist(mode=XYWH)
         for x, y in zip(bbox_list, [24, 48, 64, 96]):
             assert x == y
-        bbox_list_2 = bbox.tolist(two_point=True)
+        bbox_list_2 = bbox.tolist(mode=XYXY)
         for x, y in zip(bbox_list_2, [24, 48, 87, 143]):
             assert x == y
 
     def test_numpy(self):
         x = np.array([24, 48, 64, 96])
         bbox = BBox2D(x)
-        bb_np = bbox.numpy(two_point=False)
+        bb_np = bbox.numpy(mode=XYWH)
         assert np.array_equal(bb_np, x)
 
-        bbox = BBox2D(x, two_point=True)
-        bb_np_2 = bbox.numpy(two_point=True)
+        bbox = BBox2D(x, mode=XYXY)
+        bb_np_2 = bbox.numpy(mode=XYXY)
         assert np.array_equal(bb_np_2, x)
 
     def test_str(self):
@@ -182,13 +183,13 @@ class TestBBox2D(object):
         assert b1 == b2
 
     def test_mul(self):
-        bbox = BBox2D([24, 48, 64, 96], two_point=True)
+        bbox = BBox2D([24, 48, 64, 96], mode=XYXY)
         scaled_bbox = bbox * 2
-        assert np.array_equal(scaled_bbox.numpy(two_point=True),
+        assert np.array_equal(scaled_bbox.numpy(mode=XYXY),
                               np.array([48, 96, 128, 192],
                                        dtype=np.float))
         scaled_bbox_left = 2 * bbox
-        assert np.array_equal(scaled_bbox_left.numpy(two_point=True),
+        assert np.array_equal(scaled_bbox_left.numpy(mode=XYXY),
                               np.array([48, 96, 128, 192],
                                        dtype=np.float))
 

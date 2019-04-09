@@ -1,17 +1,19 @@
 import numpy as np
 from copy import deepcopy
 
+from bbox.box_modes import XYXY, XYWH
+
 
 class BBox2D:
-    def __init__(self, x, two_point=False):
+    def __init__(self, x, mode=XYWH):
         """
         Class to reprsent a 2D bounding box.
 
         Parameters
         ----------
         x
-            Sequence of length 4 representing (x, y, w, h) or (x1, y1, x2, y2) depending on if `two_point` is False or True respectively.
-        two_point : bool 
+            Sequence of length 4 representing (x, y, w, h) or (x1, y1, x2, y2) depending on `mode`.
+        mode : BoxMode
             Flag to indicate which format `x` is in (x, y, w, h) or (x1, y1, x2, y2).
 
         Attributes
@@ -43,7 +45,7 @@ class BBox2D:
         """
         # Copy constructor makes the constructor idempotent
         if isinstance(x, BBox2D):
-            x = x.numpy(two_point=two_point)
+            x = x.numpy(mode=mode)
 
         elif isinstance(x, (list, tuple)):
             if len(x) != 4:
@@ -61,7 +63,7 @@ class BBox2D:
             raise TypeError(
                 "Expected input to constructor to be a 4 element list, tuple, numpy ndarray, or BBox2D object.")
 
-        if two_point:
+        if mode:
             w = x[2] - x[0] + 1
             h = x[3] - x[1] + 1
         else:
@@ -195,15 +197,15 @@ class BBox2D:
         new_width = np.round(np.sqrt(area_ratio))
         new_height = np.round(ratio * new_width)
         new_bbox = BBox2D((self.x1, self.y1, new_width, new_height),
-                          two_point=False)
+                          mode=XYWH)
         return new_bbox
 
-    def tolist(self, two_point=False):
+    def tolist(self, mode=XYWH):
         """
         Return bounding box as a `list` of 4 numbers. 
-        Format depends on `two_point` flag.
+        Format depends on `mode` flag.
         """
-        if two_point:
+        if mode:
             return [self.x1, self.y1, self.x2, self.y2]
         else:
             return [self.x1, self.y1, self.w, self.h]
@@ -211,12 +213,12 @@ class BBox2D:
     def copy(self):
         return deepcopy(self)
 
-    def numpy(self, two_point=False):
+    def numpy(self, mode=XYWH):
         """
         Return bounding box as a numpy vector of length 4.
-        Format depends on `two_point` flag.
+        Format depends on `mode` flag.
         """
-        return np.asarray(self.tolist(two_point=two_point), dtype=np.float)
+        return np.asarray(self.tolist(mode=mode), dtype=np.float)
 
     def __repr__(self):
         return "BBox2D([{x}, {y}, {w}, {h}])".format(x=self.x1, y=self.y1, w=self.w, h=self.h)
@@ -225,7 +227,7 @@ class BBox2D:
         if not isinstance(s, (int, float)):
             raise ValueError(
                 "Bounding boxes can only be multiplied by scalar (int or float)")
-        return BBox2D([self.x1*s, self.y1*s, self.x2*s, self.y2*s], two_point=True)
+        return BBox2D([self.x1*s, self.y1*s, self.x2*s, self.y2*s], mode=XYXY)
 
     def __mul__(self, s):
         return self.mul(s)
