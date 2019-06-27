@@ -10,6 +10,7 @@ Welcome to bbox's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   bbox
 
 Indices and tables
 ==================

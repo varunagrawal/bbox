@@ -23,7 +23,6 @@ py.test --cov-report term-missing --cov=bbox tests/
 ## generate-docs
 
 ```sh
-sphinx-apidoc -f -T -o docs/source bbox
 make -C docs html
 ```
 
