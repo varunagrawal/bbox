@@ -171,10 +171,10 @@ class TestBBox2D(object):
         assert new_bbox.w == 16 and new_bbox.h == 16
 
         new_bbox = bbox.aspect_ratio(0.5)
-        assert new_bbox.w == 23 and new_bbox.h == 12
+        assert new_bbox.w == 11 and new_bbox.h == 22
 
         new_bbox = bbox.aspect_ratio(2)
-        assert new_bbox.w == 11 and new_bbox.h == 22
+        assert new_bbox.w == 23 and new_bbox.h == 12
 
     def test_copy(self):
         b1 = BBox2D([24, 48, 64, 96])

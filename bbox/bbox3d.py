@@ -295,12 +295,13 @@ class BBox3D:
         return x
 
     def __repr__(self):
-        return "BBox3D(x={cx}, y={cy}, z={cz}), length={l}, \
-            width={w},height={h}, q=({rw}, {rx}, {ry}, {rz}))".format(
-                cx=self._cx, cy=self._cy, cz=self._cz,
-                l=self._l, w=self._w, h=self._h,
-                rw=self._q.real,
-                rx=self._q.imaginary[0], ry=self._q.imaginary[1], rz=self._q.imaginary[2])
+        template = "BBox3D(x={cx}, y={cy}, z={cz}), length={l}, width={w}, height={h}, "\
+            "q=({rw}, {rx}, {ry}, {rz}))"
+        return template.format(
+            cx=self._cx, cy=self._cy, cz=self._cz,
+            l=self._l, w=self._w, h=self._h,
+            rw=self._q.real,
+            rx=self._q.imaginary[0], ry=self._q.imaginary[1], rz=self._q.imaginary[2])
 
     def copy(self):
         return deepcopy(self)

@@ -330,7 +330,7 @@ class BBox2DList:
         Args:
             mode (BoxMode2D): Mode in which to return the box. See :py:mod:`~bbox.box_modes`.
         """
-        if mode == XYWH:
+        if mode == XYXY:
             return self.bboxes
         else:
             bboxes = deepcopy(self.bboxes)
