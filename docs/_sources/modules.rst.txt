@@ -1,0 +1,7 @@
+bbox
+====
+
+.. toctree::
+   :maxdepth: 4
+
+   bbox

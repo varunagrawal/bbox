@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>bbox.geometry &mdash; bbox 0.8.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> bbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../bbox.html">bbox package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bbox</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>bbox.geometry</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bbox.geometry</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Useful functions to deal with 3D geometry</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># pylint: disable=invalid-name,missing-docstring,invalid-unary-operand-type,no-else-return</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="get_plane"><a class="viewcode-back" href="../../bbox.html#bbox.geometry.get_plane">[docs]</a><span class="k">def</span> <span class="nf">get_plane</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get plane equation from 3 points.</span>
+<span class="sd">    Returns the coefficients of `ax + by + cz + d = 0`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ab</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+    <span class="n">ac</span> <span class="o">=</span> <span class="n">c</span> <span class="o">-</span> <span class="n">a</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">ab</span><span class="p">,</span> <span class="n">ac</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="n">pl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pl</span></div>
+
+
+<div class="viewcode-block" id="point_plane_dist"><a class="viewcode-back" href="../../bbox.html#bbox.geometry.point_plane_dist">[docs]</a><span class="k">def</span> <span class="nf">point_plane_dist</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">plane</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the signed distance from a point `pt` to a plane `plane`.</span>
+<span class="sd">    Reference: http://mathworld.wolfram.com/Point-PlaneDistance.html</span>
+
+<span class="sd">    Plane is of the format [A, B, C, D], where the plane equation is Ax+By+Cz+D=0</span>
+<span class="sd">    Point is of the form [x, y, z]</span>
+<span class="sd">    `signed` flag indicates whether to return signed distance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">plane</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span> <span class="o">+</span> <span class="n">plane</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">signed</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dist</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="edges_of"><a class="viewcode-back" href="../../bbox.html#bbox.geometry.edges_of">[docs]</a><span class="k">def</span> <span class="nf">edges_of</span><span class="p">(</span><span class="n">vertices</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the vectors for the edges of the polygon defined by `vertices`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vertices: list of vertices of the polygon.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">edge</span> <span class="o">=</span> <span class="n">vertices</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span><span class="p">]</span> <span class="o">-</span> <span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">edges</span></div>
+
+
+<div class="viewcode-block" id="orthogonal"><a class="viewcode-back" href="../../bbox.html#bbox.geometry.orthogonal">[docs]</a><span class="k">def</span> <span class="nf">orthogonal</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a 90 degree clockwise rotation of the vector `v`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        v: 2D array representing a vector.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="is_separating_axis"><a class="viewcode-back" href="../../bbox.html#bbox.geometry.is_separating_axis">[docs]</a><span class="k">def</span> <span class="nf">is_separating_axis</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return True and the push vector if `o` is a separating axis of `p1` and `p2`.</span>
+<span class="sd">    Otherwise, return False and None.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        o: 2D array representing a vector.</span>
+<span class="sd">        p1: 2D array of points representing a polygon.</span>
+<span class="sd">        p2: 2D array of points representing a polygon.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">min1</span><span class="p">,</span> <span class="n">max1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;+inf&#39;</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
+    <span class="n">min2</span><span class="p">,</span> <span class="n">max2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;+inf&#39;</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">p1</span><span class="p">:</span>
+        <span class="n">projection</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+
+        <span class="n">min1</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min1</span><span class="p">,</span> <span class="n">projection</span><span class="p">)</span>
+        <span class="n">max1</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max1</span><span class="p">,</span> <span class="n">projection</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">p2</span><span class="p">:</span>
+        <span class="n">projection</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+
+        <span class="n">min2</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min2</span><span class="p">,</span> <span class="n">projection</span><span class="p">)</span>
+        <span class="n">max2</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max2</span><span class="p">,</span> <span class="n">projection</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">max1</span> <span class="o">&gt;=</span> <span class="n">min2</span> <span class="ow">and</span> <span class="n">max2</span> <span class="o">&gt;=</span> <span class="n">min1</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max2</span> <span class="o">-</span> <span class="n">min1</span><span class="p">,</span> <span class="n">max1</span> <span class="o">-</span> <span class="n">min2</span><span class="p">)</span>
+        <span class="c1"># push a bit more than needed so the shapes do not overlap in future</span>
+        <span class="c1"># tests due to float precision</span>
+        <span class="n">d_over_o_squared</span> <span class="o">=</span> <span class="n">d</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-10</span>
+        <span class="n">pv</span> <span class="o">=</span> <span class="n">d_over_o_squared</span><span class="o">*</span><span class="n">o</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">pv</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="polygon_collision"><a class="viewcode-back" href="../../bbox.html#bbox.geometry.polygon_collision">[docs]</a><span class="k">def</span> <span class="nf">polygon_collision</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return True if the shapes collide. Otherwise, return False.</span>
+
+<span class="sd">    p1 and p2 are np.arrays, the vertices of the polygons in the</span>
+<span class="sd">    counterclockwise direction.</span>
+
+<span class="sd">    Source: https://hackmd.io/s/ryFmIZrsl</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p1: 2D array of points representing a polygon.</span>
+<span class="sd">        p2: 2D array of points representing a polygon.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">edges_of</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+    <span class="n">edges</span> <span class="o">+=</span> <span class="n">edges_of</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span>
+    <span class="n">orthogonals</span> <span class="o">=</span> <span class="p">[</span><span class="n">orthogonal</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">]</span>
+
+    <span class="n">push_vectors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">orthogonals</span><span class="p">:</span>
+        <span class="n">separates</span><span class="p">,</span> <span class="n">pv</span> <span class="o">=</span> <span class="n">is_separating_axis</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">separates</span><span class="p">:</span>
+            <span class="c1"># they do not collide and there is no push vector</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">push_vectors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pv</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="polygon_area"><a class="viewcode-back" href="../../bbox.html#bbox.geometry.polygon_area">[docs]</a><span class="k">def</span> <span class="nf">polygon_area</span><span class="p">(</span><span class="n">polygon</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the area of a polygon which is represented by a 2D array of points.</span>
+<span class="sd">    Area is computed using the Shoelace Algorithm.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        polygon: 2D array of points.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">polygon</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">polygon</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">-</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">area</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="polygon_intersection"><a class="viewcode-back" href="../../bbox.html#bbox.geometry.polygon_intersection">[docs]</a><span class="k">def</span> <span class="nf">polygon_intersection</span><span class="p">(</span><span class="n">poly1</span><span class="p">,</span> <span class="n">poly2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Use the Sutherland-Hodgman algorithm to compute the intersection of 2 convex polygons.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">line_intersection</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+        <span class="n">dc</span> <span class="o">=</span> <span class="n">e1</span> <span class="o">-</span> <span class="n">e2</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="n">s</span> <span class="o">-</span> <span class="n">e</span>
+        <span class="n">n1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span>
+        <span class="n">n2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="n">n3</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">dc</span><span class="p">,</span> <span class="n">dp</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">n1</span><span class="o">*</span><span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">n2</span><span class="o">*</span><span class="n">dc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">n3</span><span class="p">,</span> <span class="p">(</span><span class="n">n1</span><span class="o">*</span><span class="n">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">n2</span><span class="o">*</span><span class="n">dc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">n3</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">is_inside_edge</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return True if e is inside edge (e1, e2)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">e2</span><span class="o">-</span><span class="n">e1</span><span class="p">,</span> <span class="n">p</span><span class="o">-</span><span class="n">e1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+
+    <span class="n">output_list</span> <span class="o">=</span> <span class="n">poly1</span>
+    <span class="c1"># e1 and e2 are the edge vertices for each edge in the clipping polygon</span>
+    <span class="n">e1</span> <span class="o">=</span> <span class="n">poly2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">e2</span> <span class="ow">in</span> <span class="n">poly2</span><span class="p">:</span>
+        <span class="n">input_list</span> <span class="o">=</span> <span class="n">output_list</span>
+        <span class="n">output_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">input_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">input_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">is_inside_edge</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">):</span>
+                <span class="c1"># if s in not inside edge (e1, e2)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_inside_edge</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">):</span>
+                    <span class="c1"># line intersects edge hence we compute intersection point</span>
+                    <span class="n">output_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line_intersection</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+                <span class="n">output_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="c1"># is s inside edge (e1, e2)</span>
+            <span class="k">elif</span> <span class="n">is_inside_edge</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">):</span>
+                <span class="n">output_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line_intersection</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+
+            <span class="n">s</span> <span class="o">=</span> <span class="n">e</span>
+        <span class="n">e1</span> <span class="o">=</span> <span class="n">e2</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">output_list</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Varun Agrawal
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

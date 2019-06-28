@@ -23,7 +23,15 @@ py.test --cov-report term-missing --cov=bbox tests/
 ## generate-docs
 
 ```sh
-make -C docs html
+make -C docsrc html
+```
+
+## publish-docs
+
+Run task `generate-docs` before this
+
+```sh
+cp -a docsrc/build/html docs
 ```
 
 ## build
