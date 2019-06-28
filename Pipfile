@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 numpy = "*"
 pyquaternion = "*"
-pillow = "*"
 
 [dev-packages]
 pylint = "*"
@@ -16,6 +15,7 @@ coverage = "*"
 pytest-cov = "*"
 pytest = "*"
 matplotlib = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"
