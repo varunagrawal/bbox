@@ -1,48 +1,29 @@
-import numpy as np
+"""2D bounding box module."""
+
+# pylint: disable=invalid-name,missing-docstring
+
 from copy import deepcopy
 
-from bbox.box_modes import XYXY, XYWH
+import numpy as np
+
+from bbox.box_modes import XYWH, XYXY
 
 
 class BBox2D:
+    """
+    Class to reprsent a 2D bounding box.
+
+    Args:
+        x: Sequence of length 4 representing (x, y, w, h) or (x1, y1, x2, y2) depending on ``mode``.
+        mode (BoxMode2D): Indicator of box format (x, y, w, h) or (x1, y1, x2, y2). \
+        The values are 0 for XYWH format and 1 for XYXY format. See :py:mod:`~bbox.box_modes`.
+
+    Raises:
+        ValueError: If `x` is not of length 4.
+        TypeError: If `x` is not of type {list, tuple, numpy.ndarray, BBox2D}
+
+    """
     def __init__(self, x, mode=XYWH):
-        """
-        Class to reprsent a 2D bounding box.
-
-        Parameters
-        ----------
-        x
-            Sequence of length 4 representing (x, y, w, h) or (x1, y1, x2, y2) depending on `mode`.
-        mode : BoxMode
-            Flag to indicate which format `x` is in (x, y, w, h) or (x1, y1, x2, y2).
-
-        Attributes
-        ----------
-        x1 : float
-            Left x coordinate
-        y1 : float
-            Top y coordinate
-        x2 : float
-            Right x coordinate
-        y2 : float
-            Bottom y coordinate
-        width : float
-            Width of bounding box
-        height : float
-            Height of bounding box
-        w : float
-            Syntactic sugar for width
-        h : float
-            Syntactic sugar for height
-
-        Raises
-        ------
-        ValueError
-            If `x` is not of length 4.
-        TypeError
-            If `x` is not of type {list, tuple, numpy.ndarray, BBox2D}
-
-        """
         # Copy constructor makes the constructor idempotent
         if isinstance(x, BBox2D):
             x = x.numpy(mode=mode)
@@ -61,7 +42,8 @@ class BBox2D:
                     "Invalid input length. Input should have 4 elements.")
         else:
             raise TypeError(
-                "Expected input to constructor to be a 4 element list, tuple, numpy ndarray, or BBox2D object.")
+                "Expected input to constructor to be a 4 element " \
+                    "list, tuple, numpy ndarray, or BBox2D object.")
 
         if mode:
             w = x[2] - x[0] + 1
@@ -89,6 +71,9 @@ class BBox2D:
 
     @property
     def x1(self):
+        """
+        :py:class:`float`: Left x coordinate.
+        """
         return self._x1
 
     @x1.setter
@@ -103,6 +88,9 @@ class BBox2D:
 
     @property
     def x2(self):
+        """
+        :py:class:`float`: Right x coordinate.
+        """
         return self._x2
 
     @x2.setter
@@ -117,6 +105,9 @@ class BBox2D:
 
     @property
     def y1(self):
+        """
+        :py:class:`float`: Top y coordinate.
+        """
         return self._y1
 
     @y1.setter
@@ -131,6 +122,9 @@ class BBox2D:
 
     @property
     def y2(self):
+        """
+        :py:class:`float`: Bottom y coordinate.
+        """
         return self._y2
 
     @y2.setter
@@ -145,6 +139,9 @@ class BBox2D:
 
     @property
     def width(self):
+        """
+        :py:class:`float`: Width of bounding box.
+        """
         return self._w
 
     @width.setter
@@ -157,6 +154,9 @@ class BBox2D:
 
     @property
     def w(self):
+        """
+        :py:class:`float`: Syntactic sugar for width.
+        """
         return self._w
 
     @w.setter
@@ -165,6 +165,9 @@ class BBox2D:
 
     @property
     def height(self):
+        """
+        :py:class:`float`: Height of bounding box.
+        """
         return self._h
 
     @height.setter
@@ -177,6 +180,9 @@ class BBox2D:
 
     @property
     def h(self):
+        """
+        :py:class:`float`: Syntactic sugar for height.
+        """
         return self._h
 
     @h.setter
@@ -184,15 +190,23 @@ class BBox2D:
         self.height = h
 
     def center(self):
-        """Return center coordinates of the bounding box"""
+        """
+        Return center coordinates of the bounding box.
+        """
         return np.array([self._x1 + (self._w-1)/2, self._y1 + (self._h-1)/2])
 
     def aspect_ratio(self, ratio):
         """
-        Return 2D BBox mapped to new aspect ratio denoted by `ratio`.
-        The ratio should be given as the result of `height / width`
+        Return bounding box mapped to new aspect ratio denoted by ``ratio``.
+
+        Args:
+            ratio (:py:class:`float`): The new ratio should be given as \
+                the result of `width / height`.
         """
-        area = self.h * self.w
+        # we need ratio as height/width for the below formula to be correct
+        ratio = 1.0 / ratio
+
+        area = self.w * self.h
         area_ratio = area / ratio
         new_width = np.round(np.sqrt(area_ratio))
         new_height = np.round(ratio * new_width)
@@ -202,21 +216,30 @@ class BBox2D:
 
     def tolist(self, mode=XYWH):
         """
-        Return bounding box as a `list` of 4 numbers. 
-        Format depends on `mode` flag.
+        Return bounding box as a `list` of 4 numbers.
+        Format depends on ``mode`` flag (default is XYWH).
+
+        Args:
+            mode (BoxMode2D): Mode in which to return the box. See :py:mod:`~bbox.box_modes`.
         """
         if mode:
             return [self.x1, self.y1, self.x2, self.y2]
-        else:
-            return [self.x1, self.y1, self.w, self.h]
+
+        return [self.x1, self.y1, self.w, self.h]
 
     def copy(self):
+        """
+        Return a deep copy of this 2D bounding box.
+        """
         return deepcopy(self)
 
     def numpy(self, mode=XYWH):
         """
         Return bounding box as a numpy vector of length 4.
-        Format depends on `mode` flag.
+        Format depends on ``mode`` flag (default is XYWH).
+
+        Args:
+            mode (BoxMode2D): Mode in which to return the box. See :py:mod:`~bbox.box_modes`.
         """
         return np.asarray(self.tolist(mode=mode), dtype=np.float)
 
@@ -224,6 +247,12 @@ class BBox2D:
         return "BBox2D([{x}, {y}, {w}, {h}])".format(x=self.x1, y=self.y1, w=self.w, h=self.h)
 
     def mul(self, s):
+        """
+        Multiply the box by a scalar. Used for scaling bounding boxes.
+
+        Args:
+            s (:py:class:`float` or `int`): Scalar value to scale the box by.
+        """
         if not isinstance(s, (int, float)):
             raise ValueError(
                 "Bounding boxes can only be multiplied by scalar (int or float)")

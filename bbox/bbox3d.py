@@ -1,5 +1,10 @@
-import numpy as np
+""""""
+
+# pylint: disable=invalid-name,missing-docstring
+
 from copy import deepcopy
+
+import numpy as np
 from pyquaternion import Quaternion
 
 
@@ -13,34 +18,29 @@ class BBox3D:
                  rw=1, rx=0, ry=0, rz=0, q=None,
                  euler_angles=None, is_center=True):
         """
-        Constructor for 3D bounding box (3-orthotope). It takes either the center of the 3D bounding box or the back-bottom-left corner, the width, height and length of the box, and quaternion values to indicate the rotation.
+        Constructor for 3D bounding box (3-orthotope). It takes either the center of the \
+            3D bounding box or the back-bottom-left corner, the width, height and length \
+                of the box, and quaternion values to indicate the rotation.
 
-        Parameters
-        ----------
-        x : float
-            X axis coordinate of 3D bounding box. Can be either center of bounding box or back-bottom-left corner.
-        y : float
-            Y axis coordinate of 3D bounding box. Can be either center of bounding box or back-bottom-left corner.
-        z : float
-            Z axis coordinate of 3D bounding box. Can be either center of bounding box or back-bottom-left corner.
-        length : float, optional
-            The length of the box (the default is 1).
-        width : float, optional
-            The width of the box (the default is 1).
-        height : float, optional
-            The height of the box (the default is 1).
-        rw : float, optional
-            The real part of the rotation quaternion (the default is 1).
-        rx : int, optional
-            The first element of the quaternion vector (the default is 0).
-        ry : int, optional
-            The second element of the quaternion vector (the default is 0).
-        rz : int, optional
-            The third element of the quaternion vector (the default is 0).
-        euler_angles : list or ndarray of float, optional
-            Sequence of euler angles in `[x, y, z]` rotation order (the default is None).
-        is_center : bool, optional
-            Flag to indicate if the provided coordinate is the center of the box (the default is True).
+        Args:
+            x `float`: X axis coordinate of 3D bounding box. \
+                Can be either center of bounding box or back-bottom-left corner.
+            y `float`: Y axis coordinate of 3D bounding box. \
+                    Can be either center of bounding box or back-bottom-left corner.
+            z `float`: Z axis coordinate of 3D bounding box. \
+                    Can be either center of bounding box or back-bottom-left corner.
+            length (`float`, optional): The length of the box (the default is 1).
+            width (`float`, optional): The width of the box (the default is 1).
+            height (`float`, optional): The height of the box (the default is 1).
+            rw (`float`, optional): The real part of the rotation quaternion (the default is 1).
+            rx (`int`, optional): The first element of the quaternion vector (the default is 0).
+            ry (`int`, optional): The second element of the quaternion vector (the default is 0).
+            rz : int, optional
+                The third element of the quaternion vector (the default is 0).
+            euler_angles : list or ndarray of float, optional
+                Sequence of euler angles in `[x, y, z]` rotation order (the default is None).
+            is_center (`bool`, optional): Flag to indicate if the provided coordinate is the \
+                center of the box (the default is True).
 
         """
         if is_center:
@@ -69,30 +69,19 @@ class BBox3D:
     @property
     def center(self):
         """
-        Attribute to access center coordinates of box.
+        Attribute to access center coordinates of box in (x, y, z) format.
+        Can be set to `list` or `ndarray` of float.
 
-        Returns
-        -------
-        ndarray of float
-            3-dimensional vector representing (x, y, z) coordinates of the box.
+        Returns:
+            `ndarray` of float: 3-dimensional vector representing (x, y, z) coordinates of the box.
+
+        Raises:
+            ValueError: If `c` is not a vector/list of length 3.
         """
         return self._c
 
     @center.setter
     def center(self, c):
-        """
-        Setter for center coordinates of the box.
-
-        Parameters
-        ----------
-        c : list or ndarray of float
-            Center coordinates in (x, y, z) format.
-        Raises
-        ------
-        ValueError
-            If `c` is not a vector/list of length 3.
-
-        """
         if len(c) != 3:
             raise ValueError("Center coordinates should be a vector of size 3")
         self._c = c
@@ -108,34 +97,18 @@ class BBox3D:
     @property
     def cx(self):
         """
-        Get the X coordinate of center.
-
-        Returns
-        -------
-        float
-            X coordinate of center
+        X coordinate of center.
         """
         return self._cx
 
     @cx.setter
     def cx(self, x):
-        """Setter for X coordinate of center.
-
-        Parameters
-        ----------
-        x : float
-        """
         self._cx = self.__valid_scalar(x)
 
     @property
     def cy(self):
         """
-        Get the Y coordinate of center.
-
-        Returns
-        -------
-        float
-            Y coordinate of center
+        Y coordinate of center.
         """
         return self._cy
 
@@ -146,12 +119,7 @@ class BBox3D:
     @property
     def cz(self):
         """
-        Get the Z coordinate of center.
-
-        Returns
-        -------
-        float
-            Z coordinate of center
+        Z coordinate of center.
         """
         return self._cz
 
@@ -162,12 +130,10 @@ class BBox3D:
     @property
     def q(self):
         """
-        Get the the rotation quaternion.
+        Syntactic sugar for the rotation quaternion of the box.
 
         Returns
-        -------
-        ndarray of float
-            Quaternion values in (w, x, y, z) form.
+            `ndarray` of float: Quaternion values in (w, x, y, z) form.
         """
         return np.hstack((self._q.real, self._q.imaginary))
 
@@ -184,12 +150,10 @@ class BBox3D:
     @property
     def quaternion(self):
         """
-        Get the the rotation quaternion.
+        The rotation quaternion.
 
-        Returns
-        -------
-        ndarray of float
-            Quaternion values in (w, x, y, z) form.
+        Returns:
+            `ndarray` of float: Quaternion values in (w, x, y, z) form.
         """
         return self.q
 
@@ -200,12 +164,7 @@ class BBox3D:
     @property
     def l(self):
         """
-        Get the length of the box.
-
-        Returns
-        -------
-        float
-            Length of the box.
+        Syntactic sugar for length of the box.
         """
         return self._l
 
@@ -216,12 +175,7 @@ class BBox3D:
     @property
     def length(self):
         """
-        Get the length of the box.
-
-        Returns
-        -------
-        float
-            Length of the box.
+        Length of the box.
         """
         return self._l
 
@@ -232,12 +186,7 @@ class BBox3D:
     @property
     def w(self):
         """
-        Get the width of the box.
-
-        Returns
-        -------
-        float
-            Width of the box.
+        Syntactic sugar for width of the box.
         """
         return self._w
 
@@ -248,12 +197,7 @@ class BBox3D:
     @property
     def width(self):
         """
-        Get the width of the box.
-
-        Returns
-        -------
-        float
-            Width of the box.
+        The width of the box.
         """
         return self._w
 
@@ -264,12 +208,7 @@ class BBox3D:
     @property
     def h(self):
         """
-        Get the height of the box.
-
-        Returns
-        -------
-        float
-            Height of the box.
+        Syntactic sugar for height of the box.
         """
         return self._h
 
@@ -280,12 +219,7 @@ class BBox3D:
     @property
     def height(self):
         """
-        Get the height of the box.
-
-        Returns
-        -------
-        float
-            Height of the box.
+        The height of the box.
         """
         return self._h
 
@@ -294,7 +228,9 @@ class BBox3D:
         self.h = x
 
     def __transform(self, x):
-        """Rotate and translate the point to world coordinates"""
+        """
+        Rotate and translate the point to world coordinates.
+        """
         y = self._c + self._q.rotate(x)
         return y
 
@@ -351,20 +287,20 @@ class BBox3D:
         """
         Attribute to access ndarray of all corners of box in order.
 
-        Returns
-        -------
-        ndarray of float
-            All corners of the bounding box in order.
+        Returns:
+            `ndarray` of float: All corners of the bounding box in order.
         """
         x = np.vstack([self.p1, self.p2, self.p3, self.p4,
                        self.p5, self.p6, self.p7, self.p8])
         return x
 
     def __repr__(self):
-        return "BBox3D(x={cx}, y={cy}, z={cz}), length={l}, width={w},height={h}, q=({rw}, {rx}, {ry}, {rz}))".format(
-            cx=self._cx, cy=self._cy, cz=self._cz,
-            l=self._l, w=self._w, h=self._h,
-            rw=self._q.real, rx=self._q.imaginary[0], ry=self._q.imaginary[1], rz=self._q.imaginary[2])
+        return "BBox3D(x={cx}, y={cy}, z={cz}), length={l}, \
+            width={w},height={h}, q=({rw}, {rx}, {ry}, {rz}))".format(
+                cx=self._cx, cy=self._cy, cz=self._cz,
+                l=self._l, w=self._w, h=self._h,
+                rw=self._q.real,
+                rx=self._q.imaginary[0], ry=self._q.imaginary[1], rz=self._q.imaginary[2])
 
     def copy(self):
         return deepcopy(self)

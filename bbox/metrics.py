@@ -1,10 +1,13 @@
-import numpy as np
+""""""
+
+# pylint: disable=invalid-name,missing-docstring,assignment-from-no-return,logging-format-interpolation
+
 import logging
-import warnings
+
+import numpy as np
 
 from bbox import BBox2D, BBox2DList, BBox3D
-from bbox.geometry import polygon_intersection, polygon_area, polygon_collision
-
+from bbox.geometry import polygon_area, polygon_collision, polygon_intersection
 
 logger = logging.getLogger(__name__)
 
@@ -13,16 +16,12 @@ def jaccard_index_2d(a: BBox2D, b: BBox2D):
     """
     Compute the Jaccard Index / Intersection over Union (IoU) of a pair of 2D bounding boxes.
 
-    Parameters
-    ----------
-    a : BBox2D
-        2D bounding box.
-    b : BBox2D
-        2D bounding box.
-    Returns
-    -------
-    float
-        The IoU of the 2 bounding boxes.
+    Args:
+    a (`BBox2D`): 2D bounding box.
+    b (`BBox2D`): 2D bounding box.
+
+    Returns:
+        float: The IoU of the 2 bounding boxes.
     """
 
     xA = np.maximum(a.x1, b.x1)
@@ -45,8 +44,7 @@ def jaccard_index_2d(a: BBox2D, b: BBox2D):
     a_area = a.width * a.height
     b_area = b.width * b.height
 
-    logger.debug(
-        "jaccard_index: a_area: {0}, b_area: {1}".format(a_area, b_area))
+    logger.debug("jaccard_index: a_area: {0}, b_area: {1}".format(a_area, b_area))
 
     iou = intersection / (a_area + b_area - intersection)
 
@@ -61,16 +59,12 @@ def multi_jaccard_index_2d(a: BBox2DList, b: BBox2DList):
     """
     Compute the Jaccard Index (Intersection over Union) of two sets of 2D bounding boxes.
 
-    Parameters
-    ----------
-    a : BBox2DList
-        List of 2D bounding boxes.
-    b : BBox2DList
-        List of 2D bounding boxes.
-    Returns
-    -------
-    ndarray
-        Matrix
+    Args:
+        a (`BBox2DList`): List of 2D bounding boxes.
+    b (`BBox2DList`): List of 2D bounding boxes.
+
+    Returns:
+        ndarray: IoU Matrix
     """
 
     # We need to add a trailing dimension so that max/min gives us a (N,N) matrix
@@ -90,10 +84,10 @@ def multi_jaccard_index_2d(a: BBox2DList, b: BBox2DList):
 
     # maximum generates a (N,N) matrix which consumes a lot of memory
     # thus we are aggressive about freeing memory up.
-    del(xA)
-    del(yA)
-    del(xB)
-    del(yB)
+    del xA
+    del yA
+    del xB
+    del yB
 
     intersection = inter_w * inter_h
     logger.debug(
@@ -120,16 +114,12 @@ def jaccard_index_3d(a: BBox3D, b: BBox3D):
 
     **Note**: We follow the KITTI format and assume only yaw rotations (along z-axis).
 
-    Parameters
-    ----------
-    a : BBox3D
-        3D bounding box.
-    b : BBox3D
-        3D bounding box.
-    Returns
-    -------
-    float
-        The IoU of the 2 bounding boxes.
+    Args:
+    a (`BBox3D`): 3D bounding box.
+    b (`BBox3D`): 3D bounding box.
+
+    Returns:
+        float: The IoU of the 2 bounding boxes.
     """
     # check if the two boxes don't overlap
     if not polygon_collision(a.p[0:4, 0:2], b.p[0:4, 0:2]):

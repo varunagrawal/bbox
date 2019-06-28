@@ -1,18 +1,22 @@
 """
-Adapted from Tomasz Malisiewicz's & Ross Girshick's code.
+Utility code.
+NMS adapted from Tomasz Malisiewicz's & Ross Girshick's code.
 [https://gist.github.com/quantombone/1144423]
 [https://github.com/rbgirshick/py-faster-rcnn/blob/master/lib/nms/py_cpu_nms.py]
- """
+"""
+
+# pylint: disable=invalid-name,missing-docstring,assignment-from-no-return,logging-format-interpolation
 
 import numpy as np
+
 from bbox import BBox2D, BBox2DList
-from bbox.box_modes import XYXY, XYWH
-from PIL import ImageDraw
+from bbox.box_modes import XYXY
 
 
 def nms(bbl, scores, thresh):
     """
-    Perform fast non-maximum suppression on a set of bounding boxes given their associated confidences.
+    Perform fast non-maximum suppression on a set of bounding boxes \
+        given their associated confidences.
     """
     if bbl.shape[0] == 0:
         return np.array([]).astype(np.int)
@@ -59,12 +63,17 @@ def aspect_ratio(bbox: BBox2D, ratios):
 
     stack = np.vstack((cx - 0.5*(ws-1), cy - 0.5*(hs-1),
                        cx + 0.5*(ws-1), cy + 0.5*(hs-1)))
-                       
+
     boxes = BBox2DList(stack.T, mode=XYXY)
     return boxes
 
 
 def draw_cuboid(img, p, color=None):
+    try:
+        from PIL import ImageDraw
+    except ImportError:
+        return
+
     draw = ImageDraw.Draw(img)
     color = color or tuple(np.random.choice(range(256), size=3))
 

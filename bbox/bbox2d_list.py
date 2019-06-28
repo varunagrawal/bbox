@@ -1,3 +1,7 @@
+"""Bounding Box 2D list module."""
+
+# pylint: disable=invalid-name,missing-docstring
+
 from copy import deepcopy
 import numpy as np
 
@@ -6,45 +10,23 @@ from bbox.box_modes import XYXY, XYWH
 
 
 class BBox2DList:
+    """Bounding Box 2D list class."""
+
     def __init__(self, arr, mode=XYWH):
         """
         Class to reprsent a list of 2D bounding boxes.
-        Expects an iterable of bounding boxes of the form (x, y, w, h) or (x1, y1, x2, y2) if `mode=XYXY`.
+        Expects an iterable of bounding boxes of the form
+        (x, y, w, h) or (x1, y1, x2, y2) if `mode=XYXY`.
 
-        Parameters
-        ----------
-        arr:
-            Sequence of list/tuple/ndarray/BBox2D, each representing a single bounding box.
-        mode : BoxMode
-            Flag to indicate which format `x` is in (x, y, w, h) or (x1, y1, x2, y2).
-
-        Attributes
-        ----------
-        x1 : float
-            Left x coordinate of all boxes
-        y1 : float
-            Top y coordinate of all boxes
-        x2 : float
-            Right x coordinate of all boxes
-        y2 : float
-            Bottom y coordinate of all boxes
-        width : float
-            Width of bounding box of all boxes
-        height : float
-            Height of bounding box of all boxes
-        w : float
-            Syntactic sugar for width
-        h : float
-            Syntactic sugar for height
-        shape : np.ndarray
-            Return the shape of the bounding boxes container in the form (N, 4).
+        Args:
+            arr: Sequence of list/tuple/ndarray/BBox2D, each representing a single bounding box.
+            mode (BoxMode): Indicator of box format (x, y, w, h) or (x1, y1, x2, y2). \
+                The values are 0 for XYWH format and 1 for XYXY format.\
+                    See :py:mod:`~bbox.box_modes`.
 
         Raises
-        ------
-        ValueError
-            If `x` is not of length 4.
-        TypeError
-            If `x` is not of type {list, tuple, numpy.ndarray, BBox2D}
+            ValueError: If `x` is not of length 4.
+            TypeError: If `x` is not of type {list, tuple, numpy.ndarray, BBox2D}
 
         """
         # Internally, we record the Bounding Box list as a 2D ndarray in XYXY format.
@@ -53,7 +35,7 @@ class BBox2DList:
         # check if input is a list
         if isinstance(arr, list):
             # if the list is empty, set the input to be an empty numpy array
-            if len(arr) == 0:
+            if not arr:
                 self.bboxes = np.empty((0, 4))
 
             # list is not empty, so we continue
@@ -72,7 +54,8 @@ class BBox2DList:
 
                 else:
                     raise TypeError(
-                        "Element of input is of invalid type. Elements must be all list, np.ndarray or BBox2D")
+                        "Element of input is of invalid type." \
+                            "Elements must be all list, np.ndarray or BBox2D")
 
         # check if `arr` is a 2D numpy array
         elif isinstance(arr, np.ndarray):
@@ -87,8 +70,10 @@ class BBox2DList:
 
                 # if the dimensions of the array are incorrect, raise exception.
                 if arr.ndim != 2 or arr.shape[1] != 4:
-                    raise ValueError(
-                        "Invalid dimensions. Expected 2D array of size Nx4. Extra dimensions should be size 1. Got {0}".format(arr.shape))
+                    err_msg = "Invalid dimensions. " \
+                        "Expected 2D array of size Nx4 and extra dimensions should be size 1." \
+                            "Got {0}".format(arr.shape)
+                    raise ValueError(err_msg)
 
                 # parse the input
                 self.bboxes = np.asarray(
@@ -122,20 +107,29 @@ class BBox2DList:
     def __len__(self):
         return self.bboxes.shape[0]
 
-    def mul(self, s):
-        if not isinstance(s, (int, float)):
+    def mul(self, scale):
+        """
+        Scale the bounding boxes by the factor `s`.
+
+        Args:
+            scale : Scalar factor to scale by.
+        """
+        if not isinstance(scale, (int, float)):
             raise ValueError(
                 "Bounding boxes can only be multiplied by scalar (int or float)")
-        return BBox2DList(self.bboxes * s, mode=XYXY)
+        return BBox2DList(self.bboxes * scale, mode=XYXY)
 
-    def __mul__(self, s):
-        return self.mul(s)
+    def __mul__(self, val):
+        return self.mul(val)
 
-    def __rmul__(self, s):
-        return self.mul(s)
+    def __rmul__(self, val):
+        return self.mul(val)
 
     @property
     def x1(self):
+        """
+        :py:class:`float`: Left x coordinate of all boxes.
+        """
         return self.bboxes[:, 0]
 
     def _convert_attribute_input(self, x):
@@ -154,6 +148,9 @@ class BBox2DList:
 
     @property
     def x2(self):
+        """
+        :py:class:`float`: Right x coordinate of all boxes.
+        """
         return self.bboxes[:, 2]
 
     @x2.setter
@@ -163,6 +160,9 @@ class BBox2DList:
 
     @property
     def y1(self):
+        """
+        :py:class:`float`: Top y coordinate of all boxes.
+        """
         return self.bboxes[:, 1]
 
     @y1.setter
@@ -172,6 +172,9 @@ class BBox2DList:
 
     @property
     def y2(self):
+        """
+        :py:class:`float`: Bottom y coordinate of all boxes.
+        """
         return self.bboxes[:, 3]
 
     @y2.setter
@@ -181,6 +184,9 @@ class BBox2DList:
 
     @property
     def width(self):
+        """
+        :py:class:`float`: Width of bounding box of all boxes.
+        """
         return self.x2 - self.x1 + 1
 
     @width.setter
@@ -190,6 +196,9 @@ class BBox2DList:
 
     @property
     def w(self):
+        """
+        :py:class:`float`: Syntactic sugar for width.
+        """
         return self.x2 - self.x1 + 1
 
     @w.setter
@@ -198,6 +207,9 @@ class BBox2DList:
 
     @property
     def height(self):
+        """
+        :py:class:`float`: Height of bounding box of all boxes.
+        """
         return self.y2 - self.y1 + 1
 
     @height.setter
@@ -207,6 +219,9 @@ class BBox2DList:
 
     @property
     def h(self):
+        """
+        :py:class:`float`: Syntactic sugar for height.
+        """
         return self.y2 - self.y1 + 1
 
     @h.setter
@@ -215,9 +230,18 @@ class BBox2DList:
 
     @property
     def shape(self):
+        """
+        :py:class:`tuple`: Return the shape of the bounding boxes container in the form (N, 4).
+        """
         return self.bboxes.shape
 
     def append(self, x, mode=XYWH):
+        """
+        Append a bounding box to the bounding box list.
+
+        Args:
+            x: Bounding box to append.
+        """
         if isinstance(x, (tuple, list, np.ndarray)):
             try:
                 x = np.asarray(x, dtype=np.float)
@@ -250,6 +274,13 @@ class BBox2DList:
         return BBox2DList(np.append(self.bboxes, x, axis=0), mode=XYXY)
 
     def insert(self, x, idx, mode=XYWH):
+        """
+        Insert a bounding box at a specific location.
+
+        Args:
+            x: Bounding box to insert.
+            idx (:py:class:`int`): Position where to insert bounding box.
+        """
         if isinstance(x, (tuple, list, np.ndarray)):
             try:
                 x = np.asarray(x, dtype=np.float)
@@ -277,15 +308,29 @@ class BBox2DList:
 
         return BBox2DList(np.insert(self.bboxes, idx, x, axis=0), mode=XYXY)
 
-    def delete(self, idx):
-        return BBox2DList(np.delete(self.bboxes, idx, axis=0), mode=XYXY)
+    def delete(self, index):
+        """
+        Delete bounding box at index from this list.
+
+        Args:
+            index (:py:class:`int`): Index of the box to delete.
+        """
+        return BBox2DList(np.delete(self.bboxes, index, axis=0), mode=XYXY)
 
     def copy(self):
+        """
+        Return a deep copy of this bounding box list.
+        """
         return deepcopy(self)
 
     def numpy(self, mode=XYWH):
-        """Return np.ndarray of shape (N, 4) representing all the bounding boxes"""
-        if mode:
+        """
+        Return np.ndarray of shape (N, 4) representing all the bounding boxes.
+
+        Args:
+            mode (BoxMode2D): Mode in which to return the box. See :py:mod:`~bbox.box_modes`.
+        """
+        if mode == XYWH:
             return self.bboxes
         else:
             bboxes = deepcopy(self.bboxes)

@@ -1,11 +1,13 @@
 """
 Useful functions to deal with 3D geometry
 """
+
+# pylint: disable=invalid-name,missing-docstring,invalid-unary-operand-type,no-else-return
+
 import numpy as np
-from bbox import BBox3D
 
 
-def plane(a, b, c):
+def get_plane(a, b, c):
     """
     Get plane equation from 3 points.
     Returns the coefficients of `ax + by + cz + d = 0`
@@ -30,6 +32,7 @@ def point_plane_dist(pt, plane, signed=False):
     """
     v = plane[0:3]
     dist = (np.dot(v, pt) + plane[3]) / np.linalg.norm(v)
+
     if signed:
         return dist
     else:
@@ -38,9 +41,10 @@ def point_plane_dist(pt, plane, signed=False):
 
 def edges_of(vertices):
     """
-    Return the vectors for the edges of the polygon p.
+    Return the vectors for the edges of the polygon defined by `vertices`.
 
-    p is a polygon.
+    Args:
+        vertices: list of vertices of the polygon.
     """
     edges = []
     N = len(vertices)
@@ -54,15 +58,23 @@ def edges_of(vertices):
 
 def orthogonal(v):
     """
-    Return a 90 degree clockwise rotation of the vector v.
+    Return a 90 degree clockwise rotation of the vector `v`.
+
+    Args:
+        v: 2D array representing a vector.
     """
     return np.array([-v[1], v[0]])
 
 
 def is_separating_axis(o, p1, p2):
     """
-    Return True and the push vector if o is a separating axis of p1 and p2.
+    Return True and the push vector if `o` is a separating axis of `p1` and `p2`.
     Otherwise, return False and None.
+
+    Args:
+        o: 2D array representing a vector.
+        p1: 2D array of points representing a polygon.
+        p2: 2D array of points representing a polygon.
     """
     min1, max1 = float('+inf'), float('-inf')
     min2, max2 = float('+inf'), float('-inf')
@@ -98,6 +110,10 @@ def polygon_collision(p1, p2):
     counterclockwise direction.
 
     Source: https://hackmd.io/s/ryFmIZrsl
+
+    Args:
+        p1: 2D array of points representing a polygon.
+        p2: 2D array of points representing a polygon.
     """
     edges = edges_of(p1)
     edges += edges_of(p2)
@@ -120,6 +136,9 @@ def polygon_area(polygon):
     """
     Get the area of a polygon which is represented by a 2D array of points.
     Area is computed using the Shoelace Algorithm.
+
+    Args:
+        polygon: 2D array of points.
     """
     x = polygon[:, 0]
     y = polygon[:, 1]
