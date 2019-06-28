@@ -163,207 +163,167 @@
 <p>2D bounding box module.</p>
 <dl class="class">
 <dt id="bbox.bbox2d.BBox2D">
-<em class="property">class </em><code class="descname">BBox2D</code><span class="sig-paren">(</span><em>x</em>, <em>mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">BBox2D</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class to reprsent a 2D bounding box.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> – Sequence of length 4 representing (x, y, w, h) or (x1, y1, x2, y2) depending on <code class="docutils literal notranslate"><span class="pre">mode</span></code>.</li>
-<li><strong>mode</strong> (<a class="reference internal" href="#bbox.box_modes.BoxMode2D" title="bbox.box_modes.BoxMode2D"><em>BoxMode2D</em></a>) – Indicator of box format (x, y, w, h) or (x1, y1, x2, y2).         The values are 0 for XYWH format and 1 for XYXY format. See <a class="reference internal" href="#module-bbox.box_modes" title="bbox.box_modes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">box_modes</span></code></a>.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – Sequence of length 4 representing (x, y, w, h) or (x1, y1, x2, y2) depending on <code class="docutils literal notranslate"><span class="pre">mode</span></code>.</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="#bbox.box_modes.BoxMode2D" title="bbox.box_modes.BoxMode2D"><em>BoxMode2D</em></a>) – Indicator of box format (x, y, w, h) or (x1, y1, x2, y2).         The values are 0 for XYWH format and 1 for XYXY format. See <a class="reference internal" href="#module-bbox.box_modes" title="bbox.box_modes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">box_modes</span></code></a>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If <cite>x</cite> is not of length 4.</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If <cite>x</cite> is not of type {list, tuple, numpy.ndarray, BBox2D}</li>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If <cite>x</cite> is not of length 4.</p></li>
+<li><p><strong>TypeError</strong> – If <cite>x</cite> is not of type {list, tuple, numpy.ndarray, BBox2D}</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="bbox.bbox2d.BBox2D.aspect_ratio">
-<code class="descname">aspect_ratio</code><span class="sig-paren">(</span><em>ratio</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.aspect_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.aspect_ratio" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">aspect_ratio</code><span class="sig-paren">(</span><em class="sig-param">ratio</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.aspect_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.aspect_ratio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return bounding box mapped to new aspect ratio denoted by <code class="docutils literal notranslate"><span class="pre">ratio</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ratio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – The new ratio should be given as                 the result of <cite>width / height</cite>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ratio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – The new ratio should be given as                 the result of <cite>width / height</cite>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="bbox.bbox2d.BBox2D.center">
-<code class="descname">center</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.center" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">center</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.center" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return center coordinates of the bounding box.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="bbox.bbox2d.BBox2D.copy">
-<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.copy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a deep copy of this 2D bounding box.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d.BBox2D.h">
-<code class="descname">h</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.h" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">h</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.h" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syntactic sugar for height.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d.BBox2D.height">
-<code class="descname">height</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.height" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">height</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.height" title="Permalink to this definition">¶</a></dt>
 <dd><p>Height of bounding box.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="bbox.bbox2d.BBox2D.mul">
-<code class="descname">mul</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.mul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.mul" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mul</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.mul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.mul" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiply the box by a scalar. Used for scaling bounding boxes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> or <cite>int</cite>) – Scalar value to scale the box by.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> or <cite>int</cite>) – Scalar value to scale the box by.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="bbox.bbox2d.BBox2D.numpy">
-<code class="descname">numpy</code><span class="sig-paren">(</span><em>mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.numpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.numpy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">numpy</code><span class="sig-paren">(</span><em class="sig-param">mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.numpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.numpy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return bounding box as a numpy vector of length 4.
 Format depends on <code class="docutils literal notranslate"><span class="pre">mode</span></code> flag (default is XYWH).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> (<a class="reference internal" href="#bbox.box_modes.BoxMode2D" title="bbox.box_modes.BoxMode2D"><em>BoxMode2D</em></a>) – Mode in which to return the box. See <a class="reference internal" href="#module-bbox.box_modes" title="bbox.box_modes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">box_modes</span></code></a>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<a class="reference internal" href="#bbox.box_modes.BoxMode2D" title="bbox.box_modes.BoxMode2D"><em>BoxMode2D</em></a>) – Mode in which to return the box. See <a class="reference internal" href="#module-bbox.box_modes" title="bbox.box_modes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">box_modes</span></code></a>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="bbox.bbox2d.BBox2D.tolist">
-<code class="descname">tolist</code><span class="sig-paren">(</span><em>mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.tolist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.tolist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">tolist</code><span class="sig-paren">(</span><em class="sig-param">mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d.html#BBox2D.tolist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d.BBox2D.tolist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return bounding box as a <cite>list</cite> of 4 numbers.
 Format depends on <code class="docutils literal notranslate"><span class="pre">mode</span></code> flag (default is XYWH).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> (<a class="reference internal" href="#bbox.box_modes.BoxMode2D" title="bbox.box_modes.BoxMode2D"><em>BoxMode2D</em></a>) – Mode in which to return the box. See <a class="reference internal" href="#module-bbox.box_modes" title="bbox.box_modes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">box_modes</span></code></a>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<a class="reference internal" href="#bbox.box_modes.BoxMode2D" title="bbox.box_modes.BoxMode2D"><em>BoxMode2D</em></a>) – Mode in which to return the box. See <a class="reference internal" href="#module-bbox.box_modes" title="bbox.box_modes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">box_modes</span></code></a>.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d.BBox2D.w">
-<code class="descname">w</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.w" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">w</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.w" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syntactic sugar for width.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d.BBox2D.width">
-<code class="descname">width</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.width" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">width</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Width of bounding box.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d.BBox2D.x1">
-<code class="descname">x1</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.x1" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">x1</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.x1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Left x coordinate.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d.BBox2D.x2">
-<code class="descname">x2</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.x2" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">x2</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.x2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Right x coordinate.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d.BBox2D.y1">
-<code class="descname">y1</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.y1" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">y1</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.y1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Top y coordinate.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d.BBox2D.y2">
-<code class="descname">y2</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.y2" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">y2</code><a class="headerlink" href="#bbox.bbox2d.BBox2D.y2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bottom y coordinate.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -374,213 +334,170 @@ Format depends on <code class="docutils literal notranslate"><span class="pre">m
 <p>Bounding Box 2D list module.</p>
 <dl class="class">
 <dt id="bbox.bbox2d_list.BBox2DList">
-<em class="property">class </em><code class="descname">BBox2DList</code><span class="sig-paren">(</span><em>arr</em>, <em>mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">BBox2DList</code><span class="sig-paren">(</span><em class="sig-param">arr</em>, <em class="sig-param">mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Bounding Box 2D list class.</p>
 <dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.append">
-<code class="descname">append</code><span class="sig-paren">(</span><em>x</em>, <em>mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.append" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Append a bounding box to the bounding box list.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> – Bounding box to append.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> – Bounding box to append.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.copy">
-<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.copy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a deep copy of this bounding box list.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.delete" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete bounding box at index from this list.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Index of the box to delete.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Index of the box to delete.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.h">
-<code class="descname">h</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.h" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">h</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.h" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syntactic sugar for height.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.height">
-<code class="descname">height</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.height" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">height</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.height" title="Permalink to this definition">¶</a></dt>
 <dd><p>Height of bounding box of all boxes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.insert">
-<code class="descname">insert</code><span class="sig-paren">(</span><em>x</em>, <em>idx</em>, <em>mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.insert" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">idx</em>, <em class="sig-param">mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.insert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert a bounding box at a specific location.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> – Bounding box to insert.</li>
-<li><strong>idx</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Position where to insert bounding box.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – Bounding box to insert.</p></li>
+<li><p><strong>idx</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Position where to insert bounding box.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.mul">
-<code class="descname">mul</code><span class="sig-paren">(</span><em>scale</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.mul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.mul" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mul</code><span class="sig-paren">(</span><em class="sig-param">scale</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.mul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.mul" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scale the bounding boxes by the factor <cite>s</cite>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scale</strong> – Scalar factor to scale by.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scale</strong> – Scalar factor to scale by.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.numpy">
-<code class="descname">numpy</code><span class="sig-paren">(</span><em>mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.numpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.numpy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">numpy</code><span class="sig-paren">(</span><em class="sig-param">mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox2d_list.html#BBox2DList.numpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.numpy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return np.ndarray of shape (N, 4) representing all the bounding boxes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> (<a class="reference internal" href="#bbox.box_modes.BoxMode2D" title="bbox.box_modes.BoxMode2D"><em>BoxMode2D</em></a>) – Mode in which to return the box. See <a class="reference internal" href="#module-bbox.box_modes" title="bbox.box_modes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">box_modes</span></code></a>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<a class="reference internal" href="#bbox.box_modes.BoxMode2D" title="bbox.box_modes.BoxMode2D"><em>BoxMode2D</em></a>) – Mode in which to return the box. See <a class="reference internal" href="#module-bbox.box_modes" title="bbox.box_modes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">box_modes</span></code></a>.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.shape">
-<code class="descname">shape</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.shape" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">shape</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.shape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the shape of the bounding boxes container in the form (N, 4).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.w">
-<code class="descname">w</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.w" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">w</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.w" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syntactic sugar for width.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.width">
-<code class="descname">width</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.width" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">width</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Width of bounding box of all boxes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.x1">
-<code class="descname">x1</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.x1" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">x1</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.x1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Left x coordinate of all boxes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.x2">
-<code class="descname">x2</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.x2" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">x2</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.x2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Right x coordinate of all boxes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.y1">
-<code class="descname">y1</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.y1" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">y1</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.y1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Top y coordinate of all boxes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox2d_list.BBox2DList.y2">
-<code class="descname">y2</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.y2" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">y2</code><a class="headerlink" href="#bbox.bbox2d_list.BBox2DList.y2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bottom y coordinate of all boxes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -591,334 +508,274 @@ Format depends on <code class="docutils literal notranslate"><span class="pre">m
 <p>3D bounding box module.</p>
 <dl class="class">
 <dt id="bbox.bbox3d.BBox3D">
-<em class="property">class </em><code class="descname">BBox3D</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em>, <em>length=1</em>, <em>width=1</em>, <em>height=1</em>, <em>rw=1</em>, <em>rx=0</em>, <em>ry=0</em>, <em>rz=0</em>, <em>q=None</em>, <em>euler_angles=None</em>, <em>is_center=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox3d.html#BBox3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox3d.BBox3D" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">BBox3D</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">length=1</em>, <em class="sig-param">width=1</em>, <em class="sig-param">height=1</em>, <em class="sig-param">rw=1</em>, <em class="sig-param">rx=0</em>, <em class="sig-param">ry=0</em>, <em class="sig-param">rz=0</em>, <em class="sig-param">q=None</em>, <em class="sig-param">euler_angles=None</em>, <em class="sig-param">is_center=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox3d.html#BBox3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox3d.BBox3D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for 3D Bounding Boxes (3-orthotope).
 It takes either the center of the 3D bounding box or the back-bottom-left corner,         the width, height and length of the box, and quaternion values to indicate the rotation.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – X axis coordinate of 3D bounding box.             Can be either center of bounding box or back-bottom-left corner.</li>
-<li><strong>y</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Y axis coordinate of 3D bounding box.             Can be either center of bounding box or back-bottom-left corner.</li>
-<li><strong>z</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Z axis coordinate of 3D bounding box.             Can be either center of bounding box or back-bottom-left corner.</li>
-<li><strong>length</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, optional) – The length of the box (default is 1).</li>
-<li><strong>width</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, optional) – The width of the box (default is 1).</li>
-<li><strong>height</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, optional) – The height of the box (default is 1).</li>
-<li><strong>rw</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, optional) – The real part of the rotation quaternion (default is 1).</li>
-<li><strong>rx</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, optional) – The first element of the quaternion vector (default is 0).</li>
-<li><strong>ry</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, optional) – The second element of the quaternion vector (default is 0).</li>
-<li><strong>rz</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, optional) – The third element of the quaternion vector (default is 0).</li>
-<li><strong>euler_angles</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> of float, optional) – Sequence of             euler angles in <cite>[x, y, z]</cite> rotation order (the default is None).</li>
-<li><strong>is_center</strong> (<cite>bool</cite>, optional) – Flag to indicate if the provided coordinate is the             center of the box (the default is True).</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – X axis coordinate of 3D bounding box.             Can be either center of bounding box or back-bottom-left corner.</p></li>
+<li><p><strong>y</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Y axis coordinate of 3D bounding box.             Can be either center of bounding box or back-bottom-left corner.</p></li>
+<li><p><strong>z</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Z axis coordinate of 3D bounding box.             Can be either center of bounding box or back-bottom-left corner.</p></li>
+<li><p><strong>length</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, optional) – The length of the box (default is 1).</p></li>
+<li><p><strong>width</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, optional) – The width of the box (default is 1).</p></li>
+<li><p><strong>height</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, optional) – The height of the box (default is 1).</p></li>
+<li><p><strong>rw</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, optional) – The real part of the rotation quaternion (default is 1).</p></li>
+<li><p><strong>rx</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, optional) – The first element of the quaternion vector (default is 0).</p></li>
+<li><p><strong>ry</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, optional) – The second element of the quaternion vector (default is 0).</p></li>
+<li><p><strong>rz</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, optional) – The third element of the quaternion vector (default is 0).</p></li>
+<li><p><strong>euler_angles</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> of float, optional) – Sequence of             euler angles in <cite>[x, y, z]</cite> rotation order (the default is None).</p></li>
+<li><p><strong>is_center</strong> (<cite>bool</cite>, optional) – Flag to indicate if the provided coordinate is the             center of the box (the default is True).</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="attribute">
+</dd>
+</dl>
+<dl class="method">
 <dt id="bbox.bbox3d.BBox3D.center">
-<code class="descname">center</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.center" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">center</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.center" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attribute to access center coordinates of box in (x, y, z) format.
 Can be set to <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> of float.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">3-dimensional vector representing (x, y, z) coordinates                 of the box.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> of float</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If <cite>c</cite> is not a vector/list of length 3.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>3-dimensional vector representing (x, y, z) coordinates                 of the box.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> of float</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If <cite>c</cite> is not a vector/list of length 3.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="bbox.bbox3d.BBox3D.copy">
-<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox3d.html#BBox3D.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox3d.BBox3D.copy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/bbox3d.html#BBox3D.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.bbox3d.BBox3D.copy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox3d.BBox3D.cx">
-<code class="descname">cx</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.cx" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">cx</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.cx" title="Permalink to this definition">¶</a></dt>
 <dd><p>X coordinate of center.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.cy">
-<code class="descname">cy</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.cy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Y coordinate of center.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.cz">
-<code class="descname">cz</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.cz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Z coordinate of center.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.h">
-<code class="descname">h</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.h" title="Permalink to this definition">¶</a></dt>
-<dd><p>Syntactic sugar for height of the box.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.height">
-<code class="descname">height</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.height" title="Permalink to this definition">¶</a></dt>
-<dd><p>The height of the box.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.l">
-<code class="descname">l</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.l" title="Permalink to this definition">¶</a></dt>
-<dd><p>Syntactic sugar for length of the box.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.length">
-<code class="descname">length</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.length" title="Permalink to this definition">¶</a></dt>
-<dd><p>Length of the box.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.p">
-<code class="descname">p</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p" title="Permalink to this definition">¶</a></dt>
-<dd><p>Attribute to access ndarray of all corners of box in order.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">All corners of the bounding box in order.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> of float</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.p1">
-<code class="descname">p1</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p1" title="Permalink to this definition">¶</a></dt>
-<dd><p>Back-left-bottom point.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.p2">
-<code class="descname">p2</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p2" title="Permalink to this definition">¶</a></dt>
-<dd><p>Front-left-bottom point.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.p3">
-<code class="descname">p3</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p3" title="Permalink to this definition">¶</a></dt>
-<dd><p>Front-right-bottom point.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.p4">
-<code class="descname">p4</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p4" title="Permalink to this definition">¶</a></dt>
-<dd><p>Back-right-bottom point.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.p5">
-<code class="descname">p5</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p5" title="Permalink to this definition">¶</a></dt>
-<dd><p>Back-left-top point.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.p6">
-<code class="descname">p6</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p6" title="Permalink to this definition">¶</a></dt>
-<dd><p>Front-left-top point.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.p7">
-<code class="descname">p7</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p7" title="Permalink to this definition">¶</a></dt>
-<dd><p>Front-right-top point.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.p8">
-<code class="descname">p8</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p8" title="Permalink to this definition">¶</a></dt>
-<dd><p>Back-right-top point.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="bbox.bbox3d.BBox3D.q">
-<code class="descname">q</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.q" title="Permalink to this definition">¶</a></dt>
-<dd><p>Syntactic sugar for the rotation quaternion of the box.</p>
-<dl class="docutils">
-<dt>Returns</dt>
-<dd><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> of float: Quaternion values in (w, x, y, z) form.</dd>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.cy">
+<em class="property">property </em><code class="sig-name descname">cy</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.cy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Y coordinate of center.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.cz">
+<em class="property">property </em><code class="sig-name descname">cz</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.cz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Z coordinate of center.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.h">
+<em class="property">property </em><code class="sig-name descname">h</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.h" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic sugar for height of the box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.height">
+<em class="property">property </em><code class="sig-name descname">height</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>The height of the box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.l">
+<em class="property">property </em><code class="sig-name descname">l</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.l" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic sugar for length of the box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.length">
+<em class="property">property </em><code class="sig-name descname">length</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Length of the box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.p">
+<em class="property">property </em><code class="sig-name descname">p</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attribute to access ndarray of all corners of box in order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>All corners of the bounding box in order.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> of float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.p1">
+<em class="property">property </em><code class="sig-name descname">p1</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Back-left-bottom point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.p2">
+<em class="property">property </em><code class="sig-name descname">p2</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Front-left-bottom point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.p3">
+<em class="property">property </em><code class="sig-name descname">p3</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Front-right-bottom point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.p4">
+<em class="property">property </em><code class="sig-name descname">p4</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Back-right-bottom point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.p5">
+<em class="property">property </em><code class="sig-name descname">p5</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Back-left-top point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.p6">
+<em class="property">property </em><code class="sig-name descname">p6</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p6" title="Permalink to this definition">¶</a></dt>
+<dd><p>Front-left-top point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.p7">
+<em class="property">property </em><code class="sig-name descname">p7</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p7" title="Permalink to this definition">¶</a></dt>
+<dd><p>Front-right-top point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.p8">
+<em class="property">property </em><code class="sig-name descname">p8</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.p8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Back-right-top point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bbox.bbox3d.BBox3D.q">
+<em class="property">property </em><code class="sig-name descname">q</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.q" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic sugar for the rotation quaternion of the box.</p>
+<dl class="simple">
+<dt>Returns</dt><dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> of float: Quaternion values in (w, x, y, z) form.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="bbox.bbox3d.BBox3D.quaternion">
-<code class="descname">quaternion</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.quaternion" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">quaternion</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.quaternion" title="Permalink to this definition">¶</a></dt>
 <dd><p>The rotation quaternion.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Quaternion values in (w, x, y, z) form.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> of float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Quaternion values in (w, x, y, z) form.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code> of float</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox3d.BBox3D.w">
-<code class="descname">w</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.w" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">w</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.w" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syntactic sugar for width of the box.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="bbox.bbox3d.BBox3D.width">
-<code class="descname">width</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.width" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">width</code><a class="headerlink" href="#bbox.bbox3d.BBox3D.width" title="Permalink to this definition">¶</a></dt>
 <dd><p>The width of the box.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -929,7 +786,7 @@ Can be set to <code class="xref py py-class docutils literal notranslate"><span 
 <p>Enumerations of bounding box modes.</p>
 <dl class="class">
 <dt id="bbox.box_modes.BoxMode2D">
-<em class="property">class </em><code class="descname">BoxMode2D</code><a class="reference internal" href="_modules/bbox/box_modes.html#BoxMode2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.box_modes.BoxMode2D" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">BoxMode2D</code><a class="reference internal" href="_modules/bbox/box_modes.html#BoxMode2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.box_modes.BoxMode2D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
 <p>BoxMode2D defines the mode in which the bounding box is defined.</p>
 <p>Most data sources have bounding boxes defined as <code class="docutils literal notranslate"><span class="pre">XYWH</span></code> where <cite>XY</cite> is the top left corner         and <cite>W</cite> and <cite>H</cite> are the width and height of the box, respectively.</p>
@@ -937,12 +794,12 @@ Can be set to <code class="xref py py-class docutils literal notranslate"><span 
 <p>To help disambiguate between these two configurations, <cite>bbox</cite> provides a means to specify the         mode and maintains the state internally.</p>
 <dl class="attribute">
 <dt id="bbox.box_modes.BoxMode2D.XYWH">
-<code class="descname">XYWH</code><em class="property"> = 0</em><a class="headerlink" href="#bbox.box_modes.BoxMode2D.XYWH" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">XYWH</code><em class="property"> = 0</em><a class="headerlink" href="#bbox.box_modes.BoxMode2D.XYWH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="bbox.box_modes.BoxMode2D.XYXY">
-<code class="descname">XYXY</code><em class="property"> = 1</em><a class="headerlink" href="#bbox.box_modes.BoxMode2D.XYXY" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">XYXY</code><em class="property"> = 1</em><a class="headerlink" href="#bbox.box_modes.BoxMode2D.XYXY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -953,62 +810,52 @@ Can be set to <code class="xref py py-class docutils literal notranslate"><span 
 <p>Useful functions to deal with 3D geometry</p>
 <dl class="function">
 <dt id="bbox.geometry.edges_of">
-<code class="descname">edges_of</code><span class="sig-paren">(</span><em>vertices</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#edges_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.edges_of" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">edges_of</code><span class="sig-paren">(</span><em class="sig-param">vertices</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#edges_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.edges_of" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the vectors for the edges of the polygon defined by <cite>vertices</cite>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vertices</strong> – list of vertices of the polygon.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vertices</strong> – list of vertices of the polygon.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.geometry.get_plane">
-<code class="descname">get_plane</code><span class="sig-paren">(</span><em>a</em>, <em>b</em>, <em>c</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#get_plane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.get_plane" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_plane</code><span class="sig-paren">(</span><em class="sig-param">a</em>, <em class="sig-param">b</em>, <em class="sig-param">c</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#get_plane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.get_plane" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get plane equation from 3 points.
 Returns the coefficients of <cite>ax + by + cz + d = 0</cite></p>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.geometry.is_separating_axis">
-<code class="descname">is_separating_axis</code><span class="sig-paren">(</span><em>o</em>, <em>p1</em>, <em>p2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#is_separating_axis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.is_separating_axis" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_separating_axis</code><span class="sig-paren">(</span><em class="sig-param">o</em>, <em class="sig-param">p1</em>, <em class="sig-param">p2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#is_separating_axis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.is_separating_axis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return True and the push vector if <cite>o</cite> is a separating axis of <cite>p1</cite> and <cite>p2</cite>.
 Otherwise, return False and None.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>o</strong> – 2D array representing a vector.</li>
-<li><strong>p1</strong> – 2D array of points representing a polygon.</li>
-<li><strong>p2</strong> – 2D array of points representing a polygon.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>o</strong> – 2D array representing a vector.</p></li>
+<li><p><strong>p1</strong> – 2D array of points representing a polygon.</p></li>
+<li><p><strong>p2</strong> – 2D array of points representing a polygon.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.geometry.orthogonal">
-<code class="descname">orthogonal</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#orthogonal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.orthogonal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">orthogonal</code><span class="sig-paren">(</span><em class="sig-param">v</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#orthogonal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.orthogonal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a 90 degree clockwise rotation of the vector <cite>v</cite>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>v</strong> – 2D array representing a vector.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> – 2D array representing a vector.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.geometry.point_plane_dist">
-<code class="descname">point_plane_dist</code><span class="sig-paren">(</span><em>pt</em>, <em>plane</em>, <em>signed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#point_plane_dist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.point_plane_dist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">point_plane_dist</code><span class="sig-paren">(</span><em class="sig-param">pt</em>, <em class="sig-param">plane</em>, <em class="sig-param">signed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#point_plane_dist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.point_plane_dist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the signed distance from a point <cite>pt</cite> to a plane <cite>plane</cite>.
 Reference: <a class="reference external" href="http://mathworld.wolfram.com/Point-PlaneDistance.html">http://mathworld.wolfram.com/Point-PlaneDistance.html</a></p>
 <p>Plane is of the format [A, B, C, D], where the plane equation is Ax+By+Cz+D=0
@@ -1018,43 +865,36 @@ Point is of the form [x, y, z]
 
 <dl class="function">
 <dt id="bbox.geometry.polygon_area">
-<code class="descname">polygon_area</code><span class="sig-paren">(</span><em>polygon</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#polygon_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.polygon_area" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">polygon_area</code><span class="sig-paren">(</span><em class="sig-param">polygon</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#polygon_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.polygon_area" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the area of a polygon which is represented by a 2D array of points.
 Area is computed using the Shoelace Algorithm.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>polygon</strong> – 2D array of points.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>polygon</strong> – 2D array of points.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.geometry.polygon_collision">
-<code class="descname">polygon_collision</code><span class="sig-paren">(</span><em>p1</em>, <em>p2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#polygon_collision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.polygon_collision" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">polygon_collision</code><span class="sig-paren">(</span><em class="sig-param">p1</em>, <em class="sig-param">p2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#polygon_collision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.polygon_collision" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return True if the shapes collide. Otherwise, return False.</p>
 <p>p1 and p2 are np.arrays, the vertices of the polygons in the
 counterclockwise direction.</p>
 <p>Source: <a class="reference external" href="https://hackmd.io/s/ryFmIZrsl">https://hackmd.io/s/ryFmIZrsl</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>p1</strong> – 2D array of points representing a polygon.</li>
-<li><strong>p2</strong> – 2D array of points representing a polygon.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – 2D array of points representing a polygon.</p></li>
+<li><p><strong>p2</strong> – 2D array of points representing a polygon.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.geometry.polygon_intersection">
-<code class="descname">polygon_intersection</code><span class="sig-paren">(</span><em>poly1</em>, <em>poly2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#polygon_intersection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.polygon_intersection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">polygon_intersection</code><span class="sig-paren">(</span><em class="sig-param">poly1</em>, <em class="sig-param">poly2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/geometry.html#polygon_intersection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.geometry.polygon_intersection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the Sutherland-Hodgman algorithm to compute the intersection of 2 convex polygons.</p>
 </dd></dl>
 
@@ -1064,97 +904,85 @@ counterclockwise direction.</p>
 <p>Functions for metrics related to 2D and 3D bounding boxes.</p>
 <dl class="function">
 <dt id="bbox.metrics.iou_2d">
-<code class="descname">iou_2d</code><span class="sig-paren">(</span><em>a: bbox.bbox2d.BBox2D</em>, <em>b: bbox.bbox2d.BBox2D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#iou_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.iou_2d" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">iou_2d</code><span class="sig-paren">(</span><em class="sig-param">a: bbox.bbox2d.BBox2D</em>, <em class="sig-param">b: bbox.bbox2d.BBox2D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#iou_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.iou_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the Intersection over Union (IoU) of a pair of 2D bounding boxes.</p>
 <p>Alias for <cite>jaccard_index_2d</cite>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.metrics.iou_3d">
-<code class="descname">iou_3d</code><span class="sig-paren">(</span><em>a: bbox.bbox3d.BBox3D</em>, <em>b: bbox.bbox3d.BBox3D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#iou_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.iou_3d" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">iou_3d</code><span class="sig-paren">(</span><em class="sig-param">a: bbox.bbox3d.BBox3D</em>, <em class="sig-param">b: bbox.bbox3d.BBox3D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#iou_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.iou_3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the Intersection over Union (IoU) of a pair of 3D bounding boxes.</p>
 <p>Alias for <cite>jaccard_index_3d</cite>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.metrics.jaccard_index_2d">
-<code class="descname">jaccard_index_2d</code><span class="sig-paren">(</span><em>a: bbox.bbox2d.BBox2D</em>, <em>b: bbox.bbox2d.BBox2D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#jaccard_index_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.jaccard_index_2d" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">jaccard_index_2d</code><span class="sig-paren">(</span><em class="sig-param">a: bbox.bbox2d.BBox2D</em>, <em class="sig-param">b: bbox.bbox2d.BBox2D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#jaccard_index_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.jaccard_index_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the Jaccard Index / Intersection over Union (IoU) of a pair of 2D bounding boxes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2D</span></code>) – 2D bounding box.</li>
-<li><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2D</span></code>) – 2D bounding box.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2D</span></code>) – 2D bounding box.</p></li>
+<li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2D</span></code>) – 2D bounding box.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The IoU of the 2 bounding boxes.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The IoU of the 2 bounding boxes.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.metrics.jaccard_index_3d">
-<code class="descname">jaccard_index_3d</code><span class="sig-paren">(</span><em>a: bbox.bbox3d.BBox3D</em>, <em>b: bbox.bbox3d.BBox3D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#jaccard_index_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.jaccard_index_3d" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">jaccard_index_3d</code><span class="sig-paren">(</span><em class="sig-param">a: bbox.bbox3d.BBox3D</em>, <em class="sig-param">b: bbox.bbox3d.BBox3D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#jaccard_index_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.jaccard_index_3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the Jaccard Index / Intersection over Union (IoU) of a pair of 3D bounding boxes.
 We compute the IoU using the top-down bird’s eye view of the boxes.</p>
 <p><strong>Note</strong>: We follow the KITTI format and assume only yaw rotations (along z-axis).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox3D</span></code>) – 3D bounding box.</li>
-<li><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox3D</span></code>) – 3D bounding box.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox3D</span></code>) – 3D bounding box.</p></li>
+<li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox3D</span></code>) – 3D bounding box.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The IoU of the 2 bounding boxes.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The IoU of the 2 bounding boxes.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.metrics.multi_iou_2d">
-<code class="descname">multi_iou_2d</code><span class="sig-paren">(</span><em>a: bbox.bbox2d_list.BBox2DList</em>, <em>b: bbox.bbox2d_list.BBox2DList</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#multi_iou_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.multi_iou_2d" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">multi_iou_2d</code><span class="sig-paren">(</span><em class="sig-param">a: bbox.bbox2d_list.BBox2DList</em>, <em class="sig-param">b: bbox.bbox2d_list.BBox2DList</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#multi_iou_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.multi_iou_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the Intersection over Union (IoU) of two sets of 2D bounding boxes.</p>
 <p>Alias for <cite>multi_jaccard_index_2d</cite>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.metrics.multi_jaccard_index_2d">
-<code class="descname">multi_jaccard_index_2d</code><span class="sig-paren">(</span><em>a: bbox.bbox2d_list.BBox2DList</em>, <em>b: bbox.bbox2d_list.BBox2DList</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#multi_jaccard_index_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.multi_jaccard_index_2d" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">multi_jaccard_index_2d</code><span class="sig-paren">(</span><em class="sig-param">a: bbox.bbox2d_list.BBox2DList</em>, <em class="sig-param">b: bbox.bbox2d_list.BBox2DList</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/metrics.html#multi_jaccard_index_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.metrics.multi_jaccard_index_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the Jaccard Index (Intersection over Union) of two sets of 2D bounding boxes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>a</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2DList</span></code>) – List of 2D bounding boxes.</li>
-<li><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2DList</span></code>) – List of 2D bounding boxes.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2DList</span></code>) – List of 2D bounding boxes.</p></li>
+<li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2DList</span></code>) – List of 2D bounding boxes.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">IoU Matrix</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>IoU Matrix</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -1163,51 +991,43 @@ We compute the IoU using the top-down bird’s eye view of the boxes.</p>
 <p>Utility code.</p>
 <p>NMS adapted from Tomasz Malisiewicz’s &amp; Ross Girshick’s code.</p>
 <ul class="simple">
-<li>[<a class="reference external" href="https://gist.github.com/quantombone/1144423">https://gist.github.com/quantombone/1144423</a>]</li>
-<li>[<a class="reference external" href="https://github.com/rbgirshick/py-faster-rcnn/blob/master/lib/nms/py_cpu_nms.py">https://github.com/rbgirshick/py-faster-rcnn/blob/master/lib/nms/py_cpu_nms.py</a>]</li>
+<li><p>[<a class="reference external" href="https://gist.github.com/quantombone/1144423">https://gist.github.com/quantombone/1144423</a>]</p></li>
+<li><p>[<a class="reference external" href="https://github.com/rbgirshick/py-faster-rcnn/blob/master/lib/nms/py_cpu_nms.py">https://github.com/rbgirshick/py-faster-rcnn/blob/master/lib/nms/py_cpu_nms.py</a>]</p></li>
 </ul>
 <dl class="function">
 <dt id="bbox.utils.aspect_ratio">
-<code class="descname">aspect_ratio</code><span class="sig-paren">(</span><em>bbox</em>, <em>ratios</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/utils.html#aspect_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.utils.aspect_ratio" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">aspect_ratio</code><span class="sig-paren">(</span><em class="sig-param">bbox</em>, <em class="sig-param">ratios</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/utils.html#aspect_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.utils.aspect_ratio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enumerate box for each aspect ratio.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>bbox</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2D</span></code>) – 2D bounding box.</li>
-<li><strong>ratios</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>) – list of int/float values.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bbox</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2D</span></code>) – 2D bounding box.</p></li>
+<li><p><strong>ratios</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>) – list of int/float values.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox.utils.draw_cuboid">
-<code class="descname">draw_cuboid</code><span class="sig-paren">(</span><em>img</em>, <em>p</em>, <em>color=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/utils.html#draw_cuboid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.utils.draw_cuboid" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">draw_cuboid</code><span class="sig-paren">(</span><em class="sig-param">img</em>, <em class="sig-param">p</em>, <em class="sig-param">color=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/utils.html#draw_cuboid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.utils.draw_cuboid" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="bbox.utils.nms">
-<code class="descname">nms</code><span class="sig-paren">(</span><em>bbl</em>, <em>scores</em>, <em>thresh</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/utils.html#nms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.utils.nms" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">nms</code><span class="sig-paren">(</span><em class="sig-param">bbl</em>, <em class="sig-param">scores</em>, <em class="sig-param">thresh</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbox/utils.html#nms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbox.utils.nms" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform fast non-maximum suppression on a set of bounding boxes         given their associated confidences.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>bbl</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2DList</span></code>) – List of 2D bounding boxes.</li>
-<li><strong>scores</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Scores for each bounding box.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bbl</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BBox2DList</span></code>) – List of 2D bounding boxes.</p></li>
+<li><p><strong>scores</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>) – Scores for each bounding box.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If arguments are of incorrect type or size.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If arguments are of incorrect type or size.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

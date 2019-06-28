@@ -31,6 +31,7 @@ make -C docsrc html
 Run task `generate-docs` before this
 
 ```sh
+rm -rf docs
 cp -a docsrc/build/html docs
 ```
 
