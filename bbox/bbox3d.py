@@ -1,4 +1,4 @@
-""""""
+"""3D bounding box module."""
 
 # pylint: disable=invalid-name,missing-docstring
 
@@ -241,7 +241,7 @@ class BBox3D:
     @property
     def p1(self):
         """
-        :py:class:`float`: 
+        :py:class:`float`: Back-left-bottom point.
         """
         p = np.array([-self._l/2, -self._w/2, -self._h/2])
         p = self.__transform(p)
@@ -250,7 +250,7 @@ class BBox3D:
     @property
     def p2(self):
         """
-        :py:class:`float`: 
+        :py:class:`float`: Front-left-bottom point.
         """
         p = np.array([self._l/2, -self._w/2, -self._h/2])
         p = self.__transform(p)
@@ -259,7 +259,7 @@ class BBox3D:
     @property
     def p3(self):
         """
-        :py:class:`float`: 
+        :py:class:`float`: Front-right-bottom point.
         """
         p = np.array([self._l/2, self._w/2, -self._h/2])
         p = self.__transform(p)
@@ -268,7 +268,7 @@ class BBox3D:
     @property
     def p4(self):
         """
-        :py:class:`float`: 
+        :py:class:`float`: Back-right-bottom point.
         """
         p = np.array([-self._l/2, self._w/2, -self._h/2])
         p = self.__transform(p)
@@ -277,7 +277,7 @@ class BBox3D:
     @property
     def p5(self):
         """
-        :py:class:`float`: 
+        :py:class:`float`: Back-left-top point.
         """
         p = np.array([-self._l/2, -self._w/2, self._h/2])
         p = self.__transform(p)
@@ -286,7 +286,7 @@ class BBox3D:
     @property
     def p6(self):
         """
-        :py:class:`float`: 
+        :py:class:`float`: Front-left-top point.
         """
         p = np.array([self._l/2, -self._w/2, self._h/2])
         p = self.__transform(p)
@@ -295,7 +295,7 @@ class BBox3D:
     @property
     def p7(self):
         """
-        :py:class:`float`: 
+        :py:class:`float`: Front-right-top point.
         """
         p = np.array([self._l/2, self._w/2, self._h/2])
         p = self.__transform(p)
@@ -304,7 +304,7 @@ class BBox3D:
     @property
     def p8(self):
         """
-        :py:class:`float`: 
+        :py:class:`float`: Back-right-top point.
         """
         p = np.array([-self._l/2, self._w/2, self._h/2])
         p = self.__transform(p)
