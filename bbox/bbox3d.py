@@ -23,18 +23,21 @@ class BBox3D:
                 of the box, and quaternion values to indicate the rotation.
 
         Args:
-            x `float`: X axis coordinate of 3D bounding box. \
+            x :py:class:`float`: X axis coordinate of 3D bounding box. \
                 Can be either center of bounding box or back-bottom-left corner.
-            y `float`: Y axis coordinate of 3D bounding box. \
+            y :py:class:`float`: Y axis coordinate of 3D bounding box. \
                     Can be either center of bounding box or back-bottom-left corner.
-            z `float`: Z axis coordinate of 3D bounding box. \
+            z :py:class:`float`: Z axis coordinate of 3D bounding box. \
                     Can be either center of bounding box or back-bottom-left corner.
-            length (`float`, optional): The length of the box (the default is 1).
-            width (`float`, optional): The width of the box (the default is 1).
-            height (`float`, optional): The height of the box (the default is 1).
-            rw (`float`, optional): The real part of the rotation quaternion (the default is 1).
-            rx (`int`, optional): The first element of the quaternion vector (the default is 0).
-            ry (`int`, optional): The second element of the quaternion vector (the default is 0).
+            length (:py:class:`float`, optional): The length of the box (the default is 1).
+            width (:py:class:`float`, optional): The width of the box (the default is 1).
+            height (:py:class:`float`, optional): The height of the box (the default is 1).
+            rw (:py:class:`float`, optional): The real part of the rotation quaternion \
+                (the default is 1).
+            rx (:py:class:`int`, optional): The first element of the quaternion vector \
+                (the default is 0).
+            ry (:py:class:`int`, optional): The second element of the quaternion vector \
+                (the default is 0).
             rz : int, optional
                 The third element of the quaternion vector (the default is 0).
             euler_angles : list or ndarray of float, optional
@@ -70,10 +73,11 @@ class BBox3D:
     def center(self):
         """
         Attribute to access center coordinates of box in (x, y, z) format.
-        Can be set to `list` or `ndarray` of float.
+        Can be set to :py:class:`list` or :py:class:`ndarray` of float.
 
         Returns:
-            `ndarray` of float: 3-dimensional vector representing (x, y, z) coordinates of the box.
+            :py:class:`ndarray` of float: 3-dimensional vector representing (x, y, z) coordinates \
+                of the box.
 
         Raises:
             ValueError: If `c` is not a vector/list of length 3.
@@ -97,7 +101,7 @@ class BBox3D:
     @property
     def cx(self):
         """
-        X coordinate of center.
+        :py:class:`float`: X coordinate of center.
         """
         return self._cx
 
@@ -108,7 +112,7 @@ class BBox3D:
     @property
     def cy(self):
         """
-        Y coordinate of center.
+        :py:class:`float`: Y coordinate of center.
         """
         return self._cy
 
@@ -119,7 +123,7 @@ class BBox3D:
     @property
     def cz(self):
         """
-        Z coordinate of center.
+        :py:class:`float`: Z coordinate of center.
         """
         return self._cz
 
@@ -133,7 +137,7 @@ class BBox3D:
         Syntactic sugar for the rotation quaternion of the box.
 
         Returns
-            `ndarray` of float: Quaternion values in (w, x, y, z) form.
+            :py:class:`ndarray` of float: Quaternion values in (w, x, y, z) form.
         """
         return np.hstack((self._q.real, self._q.imaginary))
 
@@ -153,7 +157,7 @@ class BBox3D:
         The rotation quaternion.
 
         Returns:
-            `ndarray` of float: Quaternion values in (w, x, y, z) form.
+            :py:class:`ndarray` of float: Quaternion values in (w, x, y, z) form.
         """
         return self.q
 
@@ -164,7 +168,7 @@ class BBox3D:
     @property
     def l(self):
         """
-        Syntactic sugar for length of the box.
+        :py:class:`float`: Syntactic sugar for length of the box.
         """
         return self._l
 
@@ -175,7 +179,7 @@ class BBox3D:
     @property
     def length(self):
         """
-        Length of the box.
+        :py:class:`float`: Length of the box.
         """
         return self._l
 
@@ -186,7 +190,7 @@ class BBox3D:
     @property
     def w(self):
         """
-        Syntactic sugar for width of the box.
+        :py:class:`float`: Syntactic sugar for width of the box.
         """
         return self._w
 
@@ -197,7 +201,7 @@ class BBox3D:
     @property
     def width(self):
         """
-        The width of the box.
+        :py:class:`float`: The width of the box.
         """
         return self._w
 
@@ -208,7 +212,7 @@ class BBox3D:
     @property
     def h(self):
         """
-        Syntactic sugar for height of the box.
+        :py:class:`float`: Syntactic sugar for height of the box.
         """
         return self._h
 
@@ -219,7 +223,7 @@ class BBox3D:
     @property
     def height(self):
         """
-        The height of the box.
+        :py:class:`float`: The height of the box.
         """
         return self._h
 
@@ -236,48 +240,72 @@ class BBox3D:
 
     @property
     def p1(self):
+        """
+        :py:class:`float`: 
+        """
         p = np.array([-self._l/2, -self._w/2, -self._h/2])
         p = self.__transform(p)
         return p
 
     @property
     def p2(self):
+        """
+        :py:class:`float`: 
+        """
         p = np.array([self._l/2, -self._w/2, -self._h/2])
         p = self.__transform(p)
         return p
 
     @property
     def p3(self):
+        """
+        :py:class:`float`: 
+        """
         p = np.array([self._l/2, self._w/2, -self._h/2])
         p = self.__transform(p)
         return p
 
     @property
     def p4(self):
+        """
+        :py:class:`float`: 
+        """
         p = np.array([-self._l/2, self._w/2, -self._h/2])
         p = self.__transform(p)
         return p
 
     @property
     def p5(self):
+        """
+        :py:class:`float`: 
+        """
         p = np.array([-self._l/2, -self._w/2, self._h/2])
         p = self.__transform(p)
         return p
 
     @property
     def p6(self):
+        """
+        :py:class:`float`: 
+        """
         p = np.array([self._l/2, -self._w/2, self._h/2])
         p = self.__transform(p)
         return p
 
     @property
     def p7(self):
+        """
+        :py:class:`float`: 
+        """
         p = np.array([self._l/2, self._w/2, self._h/2])
         p = self.__transform(p)
         return p
 
     @property
     def p8(self):
+        """
+        :py:class:`float`: 
+        """
         p = np.array([-self._l/2, self._w/2, self._h/2])
         p = self.__transform(p)
         return p
@@ -288,7 +316,7 @@ class BBox3D:
         Attribute to access ndarray of all corners of box in order.
 
         Returns:
-            `ndarray` of float: All corners of the bounding box in order.
+            :py:class:`ndarray` of float: All corners of the bounding box in order.
         """
         x = np.vstack([self.p1, self.p2, self.p3, self.p4,
                        self.p5, self.p6, self.p7, self.p8])
