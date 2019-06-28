@@ -1,4 +1,4 @@
-""""""
+"""Functions for metrics related to 2D and 3D bounding boxes."""
 
 # pylint: disable=invalid-name,missing-docstring,assignment-from-no-return,logging-format-interpolation
 
@@ -12,16 +12,25 @@ from bbox.geometry import polygon_area, polygon_collision, polygon_intersection
 logger = logging.getLogger(__name__)
 
 
+def iou_2d(a: BBox2D, b: BBox2D):
+    """
+    Compute the Intersection over Union (IoU) of a pair of 2D bounding boxes.
+
+    Alias for `jaccard_index_2d`.
+    """
+    return jaccard_index_2d(a, b)
+
+
 def jaccard_index_2d(a: BBox2D, b: BBox2D):
     """
     Compute the Jaccard Index / Intersection over Union (IoU) of a pair of 2D bounding boxes.
 
     Args:
-    a (`BBox2D`): 2D bounding box.
-    b (`BBox2D`): 2D bounding box.
+        a (`BBox2D`): 2D bounding box.
+        b (`BBox2D`): 2D bounding box.
 
     Returns:
-        float: The IoU of the 2 bounding boxes.
+        :py:class:`float`: The IoU of the 2 bounding boxes.
     """
 
     xA = np.maximum(a.x1, b.x1)
@@ -55,16 +64,25 @@ def jaccard_index_2d(a: BBox2D, b: BBox2D):
     return iou
 
 
+def multi_iou_2d(a: BBox2DList, b: BBox2DList):
+    """
+    Compute the Intersection over Union (IoU) of two sets of 2D bounding boxes.
+
+    Alias for `multi_jaccard_index_2d`.
+    """
+    return multi_jaccard_index_2d(a, b)
+
+
 def multi_jaccard_index_2d(a: BBox2DList, b: BBox2DList):
     """
     Compute the Jaccard Index (Intersection over Union) of two sets of 2D bounding boxes.
 
     Args:
         a (`BBox2DList`): List of 2D bounding boxes.
-    b (`BBox2DList`): List of 2D bounding boxes.
+        b (`BBox2DList`): List of 2D bounding boxes.
 
     Returns:
-        ndarray: IoU Matrix
+        :py:class:`ndarray`: IoU Matrix
     """
 
     # We need to add a trailing dimension so that max/min gives us a (N,N) matrix
@@ -106,6 +124,14 @@ def multi_jaccard_index_2d(a: BBox2DList, b: BBox2DList):
 
     return iou
 
+def iou_3d(a: BBox3D, b: BBox3D):
+    """
+    Compute the Intersection over Union (IoU) of a pair of 3D bounding boxes.
+
+    Alias for `jaccard_index_3d`.
+    """
+    return jaccard_index_3d(a, b)
+
 
 def jaccard_index_3d(a: BBox3D, b: BBox3D):
     """
@@ -115,11 +141,11 @@ def jaccard_index_3d(a: BBox3D, b: BBox3D):
     **Note**: We follow the KITTI format and assume only yaw rotations (along z-axis).
 
     Args:
-    a (`BBox3D`): 3D bounding box.
-    b (`BBox3D`): 3D bounding box.
+        a (`BBox3D`): 3D bounding box.
+        b (`BBox3D`): 3D bounding box.
 
     Returns:
-        float: The IoU of the 2 bounding boxes.
+        :py:class:`float`: The IoU of the 2 bounding boxes.
     """
     # check if the two boxes don't overlap
     if not polygon_collision(a.p[0:4, 0:2], b.p[0:4, 0:2]):
