@@ -11,41 +11,33 @@ from pyquaternion import Quaternion
 class BBox3D:
     """
     Class for 3D Bounding Boxes (3-orthotope).
+    It takes either the center of the 3D bounding box or the back-bottom-left corner, \
+        the width, height and length of the box, and quaternion values to indicate the rotation.
+
+    Args:
+        x (:py:class:`float`): X axis coordinate of 3D bounding box. \
+            Can be either center of bounding box or back-bottom-left corner.
+        y (:py:class:`float`): Y axis coordinate of 3D bounding box. \
+            Can be either center of bounding box or back-bottom-left corner.
+        z (:py:class:`float`): Z axis coordinate of 3D bounding box. \
+            Can be either center of bounding box or back-bottom-left corner.
+        length (:py:class:`float`, optional): The length of the box (default is 1).
+        width (:py:class:`float`, optional): The width of the box (default is 1).
+        height (:py:class:`float`, optional): The height of the box (default is 1).
+        rw (:py:class:`float`, optional): The real part of the rotation quaternion (default is 1).
+        rx (:py:class:`int`, optional): The first element of the quaternion vector (default is 0).
+        ry (:py:class:`int`, optional): The second element of the quaternion vector (default is 0).
+        rz (:py:class:`int`, optional): The third element of the quaternion vector (default is 0).
+        euler_angles (:py:class:`list` or :py:class:`ndarray` of float, optional): Sequence of \
+            euler angles in `[x, y, z]` rotation order (the default is None).
+        is_center (`bool`, optional): Flag to indicate if the provided coordinate is the \
+            center of the box (the default is True).
     """
 
     def __init__(self, x, y, z,
                  length=1, width=1, height=1,
                  rw=1, rx=0, ry=0, rz=0, q=None,
                  euler_angles=None, is_center=True):
-        """
-        Constructor for 3D bounding box (3-orthotope). It takes either the center of the \
-            3D bounding box or the back-bottom-left corner, the width, height and length \
-                of the box, and quaternion values to indicate the rotation.
-
-        Args:
-            x :py:class:`float`: X axis coordinate of 3D bounding box. \
-                Can be either center of bounding box or back-bottom-left corner.
-            y :py:class:`float`: Y axis coordinate of 3D bounding box. \
-                    Can be either center of bounding box or back-bottom-left corner.
-            z :py:class:`float`: Z axis coordinate of 3D bounding box. \
-                    Can be either center of bounding box or back-bottom-left corner.
-            length (:py:class:`float`, optional): The length of the box (the default is 1).
-            width (:py:class:`float`, optional): The width of the box (the default is 1).
-            height (:py:class:`float`, optional): The height of the box (the default is 1).
-            rw (:py:class:`float`, optional): The real part of the rotation quaternion \
-                (the default is 1).
-            rx (:py:class:`int`, optional): The first element of the quaternion vector \
-                (the default is 0).
-            ry (:py:class:`int`, optional): The second element of the quaternion vector \
-                (the default is 0).
-            rz : int, optional
-                The third element of the quaternion vector (the default is 0).
-            euler_angles : list or ndarray of float, optional
-                Sequence of euler angles in `[x, y, z]` rotation order (the default is None).
-            is_center (`bool`, optional): Flag to indicate if the provided coordinate is the \
-                center of the box (the default is True).
-
-        """
         if is_center:
             self._cx, self._cy, self._cz = x, y, z
             self._c = np.array([x, y, z])

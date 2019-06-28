@@ -1,15 +1,17 @@
 """
 Utility code.
+
 NMS adapted from Tomasz Malisiewicz's & Ross Girshick's code.
-[https://gist.github.com/quantombone/1144423]
-[https://github.com/rbgirshick/py-faster-rcnn/blob/master/lib/nms/py_cpu_nms.py]
+
+- [https://gist.github.com/quantombone/1144423]
+- [https://github.com/rbgirshick/py-faster-rcnn/blob/master/lib/nms/py_cpu_nms.py]
 """
 
 # pylint: disable=invalid-name,missing-docstring,assignment-from-no-return,logging-format-interpolation
 
 import numpy as np
 
-from bbox import BBox2D, BBox2DList
+from bbox import BBox2DList
 from bbox.box_modes import XYXY
 
 
@@ -17,9 +19,25 @@ def nms(bbl, scores, thresh):
     """
     Perform fast non-maximum suppression on a set of bounding boxes \
         given their associated confidences.
+
+    Args:
+        bbl (:py:class:`BBox2DList`): List of 2D bounding boxes.
+        scores (:py:class:`list` or :py:class:`ndarray`): Scores for each bounding box.
+
+    Raises:
+        ValueError: If arguments are of incorrect type or size.
     """
     if bbl.shape[0] == 0:
         return np.array([]).astype(np.int)
+
+    if not isinstance(scores, (list, np.ndarray)):
+        raise ValueError("`scores` should be a list of numpy array")
+
+    # convert to numpy array if it is a list
+    scores = np.asarray(scores)
+
+    if not scores.shape[0] == bbl.shape[0]:
+        raise ValueError("box list and scores should have the same number of elements.")
 
     areas = bbl.w * bbl.h
     order = scores.argsort()[::-1]
@@ -46,9 +64,13 @@ def nms(bbl, scores, thresh):
     return np.array(keep).astype(np.int)
 
 
-def aspect_ratio(bbox: BBox2D, ratios):
+def aspect_ratio(bbox, ratios):
     """
     Enumerate box for each aspect ratio.
+
+    Args:
+        bbox (:py:class:`BBox2D`): 2D bounding box.
+        ratios (:py:class:`list`): list of int/float values.
     """
 
     cx, cy = bbox.center()

@@ -26,8 +26,8 @@ def jaccard_index_2d(a: BBox2D, b: BBox2D):
     Compute the Jaccard Index / Intersection over Union (IoU) of a pair of 2D bounding boxes.
 
     Args:
-        a (`BBox2D`): 2D bounding box.
-        b (`BBox2D`): 2D bounding box.
+        a (:py:class:`BBox2D`): 2D bounding box.
+        b (:py:class:`BBox2D`): 2D bounding box.
 
     Returns:
         :py:class:`float`: The IoU of the 2 bounding boxes.
@@ -78,8 +78,8 @@ def multi_jaccard_index_2d(a: BBox2DList, b: BBox2DList):
     Compute the Jaccard Index (Intersection over Union) of two sets of 2D bounding boxes.
 
     Args:
-        a (`BBox2DList`): List of 2D bounding boxes.
-        b (`BBox2DList`): List of 2D bounding boxes.
+        a (:py:class:`BBox2DList`): List of 2D bounding boxes.
+        b (:py:class:`BBox2DList`): List of 2D bounding boxes.
 
     Returns:
         :py:class:`ndarray`: IoU Matrix
@@ -141,8 +141,8 @@ def jaccard_index_3d(a: BBox3D, b: BBox3D):
     **Note**: We follow the KITTI format and assume only yaw rotations (along z-axis).
 
     Args:
-        a (`BBox3D`): 3D bounding box.
-        b (`BBox3D`): 3D bounding box.
+        a (:py:class:`BBox3D`): 3D bounding box.
+        b (:py:class:`BBox3D`): 3D bounding box.
 
     Returns:
         :py:class:`float`: The IoU of the 2 bounding boxes.
