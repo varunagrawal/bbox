@@ -1,5 +1,4 @@
 from bbox import BBox3D
-from bbox.utils import draw_cuboid
 from bbox.metrics import jaccard_index_3d
 
 import numpy as np
@@ -244,7 +243,7 @@ class TestBBox3d:
         for i in range(u.shape[0]):
             u[i] = self.distortion_correction(u[i], dist_coeff, img.size)
 
-        img = draw_cuboid(img, u)
+        img = self.draw_cuboid(img, u)
         # img.show()
 
     @staticmethod
@@ -275,6 +274,27 @@ class TestBBox3d:
         # correct for distortion
         v = u + (u - np.array([w, h])/2)*distortion
         return v
+
+    @staticmethod
+    def draw_cuboid(img, p, color=None):
+        draw = ImageDraw.Draw(img)
+        color = color or tuple(np.random.choice(range(256), size=3))
+
+        draw.line([p[0][0], p[0][1], p[1][0], p[1][1]], fill=color, width=2)
+        draw.line([p[1][0], p[1][1], p[5][0], p[5][1]], fill=color, width=2)
+        draw.line([p[5][0], p[5][1], p[4][0], p[4][1]], fill=color, width=2)
+        draw.line([p[4][0], p[4][1], p[0][0], p[0][1]], fill=color, width=2)
+
+        draw.line([p[3][0], p[3][1], p[2][0], p[2][1]], fill=color, width=2)
+        draw.line([p[2][0], p[2][1], p[6][0], p[6][1]], fill=color, width=2)
+        draw.line([p[6][0], p[6][1], p[7][0], p[7][1]], fill=color, width=2)
+        draw.line([p[7][0], p[7][1], p[3][0], p[3][1]], fill=color, width=2)
+
+        draw.line([p[0][0], p[0][1], p[3][0], p[3][1]], fill=color, width=2)
+        draw.line([p[1][0], p[1][1], p[2][0], p[2][1]], fill=color, width=2)
+        draw.line([p[5][0], p[5][1], p[6][0], p[6][1]], fill=color, width=2)
+        draw.line([p[4][0], p[4][1], p[7][0], p[7][1]], fill=color, width=2)
+        return img
 
     def test_repr(self):
         representation = "BBox3D(x=-49.19743041908411, y=12.38666074615689, z=0.782056864653507), "\

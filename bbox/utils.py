@@ -88,29 +88,3 @@ def aspect_ratio(bbox, ratios):
 
     boxes = BBox2DList(stack.T, mode=XYXY)
     return boxes
-
-
-def draw_cuboid(img, p, color=None):
-    try:
-        from PIL import ImageDraw
-    except ImportError:
-        return
-
-    draw = ImageDraw.Draw(img)
-    color = color or tuple(np.random.choice(range(256), size=3))
-
-    draw.line([p[0][0], p[0][1], p[1][0], p[1][1]], fill=color, width=2)
-    draw.line([p[1][0], p[1][1], p[5][0], p[5][1]], fill=color, width=2)
-    draw.line([p[5][0], p[5][1], p[4][0], p[4][1]], fill=color, width=2)
-    draw.line([p[4][0], p[4][1], p[0][0], p[0][1]], fill=color, width=2)
-
-    draw.line([p[3][0], p[3][1], p[2][0], p[2][1]], fill=color, width=2)
-    draw.line([p[2][0], p[2][1], p[6][0], p[6][1]], fill=color, width=2)
-    draw.line([p[6][0], p[6][1], p[7][0], p[7][1]], fill=color, width=2)
-    draw.line([p[7][0], p[7][1], p[3][0], p[3][1]], fill=color, width=2)
-
-    draw.line([p[0][0], p[0][1], p[3][0], p[3][1]], fill=color, width=2)
-    draw.line([p[1][0], p[1][1], p[2][0], p[2][1]], fill=color, width=2)
-    draw.line([p[5][0], p[5][1], p[6][0], p[6][1]], fill=color, width=2)
-    draw.line([p[4][0], p[4][1], p[7][0], p[7][1]], fill=color, width=2)
-    return img
