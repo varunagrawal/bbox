@@ -23,7 +23,7 @@
 Easily work with bounding boxes using a simple class that abstracts and maintains various attributes.
 
 ```python
-from bbox import BBox2D
+from bbox import BBox2D, XYXY
 
 # x, y, w, h
 box = BBox2D([0, 0, 32, 32])
