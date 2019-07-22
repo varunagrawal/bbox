@@ -76,8 +76,6 @@ class TestBBox2D(object):
     def test_invalid_x1(self):
         bbox = BBox2D([24, 48, 64, 96])
         with pytest.raises(ValueError):
-            bbox.x1 = -25
-        with pytest.raises(ValueError):
             bbox.x1 = bbox.x2 + 1
 
     def test_x2(self):
@@ -87,8 +85,6 @@ class TestBBox2D(object):
 
     def test_invalid_x2(self):
         bbox = BBox2D([24, 48, 64, 96])
-        with pytest.raises(ValueError):
-            bbox.x2 = -25
         with pytest.raises(ValueError):
             bbox.x2 = bbox.x1 - 1
 
@@ -100,8 +96,6 @@ class TestBBox2D(object):
     def test_invalid_y1(self):
         bbox = BBox2D([24, 48, 64, 96])
         with pytest.raises(ValueError):
-            bbox.y1 = -25
-        with pytest.raises(ValueError):
             bbox.y1 = bbox.y2 + 1
 
     def test_y2(self):
@@ -111,8 +105,6 @@ class TestBBox2D(object):
 
     def test_invalid_y2(self):
         bbox = BBox2D([24, 48, 64, 96])
-        with pytest.raises(ValueError):
-            bbox.y2 = -25
         with pytest.raises(ValueError):
             bbox.y2 = bbox.y1 - 1
 

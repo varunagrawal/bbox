@@ -9,7 +9,7 @@ from bbox import utils, metrics
 
 __author__ = "Varun Agrawal"
 __copyright__ = "GTRC & Argo AI LLC"
-__version__ = "0.8.4"
+__version__ = "0.9.1"
 __maintainer__ = "Varun Agrawal"
 __email__ = "varunagrawal@gatech.com"
 __status__ = "Beta"

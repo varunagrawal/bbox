@@ -45,12 +45,14 @@ class BBox2D:
                 "Expected input to constructor to be a 4 element " \
                     "list, tuple, numpy ndarray, or BBox2D object.")
 
-        if mode:
+        if mode == XYXY:
             w = x[2] - x[0] + 1
             h = x[3] - x[1] + 1
-        else:
+        elif mode == XYWH:
             w = x[2]
             h = x[3]
+        else:
+            raise ValueError('argument mode has invalid value')
 
         self._x1 = np.float(x[0])
         self._y1 = np.float(x[1])
@@ -78,9 +80,7 @@ class BBox2D:
 
     @x1.setter
     def x1(self, x):
-        if x < 0:
-            raise ValueError("Invalid input. Should be non-negative.")
-        elif x > self.x2:
+        if x > self.x2:
             raise ValueError("Value is greater than x2={0}".format(self.x2))
 
         self._x1 = x
@@ -95,9 +95,7 @@ class BBox2D:
 
     @x2.setter
     def x2(self, x):
-        if x < 0:
-            raise ValueError("Invalid input. Should be non-negative.")
-        elif x < self.x1:
+        if x < self.x1:
             raise ValueError("Value is lesser than x1={0}".format(self.x1))
 
         self._x2 = x
@@ -112,9 +110,7 @@ class BBox2D:
 
     @y1.setter
     def y1(self, y):
-        if y < 0:
-            raise ValueError("Invalid input. Should be non-negative.")
-        elif y > self.y2:
+        if y > self.y2:
             raise ValueError("Value is greater than y2={0}".format(self.y2))
 
         self._y1 = y
@@ -129,9 +125,7 @@ class BBox2D:
 
     @y2.setter
     def y2(self, y):
-        if y < 0:
-            raise ValueError("Invalid input. Should be non-negative.")
-        elif y < self.y1:
+        if y < self.y1:
             raise ValueError("Value is lesser than y1={0}".format(self.y1))
 
         self._y2 = y
