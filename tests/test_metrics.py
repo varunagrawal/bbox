@@ -25,12 +25,12 @@ def naive_intersection_over_union(boxA, boxB):
     yB = min(boxA[3], boxB[3])
 
     # compute the area of intersection rectangle
-    interArea = (xB - xA + 1) * (yB - yA + 1)
+    interArea = (xB - xA) * (yB - yA)
 
     # compute the area of both the prediction and ground-truth
     # rectangles
-    boxAArea = (boxA[2] - boxA[0] + 1) * (boxA[3] - boxA[1] + 1)
-    boxBArea = (boxB[2] - boxB[0] + 1) * (boxB[3] - boxB[1] + 1)
+    boxAArea = (boxA[2] - boxA[0]) * (boxA[3] - boxA[1])
+    boxBArea = (boxB[2] - boxB[0]) * (boxB[3] - boxB[1])
 
     # compute the intersection over union by taking the intersection
     # area and dividing it by the sum of prediction + ground-truth
@@ -50,8 +50,8 @@ def test_single_jaccard_index_2d():
     b = BBox2D(bbox2)
     iou = jaccard_index_2d(a, b)
 
-    bbox1[2], bbox1[3] = bbox1[2] + bbox1[0] - 1, bbox1[3] + bbox1[1] - 1
-    bbox2[2], bbox2[3] = bbox2[2] + bbox2[0] - 1, bbox2[3] + bbox2[1] - 1
+    bbox1[2], bbox1[3] = bbox1[2] + bbox1[0], bbox1[3] + bbox1[1]
+    bbox2[2], bbox2[3] = bbox2[2] + bbox2[0], bbox2[3] + bbox2[1]
 
     gt_iou = naive_intersection_over_union(bbox1, bbox2)
 
@@ -92,8 +92,8 @@ def test_multi_jaccard_index_2d():
     gt_iou = np.zeros((len(bboxes_1), len(bboxes_2)))
     for i, x in enumerate(bboxes_1):
         for j, y in enumerate(bboxes_2):
-            bx = [x[0], x[1], x[2]+x[0]-1, x[3]+x[1]-1]
-            by = [y[0], y[1], y[2]+y[0]-1, y[3]+y[1]-1]
+            bx = [x[0], x[1], x[2]+x[0], x[3]+x[1]]
+            by = [y[0], y[1], y[2]+y[0], y[3]+y[1]]
             gt_iou[i, j] = naive_intersection_over_union(bx, by)
 
     assert gt_iou.shape == iou.shape

@@ -187,19 +187,19 @@ class BBox2DList:
         """
         :py:class:`float`: Width of bounding box of all boxes.
         """
-        return self.x2 - self.x1 + 1
+        return self.x2 - self.x1
 
     @width.setter
     def width(self, w):
         w = self._convert_attribute_input(w)
-        self.x2 = self.x1 + w - 1
+        self.x2 = self.x1 + w
 
     @property
     def w(self):
         """
         :py:class:`float`: Syntactic sugar for width.
         """
-        return self.x2 - self.x1 + 1
+        return self.x2 - self.x1
 
     @w.setter
     def w(self, w):
@@ -210,19 +210,19 @@ class BBox2DList:
         """
         :py:class:`float`: Height of bounding box of all boxes.
         """
-        return self.y2 - self.y1 + 1
+        return self.y2 - self.y1
 
     @height.setter
     def height(self, h):
         h = self._convert_attribute_input(h)
-        self.y2 = self.y1 + h - 1
+        self.y2 = self.y1 + h
 
     @property
     def h(self):
         """
         :py:class:`float`: Syntactic sugar for height.
         """
-        return self.y2 - self.y1 + 1
+        return self.y2 - self.y1
 
     @h.setter
     def h(self, h):
@@ -334,6 +334,6 @@ class BBox2DList:
             return self.bboxes
         else:
             bboxes = deepcopy(self.bboxes)
-            bboxes[:, 2] = bboxes[:, 2] - bboxes[:, 0] + 1
-            bboxes[:, 3] = bboxes[:, 3] - bboxes[:, 1] + 1
+            bboxes[:, 2] = bboxes[:, 2] - bboxes[:, 0]
+            bboxes[:, 3] = bboxes[:, 3] - bboxes[:, 1]
             return bboxes

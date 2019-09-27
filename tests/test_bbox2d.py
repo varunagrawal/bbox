@@ -47,15 +47,15 @@ class TestBBox2D(object):
     def test_copy_constructor(self):
         bbox1 = BBox2D([10, 11, 510, 511])
         bbox2 = BBox2D(bbox1)
-        self.attributes_test(bbox2, 10, 11, 519, 521, 510, 511)
+        self.attributes_test(bbox2, 10, 11, 520, 522, 510, 511)
 
     def test_basic_box(self):
         bbox1 = BBox2D([0, 0, 500, 500])
-        self.attributes_test(bbox1, 0, 0, 499, 499, 500, 500)
+        self.attributes_test(bbox1, 0, 0, 500, 500, 500, 500)
 
     def test_nonbasic_box(self):
         bbox2 = BBox2D([24, 48, 64, 96])
-        self.attributes_test(bbox2, 24, 48, 87, 143, 64, 96)
+        self.attributes_test(bbox2, 24, 48, 88, 144, 64, 96)
 
     def test_equality(self):
         b1 = BBox2D([1, 2, 3, 4])
@@ -80,8 +80,8 @@ class TestBBox2D(object):
 
     def test_x2(self):
         bbox = BBox2D([24, 48, 64, 96])
-        bbox.x2 = 89
-        assert bbox.x2 == 89 and bbox.w == 66
+        bbox.x2 = 90
+        assert bbox.x2 == 90 and bbox.w == 66
 
     def test_invalid_x2(self):
         bbox = BBox2D([24, 48, 64, 96])
@@ -101,7 +101,7 @@ class TestBBox2D(object):
     def test_y2(self):
         bbox = BBox2D([24, 48, 64, 30])
         bbox.y2 = 80
-        assert bbox.y2 == 80 and bbox.h == 33
+        assert bbox.y2 == 80 and bbox.h == 32
 
     def test_invalid_y2(self):
         bbox = BBox2D([24, 48, 64, 96])
@@ -111,7 +111,7 @@ class TestBBox2D(object):
     def test_w(self):
         bbox = BBox2D([24, 48, 64, 96])
         bbox.width = 70
-        assert bbox.width == 70 and bbox.x1 == 24 and bbox.x2 == 93
+        assert bbox.width == 70 and bbox.x1 == 24 and bbox.x2 == 94
         bbox.w = 70
         assert bbox.width == 70 and bbox.w == 70
 
@@ -122,10 +122,10 @@ class TestBBox2D(object):
 
     def test_h(self):
         bbox = BBox2D([24, 48, 64, 96])
-        bbox.height = 93
-        assert bbox.height == 93 and bbox.y1 == 48 and bbox.y2 == 140
-        bbox.h = 93
-        assert bbox.height == 93 and bbox.h == 93
+        bbox.height = 92
+        assert bbox.height == 92 and bbox.y1 == 48 and bbox.y2 == 140
+        bbox.h = 92
+        assert bbox.height == 92 and bbox.h == 92
 
         with pytest.raises(ValueError):
             bbox.h = -1
@@ -138,7 +138,7 @@ class TestBBox2D(object):
         for x, y in zip(bbox_list, [24, 48, 64, 96]):
             assert x == y
         bbox_list_2 = bbox.tolist(mode=XYXY)
-        for x, y in zip(bbox_list_2, [24, 48, 87, 143]):
+        for x, y in zip(bbox_list_2, [24, 48, 88, 144]):
             assert x == y
 
     def test_numpy(self):

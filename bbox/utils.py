@@ -52,8 +52,8 @@ def nms(bbl, scores, thresh):
         xx2 = np.minimum(bbl.x2[i], bbl.x2[order[1:]])
         yy2 = np.minimum(bbl.y2[i], bbl.y2[order[1:]])
 
-        w = np.maximum(0.0, xx2 - xx1 + 1)
-        h = np.maximum(0.0, yy2 - yy1 + 1)
+        w = np.maximum(0.0, xx2 - xx1)
+        h = np.maximum(0.0, yy2 - yy1)
         inter = w * h
 
         overlap = inter / (areas[i] + areas[order[1:]] - inter)
@@ -83,8 +83,8 @@ def aspect_ratio(bbox, ratios):
     ws = np.round(np.sqrt(size_ratios))
     hs = np.round(ws * ratios)
 
-    stack = np.vstack((cx - 0.5*(ws-1), cy - 0.5*(hs-1),
-                       cx + 0.5*(ws-1), cy + 0.5*(hs-1)))
+    stack = np.vstack((cx - 0.5*(ws), cy - 0.5*(hs),
+                       cx + 0.5*(ws), cy + 0.5*(hs)))
 
     boxes = BBox2DList(stack.T, mode=XYXY)
     return boxes

@@ -20,7 +20,7 @@ def naive_nms(dets, thresh):
     y2 = dets[:, 3]
     scores = dets[:, 4]
 
-    areas = (x2 - x1 + 1) * (y2 - y1 + 1)
+    areas = (x2 - x1) * (y2 - y1)
     order = scores.argsort()[::-1]
 
     keep = []
@@ -32,8 +32,8 @@ def naive_nms(dets, thresh):
         xx2 = np.minimum(x2[i], x2[order[1:]])
         yy2 = np.minimum(y2[i], y2[order[1:]])
 
-        w = np.maximum(0.0, xx2 - xx1 + 1)
-        h = np.maximum(0.0, yy2 - yy1 + 1)
+        w = np.maximum(0.0, xx2 - xx1)
+        h = np.maximum(0.0, yy2 - yy1)
         inter = w * h
 
         ovr = inter / (areas[i] + areas[order[1:]] - inter)
@@ -61,8 +61,8 @@ def test_nms():
     y1 = np.random.randint(0, 50, size=40)
     w = np.random.randint(0, 50, size=40)
     h = np.random.randint(0, 50, size=40)
-    x2 = x1 + w - 1
-    y2 = y1 + h - 1
+    x2 = x1 + w
+    y2 = y1 + h
 
     bboxes_list = np.stack((x1, y1, x2, y2), axis=1)
     scores = np.random.rand(40)
@@ -81,9 +81,9 @@ def test_nms():
 def test_aspect_ratio():
     box = BBox2D([0, 0, 15, 15], mode=XYXY)
     box_ar = aspect_ratio(box, [0.5, 1, 2])
-    gt_box_ar = BBox2DList(np.array([[-3.5,  2., 18.5, 13.],
-                                     [0.,  0., 15., 15.],
-                                     [2.5, -3, 12.5, 18.]]),
+    gt_box_ar = BBox2DList(np.array([[-3, 2.5, 18., 12.5],
+                                     [0., 0., 15., 15.],
+                                     [2., -3.5, 13., 18.5]]),
                            mode=XYXY)
 
     assert box_ar == gt_box_ar

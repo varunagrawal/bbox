@@ -40,10 +40,10 @@ def jaccard_index_2d(a: BBox2D, b: BBox2D):
 
     logger.debug("xA={0} yA={1} xB={2} yB={3}".format(xA, yA, xB, yB))
 
-    inter_w = xB - xA + 1
+    inter_w = xB - xA
     inter_w = inter_w * (inter_w >= 0)
 
-    inter_h = yB - yA + 1
+    inter_h = yB - yA
     inter_h = inter_h * (inter_h >= 0)
 
     intersection = inter_w * inter_h
@@ -94,10 +94,10 @@ def multi_jaccard_index_2d(a: BBox2DList, b: BBox2DList):
     logger.debug("\nmulti_jaccard_index:\nxA\n{0}\nyA\n{1}\nxB\n{2}\nyB\n{3}".format(
         xA, yA, xB, yB))
 
-    inter_w = xB - xA + 1
+    inter_w = xB - xA
     inter_w[inter_w < 0] = 0
 
-    inter_h = yB - yA + 1
+    inter_h = yB - yA
     inter_h[inter_h < 0] = 0
 
     # maximum generates a (N,N) matrix which consumes a lot of memory

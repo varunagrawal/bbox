@@ -144,7 +144,7 @@ class TestBBox2DList(object):
             bbl.x1 = np.zeros(5)
 
     def test_width_getter(self):
-        w = self.bbl.bboxes[:, 2] - self.bbl.bboxes[:, 0] + 1
+        w = self.bbl.bboxes[:, 2] - self.bbl.bboxes[:, 0]
         assert np.array_equal(self.bbl.w, w)
         assert np.array_equal(self.bbl.width, w)
 
@@ -156,7 +156,7 @@ class TestBBox2DList(object):
         assert np.array_equal(bbl.width, w)
 
     def test_height_getter(self):
-        h = self.bbl.bboxes[:, 3] - self.bbl.bboxes[:, 1] + 1
+        h = self.bbl.bboxes[:, 3] - self.bbl.bboxes[:, 1]
         assert np.array_equal(self.bbl.h, h)
         assert np.array_equal(self.bbl.height, h)
 
@@ -170,9 +170,11 @@ class TestBBox2DList(object):
     def test_mul(self):
         bbl = BBox2DList(np.ones((7, 4)))
         bbl_scaled = bbl * 11
-        assert np.all(bbl_scaled.bboxes == 11)
+        assert np.all(bbl_scaled.bboxes[:, 0:2] == 11)
+        assert np.all(bbl_scaled.bboxes[:, 2:4] == 22)
         bbl_scaled = 11 * bbl
-        assert np.all(bbl_scaled.bboxes == 11)
+        assert np.all(bbl_scaled.bboxes[:, 0:2] == 11)
+        assert np.all(bbl_scaled.bboxes[:, 2:4] == 22)
 
     def test_invalid_mul(self):
         bbl = BBox2DList(np.ones((7, 4)))

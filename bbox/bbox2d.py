@@ -46,8 +46,8 @@ class BBox2D:
                     "list, tuple, numpy ndarray, or BBox2D object.")
 
         if mode == XYXY:
-            w = x[2] - x[0] + 1
-            h = x[3] - x[1] + 1
+            w = x[2] - x[0]
+            h = x[3] - x[1]
         elif mode == XYWH:
             w = x[2]
             h = x[3]
@@ -60,8 +60,8 @@ class BBox2D:
         self._h = np.float(h)
 
         # (x2, y2) will be used for indexing, hence we need to subtract 1
-        self._x2 = self._x1 + self._w - 1
-        self._y2 = self._y1 + self._h - 1
+        self._x2 = self._x1 + self._w
+        self._y2 = self._y1 + self._h
 
     def __eq__(self, x):
         if not isinstance(x, BBox2D):
@@ -84,7 +84,7 @@ class BBox2D:
             raise ValueError("Value is greater than x2={0}".format(self.x2))
 
         self._x1 = x
-        self._w = self._x2 - self._x1 + 1
+        self._w = self._x2 - self._x1
 
     @property
     def x2(self):
@@ -99,7 +99,7 @@ class BBox2D:
             raise ValueError("Value is lesser than x1={0}".format(self.x1))
 
         self._x2 = x
-        self._w = self._x2 - self._x1 + 1
+        self._w = self._x2 - self._x1
 
     @property
     def y1(self):
@@ -114,7 +114,7 @@ class BBox2D:
             raise ValueError("Value is greater than y2={0}".format(self.y2))
 
         self._y1 = y
-        self._h = self._y2 - self._y1 + 1
+        self._h = self._y2 - self._y1
 
     @property
     def y2(self):
@@ -129,7 +129,7 @@ class BBox2D:
             raise ValueError("Value is lesser than y1={0}".format(self.y1))
 
         self._y2 = y
-        self._h = self._y2 - self._y1 + 1
+        self._h = self._y2 - self._y1
 
     @property
     def width(self):
@@ -144,7 +144,7 @@ class BBox2D:
             raise ValueError(
                 "Invalid width value. Width cannot be non-positive.")
         self._w = w
-        self._x2 = self._x1 + self._w - 1
+        self._x2 = self._x1 + self._w
 
     @property
     def w(self):
@@ -170,7 +170,7 @@ class BBox2D:
             raise ValueError(
                 "Invalid height value. Height cannot be non-positive.")
         self._h = h
-        self._y2 = self._y1 + self._h - 1
+        self._y2 = self._y1 + self._h
 
     @property
     def h(self):
@@ -187,7 +187,7 @@ class BBox2D:
         """
         Return center coordinates of the bounding box.
         """
-        return np.array([self._x1 + (self._w-1)/2, self._y1 + (self._h-1)/2])
+        return np.array([self._x1 + (self._w)/2, self._y1 + (self._h)/2])
 
     def aspect_ratio(self, ratio):
         """
