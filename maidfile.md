@@ -38,8 +38,7 @@ cp -a docsrc/build/html docs
 ## build
 
 ```sh
-rm -rf dist/*
-python setup.py sdist bdist_wheel
+poetry build
 ```
 
 ## publish
@@ -48,5 +47,5 @@ Run task `build` before this
 
 ```sh
 echo "publishing"
-twine upload dist/*
+poetry publish
 ```
