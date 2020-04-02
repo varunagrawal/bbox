@@ -6,7 +6,7 @@ authors = ["Varun Agrawal <varagrawal@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.5"
+python = "^3.6"
 numpy = "^1.18.2"
 pyquaternion = "^0.9.5"
 
