@@ -114,9 +114,9 @@ def test_multi_jaccard_index_2d_performance():
     _ = multi_jaccard_index_2d(bbl, bbl)
     dt = pendulum.now() - start
 
-    # our runtime should be less than 3 seconds for 5k boxes
+    # our runtime should be less than 10 seconds for 5k boxes
     assert dt.microseconds < 1e6
-    assert dt.seconds < 3
+    assert dt.seconds < 10
 
 
 def test_jaccard_index_3d_identity():
