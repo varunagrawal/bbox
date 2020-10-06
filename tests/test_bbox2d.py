@@ -189,3 +189,23 @@ class TestBBox2D(object):
         bbox = BBox2D([24, 48, 64, 96])
         with pytest.raises(ValueError):
             bbox * (1, 2)
+
+    def test_contains_point(self):
+        bbox = BBox2D([24, 48, 64, 96])
+        with pytest.raises(ValueError):
+            bbox.contains(1)
+
+        with pytest.raises(ValueError):
+            bbox.contains([1, 2, 3])
+
+        # test tuple
+        assert bbox.contains((35, 57))
+        # test list
+        assert bbox.contains([35, 57])
+        # test numpy array
+        assert bbox.contains(np.array([35, 57]))
+
+        assert not bbox.contains([22, 57])
+        assert not bbox.contains([25, 47])
+        assert not bbox.contains([90, 57])
+        assert not bbox.contains([25, 144])

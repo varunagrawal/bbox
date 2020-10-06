@@ -23,6 +23,7 @@ class BBox2D:
         TypeError: If `x` is not of type {list, tuple, numpy.ndarray, BBox2D}
 
     """
+
     def __init__(self, x, mode=XYWH):
         # Copy constructor makes the constructor idempotent
         if isinstance(x, BBox2D):
@@ -42,8 +43,8 @@ class BBox2D:
                     "Invalid input length. Input should have 4 elements.")
         else:
             raise TypeError(
-                "Expected input to constructor to be a 4 element " \
-                    "list, tuple, numpy ndarray, or BBox2D object.")
+                "Expected input to constructor to be a 4 element "
+                "list, tuple, numpy ndarray, or BBox2D object.")
 
         if mode == XYXY:
             w = x[2] - x[0] + 1
@@ -257,3 +258,18 @@ class BBox2D:
 
     def __rmul__(self, s):
         return self.mul(s)
+
+    def contains(self, point):
+        """
+        Check if `point` is inside the bounding box.
+
+        Args:
+            point (:py:class:`Iterable`): Vector of 2 values (x, y).
+        """
+        try:
+            if len(point) != 2:
+                raise ValueError("Invalid argument point.")
+        except:
+            raise ValueError("Argument is not an iterable.")
+
+        return self.x1 <= point[0] <= self.x2 and self.y1 <= point[1] <= self.y2
