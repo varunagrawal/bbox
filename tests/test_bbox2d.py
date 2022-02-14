@@ -179,11 +179,11 @@ class TestBBox2D(object):
         scaled_bbox = bbox * 2
         assert np.array_equal(scaled_bbox.numpy(mode=XYXY),
                               np.array([48, 96, 128, 192],
-                                       dtype=np.float))
+                                       dtype=float))
         scaled_bbox_left = 2 * bbox
         assert np.array_equal(scaled_bbox_left.numpy(mode=XYXY),
                               np.array([48, 96, 128, 192],
-                                       dtype=np.float))
+                                       dtype=float))
 
     def test_invalid_mul(self):
         bbox = BBox2D([24, 48, 64, 96])

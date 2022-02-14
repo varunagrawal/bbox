@@ -12,7 +12,7 @@ def naive_nms(dets, thresh):
     [https://github.com/rbgirshick/py-faster-rcnn/blob/master/lib/nms/py_cpu_nms.py]
     """
     if dets.shape[0] == 0:
-        return np.array([]).astype(np.int)
+        return np.array([]).astype(int)
 
     x1 = dets[:, 0]
     y1 = dets[:, 1]
@@ -41,7 +41,7 @@ def naive_nms(dets, thresh):
         inds = np.where(ovr <= thresh)[0]
         order = order[inds + 1]
 
-    return np.array(keep).astype(np.int)
+    return np.array(keep).astype(int)
 
 
 def test_blank_nms():

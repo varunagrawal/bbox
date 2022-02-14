@@ -28,7 +28,7 @@ def nms(bbl, scores, thresh):
         ValueError: If arguments are of incorrect type or size.
     """
     if bbl.shape[0] == 0:
-        return np.array([]).astype(np.int)
+        return np.array([]).astype(int)
 
     if not isinstance(scores, (list, np.ndarray)):
         raise ValueError("`scores` should be a list of numpy array")
@@ -61,7 +61,7 @@ def nms(bbl, scores, thresh):
         idx = np.where(overlap <= thresh)[0]
         order = order[idx + 1]
 
-    return np.array(keep).astype(np.int)
+    return np.array(keep).astype(int)
 
 
 def aspect_ratio(bbox, ratios):
@@ -76,7 +76,7 @@ def aspect_ratio(bbox, ratios):
     cx, cy = bbox.center()
     w, h = bbox.w, bbox.h
     size = w * h
-    ratios = np.asarray(ratios, dtype=np.float)
+    ratios = np.asarray(ratios, dtype=float)
 
     size_ratios = size / ratios
 
