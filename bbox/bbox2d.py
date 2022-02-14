@@ -55,10 +55,10 @@ class BBox2D:
         else:
             raise ValueError('argument mode has invalid value')
 
-        self._x1 = np.float(x[0])
-        self._y1 = np.float(x[1])
-        self._w = np.float(w)
-        self._h = np.float(h)
+        self._x1 = float(x[0])
+        self._y1 = float(x[1])
+        self._w = float(w)
+        self._h = float(h)
 
         # (x2, y2) will be used for indexing, hence we need to subtract 1
         self._x2 = self._x1 + self._w - 1
@@ -236,7 +236,7 @@ class BBox2D:
         Args:
             mode (BoxMode2D): Mode in which to return the box. See :py:mod:`~bbox.box_modes`.
         """
-        return np.asarray(self.tolist(mode=mode), dtype=np.float)
+        return np.asarray(self.tolist(mode=mode), dtype=float)
 
     def __repr__(self):
         return "BBox2D([{x}, {y}, {w}, {h}])".format(x=self.x1, y=self.y1, w=self.w, h=self.h)

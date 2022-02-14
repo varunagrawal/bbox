@@ -244,7 +244,7 @@ class BBox2DList:
         """
         if isinstance(x, (tuple, list, np.ndarray)):
             try:
-                x = np.asarray(x, dtype=np.float)
+                x = np.asarray(x, dtype=float)
             except (ValueError,):
                 raise ValueError(
                     "Expected list, tuple, or numpy array of ints/floats")
@@ -283,7 +283,7 @@ class BBox2DList:
         """
         if isinstance(x, (tuple, list, np.ndarray)):
             try:
-                x = np.asarray(x, dtype=np.float)
+                x = np.asarray(x, dtype=float)
             except (ValueError,):
                 raise ValueError(
                     "Expected list, tuple, or numpy array of ints/floats")
