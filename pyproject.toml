@@ -6,8 +6,8 @@ authors = ["Varun Agrawal <varagrawal@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = ">=3.7"
-numpy = "^1.18.2"
+python = ">=3.8"
+numpy = "^1.22.0"
 pyquaternion = "^0.9.5"
 
 [tool.poetry.dev-dependencies]
@@ -17,7 +17,7 @@ coverage = ">=5.5"
 pytest-cov = "^2.8.1"
 pytest = "^5.4.1"
 matplotlib = "^3.2.1"
-pillow = "^9.0.0"
+pillow = "^9.0.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
