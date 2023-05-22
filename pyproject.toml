@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bbox"
-version = "0.9.2"
+version = "0.9.4"
 description = "Python library for 2D/3D bounding boxes"
 authors = ["Varun Agrawal <varagrawal@gmail.com>"]
 license = "MIT"
