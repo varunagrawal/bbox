@@ -107,3 +107,5 @@ venv.bak/
 *.png
 *.jp*g
 *.bmp
+
+**/*.DS_Store
