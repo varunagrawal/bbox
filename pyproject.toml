@@ -15,7 +15,7 @@ pylint = "^2.4.4"
 pendulum = "^2.1.0"
 coverage = ">=5.5"
 pytest-cov = "^2.8.1"
-pytest = "^5.4.1"
+pytest = "^6.2.5"
 matplotlib = "^3.2.1"
 pillow = "^9.3.0"
 
