@@ -6,8 +6,11 @@ import logging
 
 import numpy as np
 
-from bbox import BBox2D, BBox2DList, BBox3D
 from bbox.geometry import polygon_area, polygon_collision, polygon_intersection
+
+from .bbox2d import BBox2D
+from .bbox2d_list import BBox2DList
+from .bbox3d import BBox3D
 
 logger = logging.getLogger(__name__)
 

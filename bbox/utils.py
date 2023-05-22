@@ -11,8 +11,9 @@ NMS adapted from Tomasz Malisiewicz's & Ross Girshick's code.
 
 import numpy as np
 
-from bbox import BBox2DList
 from bbox.box_modes import XYXY
+
+from .bbox2d_list import BBox2DList
 
 
 def nms(bbl, scores, thresh):
