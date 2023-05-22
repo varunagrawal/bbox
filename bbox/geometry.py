@@ -95,8 +95,8 @@ def is_separating_axis(o, p1, p2):
         d = min(max2 - min1, max1 - min2)
         # push a bit more than needed so the shapes do not overlap in future
         # tests due to float precision
-        d_over_o_squared = d/np.dot(o, o) + 1e-10
-        pv = d_over_o_squared*o
+        d_over_o_squared = d / np.dot(o, o) + 1e-10
+        pv = d_over_o_squared * o
         return False, pv
     else:
         return True, None
@@ -142,32 +142,37 @@ def polygon_area(polygon):
     """
     x = polygon[:, 0]
     y = polygon[:, 1]
-    area = (np.dot(x, np.roll(y, -1)) -
-            np.dot(np.roll(x, -1), y))
-    return np.abs(area)/2
+    area = (np.dot(x, np.roll(y, -1)) - np.dot(np.roll(x, -1), y))
+    return np.abs(area) / 2
 
 
 def polygon_intersection(poly1, poly2):
     """
     Use the Sutherland-Hodgman algorithm to compute the intersection of 2 convex polygons.
     """
+
     def line_intersection(e1, e2, s, e):
         dc = e1 - e2
         dp = s - e
         n1 = np.cross(e1, e2)
         n2 = np.cross(s, e)
         n3 = 1.0 / (np.cross(dc, dp))
-        return np.array([(n1*dp[0] - n2*dc[0]) * n3, (n1*dp[1] - n2*dc[1]) * n3])
+        return np.array([(n1 * dp[0] - n2 * dc[0]) * n3,
+                         (n1 * dp[1] - n2 * dc[1]) * n3])
 
     def is_inside_edge(p, e1, e2):
         """Return True if e is inside edge (e1, e2)"""
-        return np.cross(e2-e1, p-e1) >= 0
+        return np.cross(e2 - e1, p - e1) >= 0
 
     output_list = poly1
     # e1 and e2 are the edge vertices for each edge in the clipping polygon
     e1 = poly2[-1]
 
     for e2 in poly2:
+        # If there is no point of intersection
+        if len(output_list) == 0:
+            break
+
         input_list = output_list
         output_list = []
         s = input_list[-1]

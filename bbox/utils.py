@@ -38,7 +38,8 @@ def nms(bbl, scores, thresh):
     scores = np.asarray(scores)
 
     if not scores.shape[0] == bbl.shape[0]:
-        raise ValueError("box list and scores should have the same number of elements.")
+        raise ValueError(
+            "box list and scores should have the same number of elements.")
 
     areas = bbl.w * bbl.h
     order = scores.argsort()[::-1]
@@ -84,8 +85,8 @@ def aspect_ratio(bbox, ratios):
     ws = np.round(np.sqrt(size_ratios))
     hs = np.round(ws * ratios)
 
-    stack = np.vstack((cx - 0.5*(ws-1), cy - 0.5*(hs-1),
-                       cx + 0.5*(ws-1), cy + 0.5*(hs-1)))
+    stack = np.vstack((cx - 0.5 * (ws - 1), cy - 0.5 * (hs - 1),
+                       cx + 0.5 * (ws - 1), cy + 0.5 * (hs - 1)))
 
     boxes = BBox2DList(stack.T, mode=XYXY)
     return boxes

@@ -241,7 +241,7 @@ class TestBBox3d(unittest.TestCase):
                    width=1.8,
                    height=1.819601518010064,
                    q=(0.999845654958524, 0.0, 0.0, 0.017568900379933073))
-        print(jaccard_index_3d(a, b))
+
         self.assertEqual(jaccard_index_3d(a, b), 0)
 
     def test_render(self):
@@ -335,3 +335,24 @@ class TestBBox3d(unittest.TestCase):
             "length=5.340892485711914, width=2.457703972075464, height=1.9422248281533563, "\
                 "q=(0.9997472337219893, 0.0, 0.0, 0.022482630300529462))"
         assert repr(self.box) == representation
+
+    def test_iou(self):
+        """Test if IoU computation of 2 3D boxes is correct."""
+
+        # These 2 boxes don't overlap (run plot_cubes.py to visually verify),
+        # so the IOU should be 0.0.
+        bbox_a = BBox3D(x=332.5,
+                        y=85.0,
+                        z=205.5,
+                        length=125,
+                        width=74,
+                        height=45)
+        bbox_b = BBox3D(x=332.5,
+                        y=144.0,
+                        z=366.5,
+                        length=113,
+                        width=44,
+                        height=65)
+
+        iou = iou_3d(bbox_a, bbox_b)
+        self.assertEqual(iou, 0.0)
