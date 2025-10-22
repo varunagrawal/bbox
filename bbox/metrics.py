@@ -2,17 +2,14 @@
 
 # pylint: disable=invalid-name,missing-docstring,assignment-from-no-return,logging-fstring-interpolation
 
-import logging
-
 import numpy as np
+from loguru import logger
 
 from bbox.geometry import polygon_area, polygon_collision, polygon_intersection
 
 from .bbox2d import BBox2D
 from .bbox2d_list import BBox2DList
 from .bbox3d import BBox3D
-
-logger = logging.getLogger(__name__)
 
 
 def iou_2d(a: BBox2D, b: BBox2D):
@@ -58,7 +55,12 @@ def jaccard_index_2d(a: BBox2D, b: BBox2D):
 
     logger.debug(f"jaccard_index: a_area: {a_area}, b_area: {b_area}")
 
-    iou = intersection / (a_area + b_area - intersection)
+    union = a_area + b_area - intersection
+
+    if union == 0.0:
+        iou = np.nan
+    else:
+        iou = intersection / union
 
     # set nan and +/- inf to 0
     if np.isinf(iou) or np.isnan(iou):
@@ -118,7 +120,12 @@ def multi_jaccard_index_2d(a: BBox2DList, b: BBox2DList):
     logger.debug(
         f"\nmulti_jaccard_index:\n a_area:\n {a_area} \nb_area:\n {b_area}")
 
-    iou = intersection / (a_area + b_area.T - intersection)
+    union = a_area + b_area.T - intersection
+
+    iou = np.zeros_like(intersection)
+
+    iou[union > 0] = intersection[union > 0] / union[union > 0]
+    iou[union == 0] = np.nan
 
     # set nan and +/- inf to 0
     iou[np.isinf(iou)] = 0
@@ -152,7 +159,7 @@ def jaccard_index_3d(a: BBox3D, b: BBox3D):
     """
     # check if the two boxes don't overlap
     if not polygon_collision(a.p[0:4, 0:2], b.p[0:4, 0:2]):
-        return np.round_(0, decimals=5)
+        return np.round(0, decimals=5)
 
     intersection_points = polygon_intersection(a.p[0:4, 0:2], b.p[0:4, 0:2])
     # If intersection_points is empty, means the boxes don't intersect
@@ -171,10 +178,13 @@ def jaccard_index_3d(a: BBox3D, b: BBox3D):
 
     union_vol = (a_vol + b_vol - inter_vol)
 
-    iou = inter_vol / union_vol
+    if union_vol == 0:
+        iou = np.nan
+    else:
+        iou = inter_vol / union_vol
 
     # set nan and +/- inf to 0
     if np.isinf(iou) or np.isnan(iou):
         iou = 0
 
-    return np.round_(iou, decimals=5)
+    return np.round(iou, decimals=5)

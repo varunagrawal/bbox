@@ -1,23 +1,15 @@
 """Tests for metrics."""
 
-import logging
-# needed to ignore matplotlib warnings
-import warnings
-
+import matplotlib.pyplot as plt
 import numpy as np
 import pendulum
 import pytest
-
-warnings.filterwarnings("ignore")
-
-import matplotlib.pyplot as plt
+from loguru import logger
 from matplotlib.patches import Polygon
 
 from bbox import BBox2D, BBox2DList, BBox3D
 from bbox.metrics import (jaccard_index_2d, jaccard_index_3d,
                           multi_jaccard_index_2d)
-
-logger = logging.getLogger("test_metrics")
 
 
 def naive_intersection_over_union(boxA, boxB):
@@ -279,4 +271,5 @@ def visualize_boxes(box_list):
     #     plt.plot(p[0], p[1], 'bx')
 
     plt.axis('scaled')
+    plt.show()
     plt.show()

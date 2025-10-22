@@ -95,7 +95,7 @@ def is_separating_axis(o, p1, p2):
         d = min(max2 - min1, max1 - min2)
         # push a bit more than needed so the shapes do not overlap in future
         # tests due to float precision
-        d_over_o_squared = d / np.dot(o, o) + 1e-10
+        d_over_o_squared = d / (np.dot(o, o) + 1e-10)
         pv = d_over_o_squared * o
         return False, pv
     else:
@@ -146,6 +146,11 @@ def polygon_area(polygon):
     return np.abs(area) / 2
 
 
+def cross2d(x, y):
+    """2D vector cross product."""
+    return x[..., 0] * y[..., 1] - x[..., 1] * y[..., 0]
+
+
 def polygon_intersection(poly1, poly2):
     """
     Use the Sutherland-Hodgman algorithm to compute the intersection of 2 convex polygons.
@@ -154,15 +159,15 @@ def polygon_intersection(poly1, poly2):
     def line_intersection(e1, e2, s, e):
         dc = e1 - e2
         dp = s - e
-        n1 = np.cross(e1, e2)
-        n2 = np.cross(s, e)
-        n3 = 1.0 / (np.cross(dc, dp))
+        n1 = cross2d(e1, e2)
+        n2 = cross2d(s, e)
+        n3 = 1.0 / (cross2d(dc, dp))
         return np.array([(n1 * dp[0] - n2 * dc[0]) * n3,
                          (n1 * dp[1] - n2 * dc[1]) * n3])
 
     def is_inside_edge(p, e1, e2):
         """Return True if e is inside edge (e1, e2)"""
-        return np.cross(e2 - e1, p - e1) >= 0
+        return cross2d(e2 - e1, p - e1) >= 0
 
     output_list = poly1
     # e1 and e2 are the edge vertices for each edge in the clipping polygon
