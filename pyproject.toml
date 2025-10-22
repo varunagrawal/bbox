@@ -1,24 +1,32 @@
-[tool.poetry]
+[project]
 name = "bbox"
 version = "0.9.4"
 description = "Python library for 2D/3D bounding boxes"
-authors = ["Varun Agrawal <varagrawal@gmail.com>"]
-license = "MIT"
+readme = "README.md"
+authors = [
+  { name = "Varun Agrawal", email="varagrawal@gmail.com" }
+]
 
-[tool.poetry.dependencies]
-python = ">=3.8"
-numpy = "^1.22.0"
-pyquaternion = "^0.9.5"
+requires-python = ">= 3.10"
+dependencies = [
+  "numpy>=1.22.0",
+  "pyquaternion>=0.9.5"
+]
 
-[tool.poetry.dev-dependencies]
-pylint = "^2.4.4"
-pendulum = "^2.1.0"
-coverage = ">=5.5"
-pytest-cov = "^2.8.1"
-pytest = "^6.2.5"
-matplotlib = "^3.2.1"
-pillow = "^10.0.1"
+[project.license]
+text = "MIT"
+
+[dependency-groups]
+dev = [
+    "pylint>=2.4.4",
+    "pendulum>=2.1.0",
+    "coverage>=5.5",
+    "pytest-cov>=2.8.1",
+    "pytest>=6.2.5",
+    "matplotlib>=3.2.1",
+    "pillow>=10.3.0",
+]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
