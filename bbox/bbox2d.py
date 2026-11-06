@@ -269,7 +269,7 @@ class BBox2D:
         try:
             if len(point) != 2:
                 raise ValueError("Invalid argument point.")
-        except:
+        except TypeError:
             raise ValueError("Argument is not an iterable.")
 
         return self.x1 <= point[0] <= self.x2 and self.y1 <= point[1] <= self.y2
